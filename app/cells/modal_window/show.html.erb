@@ -1,0 +1,7 @@
+<div id="<%= @modal_window[:name] %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="<%= @modal_window[:name] %>-title" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 id="<%= @modal_window[:name] %>-title"><%= @modal_window[:title] %></h4>
+  </div>
+  <%= @modal_window[:content] %>
+</div>

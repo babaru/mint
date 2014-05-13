@@ -1,0 +1,20 @@
+
+<%= simple_form_for(@time_record , html: {class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+    <%= f.input :user_id, collection: User.all.map{|v| [v.name, v.id]} %>
+
+    <%= f.input :project_id, collection: Project.all.map{|v| [v.name, v.id]} %>
+
+    <%= f.input :recorded_on, as: :date_picker %>
+
+    <%= f.input :value, input_html: {min: '0.5', step: '0.5'} %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+<% end %>

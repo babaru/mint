@@ -1,0 +1,103 @@
+<%= grid(@projects, :show_filters => :when_filtered) do |g|
+
+  if @show_extra_column
+
+    # Client column
+    g.column name: "#{Client.model_name.human}#{t('activerecord.attributes.client.name')}", attribute: 'name', model: Client do |project|
+      link_to project.client.name, client_projects_path(client_id: project.client_id)
+    end
+
+  end
+
+  # Project name
+  g.column name: t('activerecord.attributes.project.name'), attribute: 'name' do |project|
+    link_to content_tag(:strong, project.name), client_project_master_plan_path(id: project.current_master_plan_id, client_id: project.client_id, project_id: project.id)
+  end
+
+  # Started at
+  g.column name: t('activerecord.attributes.project.started_at'), attribute: 'started_at' do |project|
+    project.started_at.strftime('%Y-%m-%d') if project.started_at
+  end
+
+  # Ended at
+  g.column name: t('activerecord.attributes.project.ended_at'), attribute: 'ended_at' do |project|
+    project.ended_at.strftime('%Y-%m-%d') if project.ended_at
+  end
+
+  g.column name: t('activerecord.attributes.project.budget') do |project|
+    content_tag(:strong, number_to_currency(project.budget, precision: 0, unit: '￥'))
+  end
+
+  g.column name: t('activerecord.attributes.project.is_started'), attribute: 'is_started' do |project|
+    fa_icon('ok-sign') if project.is_started?
+  end
+
+  g.column name: t('activerecord.attributes.project.is_started_at'), attribute: 'is_started_at' do |project|
+    project.is_started_at.strftime('%Y-%m-%d %H:%M:%S') if project.is_started?
+  end
+
+  g.column name: t('activerecord.attributes.project.assigned_users') do |project|
+    project.assigned_users.inject([]){|list, u| list << content_tag(:span, u.name, class: 'label label-success')}.join(' ').html_safe
+  end
+
+  # Finance Columns
+
+  if @show_finance_columns
+
+    g.column html: { class: 'btn-cell' } do |project|
+      link_to(
+        fa_icon('money', text: t('model.add', model: Payment.model_name.human)),
+        new_project_payment(project),
+        class: 'btn btn-warning'
+      )
+    end
+
+  end
+
+  # Management Columns
+
+  if @show_management_columns
+
+    g.column html: {class: 'btn-cell'} do |project|
+      link_to(
+        fa_icon('rocket'),
+        start_project_path(project),
+        class: 'btn btn-success',
+        method: :post
+      ) if !project.is_started? && can? :manage, project
+    end
+
+    g.column html: {class: 'btn-cell'} do |project|
+      link_to(
+        fa_icon('user'),
+        assign_project_user_path(id: project),
+        rel: 'tooltip',
+        title: '分配项目',
+        class: 'btn'
+      ) if can? :manage, project
+    end
+
+    g.column html: {class: 'btn-cell'} do |project|
+      link_to(
+        fa_icon('edit'),
+        edit_project_path(project),
+        class: 'btn',
+        rel: 'tooltip',
+        title: t('buttons.edit')
+      ) if can? :manage, project
+    end
+
+    g.column html: {class: 'btn-cell'} do |project|
+      link_to(
+        fa_icon('trash'),
+        project_path(project),
+        method: :delete,
+        confirm: t("confirms.delete"),
+        class: 'btn btn-danger',
+        rel: 'tooltip',
+        title: t('buttons.delete')
+      ) if can? :manage, project
+    end
+
+  end
+end -%>

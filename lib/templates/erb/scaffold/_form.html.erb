@@ -1,0 +1,16 @@
+
+<%%= simple_form_for(<% if class_name.split('::').count > 1 %> ['<%= class_name.split('::').first.underscore.downcase %>', @<%= class_name.split('::').last.underscore.downcase %>]<% else %>@<%= class_name.split('::').last.underscore.downcase %> <% end %>, html: {class: 'form-horizontal' }) do |f| %>
+  <%%= f.error_notification %>
+
+  <div class="form-inputs">
+  <% for attribute in class_name.split('::').last.constantize.columns -%>
+    <% if attribute.name != "id" && attribute.name !="created_at" && attribute.name !="updated_at" %>
+    <%%= f.input :<%= attribute.name %> %>
+    <% end -%>
+  <% end -%>
+  </div>
+
+  <div class="form-actions">
+    <%%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+<%% end %>

@@ -1,0 +1,58 @@
+.simple_form {
+  > .form-inputs {
+    > .control-group {
+      &.hidden {
+        display: none;
+      }
+
+      > .required {
+        font-weight: bold;
+
+        > abbr {
+          // font-size: 18px;
+        }
+      }
+    }
+  }
+
+  &.single-line {
+    label {
+      display: block;
+      text-align: left;
+      width: auto;
+      line-height: 28px;
+    }
+
+    .controls {
+      margin-left: 0px;
+      > div {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+form {
+  margin-bottom: $small-space;
+
+  input[type='checkbox'] {
+    margin-top: 0px;
+  }
+}
+
+.pill-checkbox-group {
+  @extend .nav-pills;
+  @extend .nav;
+
+  > li {
+    > a {
+      > input[type='checkbox'] {
+        display: none;
+      }
+    }
+  }
+}
+
+.date-picker {
+  padding: 0;
+}

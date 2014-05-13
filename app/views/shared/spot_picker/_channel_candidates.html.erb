@@ -1,0 +1,10 @@
+<tr class="selectors">
+  <td class="title">所属频道</td>
+  <td>
+    <ul class="nav nav-pills">
+      <% spot_picker.channels.each do |channel| %>
+      <%= spot_picker_channel_candidates(spot_picker, channel) %>
+      <% end %>
+    </ul>
+  </td>
+</tr>

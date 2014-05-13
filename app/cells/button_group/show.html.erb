@@ -1,0 +1,5 @@
+<div class="btn-group">
+  <% @buttons.each do |button| %>
+  <%= render_cell :button, :show, data: button %>
+  <% end %>
+</div>

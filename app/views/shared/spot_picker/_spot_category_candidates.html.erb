@@ -1,0 +1,10 @@
+<tr class="selectors">
+  <td class="title">刊例类型</td>
+  <td>
+    <ul class="nav nav-pills">
+      <% spot_picker.spot_categories.each do |spot_category| %>
+      <%= spot_picker_spot_category_candidates(spot_picker, spot_category) %>
+      <% end %>
+    </ul>
+  </td>
+</tr>

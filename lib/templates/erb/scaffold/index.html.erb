@@ -1,0 +1,44 @@
+<%%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.list', model: <%= class_name.split('::').last %>.model_name.human)}",
+    toolbar:
+    {
+      right:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('plus-sign', text: t('model.create', :model => <%= class_name.split('::').last %>.model_name.human)),
+            url: new_<%= class_name.split('::').last.underscore.downcase %>_path,
+            options:
+            {
+              class: 'btn btn-primary'
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%%= grid(@<%= class_name.split('::').last.underscore.downcase.pluralize %>_grid, :show_filters => :when_filtered) do |g|
+<% for attribute in class_name.split('::').last.constantize.columns -%>
+  g.column :name => t('activerecord.attributes.<%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>'), :html => {:class => "grid-cell"} do |<%= class_name.split('::').last.underscore.downcase %>|
+    <%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>
+  end
+<% end %>
+
+  g.column html: {class: 'btn-cell'} do |<%= class_name.split('::').last.underscore.downcase %>|
+    link_to(fa_icon('edit'), edit_<%= singular_table_name %>_path(<%= class_name.split('::').last.underscore.downcase %>), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
+  end
+
+  g.column html: {class: 'btn-cell'} do |<%= class_name.split('::').last.underscore.downcase %>|
+    link_to(fa_icon('trash'), <%= singular_table_name %>_path(<%= class_name.split('::').last.underscore.downcase %>), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
+  end
+end -%>

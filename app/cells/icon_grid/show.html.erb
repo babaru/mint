@@ -1,0 +1,13 @@
+<div class="icon-grid">
+  <% @icon_grid[:items].each do |item| %>
+  <%= link_to(
+    content_tag(:span, item[:name]),
+    item[:url],
+    'logo-url'        => item[:icon],
+    'data-editable'   => @icon_grid[:editable],
+    'data-edit-url'   => item[:edit_url],
+    'data-remove-url' => item[:remove_url]
+  )
+  %>
+  <% end %>
+</div>

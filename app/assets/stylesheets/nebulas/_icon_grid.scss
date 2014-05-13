@@ -1,0 +1,53 @@
+$icon-size: 80px;
+
+
+.icon-grid {
+  @extend .container-fluid;
+
+  .span2 {
+    height: $icon-size + 60px;
+    .item {
+      display: block;
+      cursor: pointer;
+      @include border-radius($icon-size / 2);
+      width: $icon-size; height: $icon-size;
+      margin: auto; clear: both;
+      border: 1px solid $tableBorder;
+      // @include box-shadow(rgba(0, 0, 0, 0.5) 0px 0px 10px inset);
+
+      &:hover {
+        // @include box-shadow(rgba(0, 0, 0, 0.3) 0px -5px 15px inset);
+        text-decoration: none !important;
+      }
+
+      > span {
+        position: relative; top: $icon-size + 10px;
+        display: block;
+        min-width: $icon-size / 2; height: 20px;
+        margin: auto; clear: both;
+        text-align: center;
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: bold;
+        color: $textColor;
+
+        &:hover {
+        }
+      }
+    }
+
+    .edit-panel {
+      display: block;
+      position: relative;
+      left: 150px; top: 0 - $icon-size;
+      width: 24px;
+      color: #666;
+    }
+  }
+
+  &.app-icon-grid {
+    .item {
+      border: none !important;
+    }
+  }
+}

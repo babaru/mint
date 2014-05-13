@@ -1,0 +1,20 @@
+<div class="padding grid">
+  <div class="grid-row">
+    <div class="cell6">
+      <a href="#" class="button button-primary" id="change-date-button" data-date-format="yyyy-mm-dd" data-date="<%= date_jumper[:current_date] %>">选择日期</a>
+    </div>
+    <div class="cell6">
+      <h4 class="pull-right"><%= date_jumper[:current_date] %></h4>
+    </div>
+  </div>
+</div>
+
+<script language="javascript">
+  $(document).ready(function() {
+    $('#change-date-button').datepicker().on('changeDate', function(ev){
+      var selected_date = new Date(ev.date);
+      var date_string = selected_date.getFullYear() + '-' + ('0' + (selected_date.getMonth()+1)).slice(-2) + '-' + ('0' + selected_date.getDate()).slice(-2);
+      window.location.href = "<%= brand_launch_type_path(brand_id: @brand.id, type: @launch_type) %>" + "?date=" + date_string;
+    });
+  });
+</script>

@@ -1,0 +1,5 @@
+<div class="icon-grid">
+  <% items.each do |item| %>
+  <%= link_to content_tag(:span, item[:name]), item[:url], 'logo-url' => item[:icon], 'data-editable' => editable %>
+  <% end %>
+</div>

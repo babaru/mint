@@ -1,0 +1,52 @@
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.list', model: Client.model_name.human)}",
+    toolbar:
+    {
+      right:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('plus-sign', text: t('model.create', :model => Client.model_name.human)),
+            url: new_client_path,
+            options:
+            {
+              class: 'btn btn-primary'
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%= grid(@clients_grid, :show_filters => :when_filtered) do |g|
+  g.column :name => t('activerecord.attributes.client.id'), :html => {:class => "grid-cell"} do |client|
+    client.id
+  end
+  g.column :name => t('activerecord.attributes.client.name'), :html => {:class => "grid-cell"} do |client|
+    client.name
+  end
+  g.column :name => t('activerecord.attributes.client.created_at'), :html => {:class => "grid-cell"} do |client|
+    client.created_at
+  end
+  g.column :name => t('activerecord.attributes.client.updated_at'), :html => {:class => "grid-cell"} do |client|
+    client.updated_at
+  end
+
+
+  g.column html: {class: 'btn-cell'} do |client|
+    link_to(fa_icon('edit'), edit_client_path(client), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
+  end
+
+  g.column html: {class: 'btn-cell'} do |client|
+    link_to(fa_icon('trash'), client_path(client), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
+  end
+end -%>

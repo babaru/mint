@@ -1,0 +1,57 @@
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.list', model: TimeRecord.model_name.human)}",
+    toolbar:
+    {
+      right:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('plus-sign', text: t('model.create', :model => TimeRecord.model_name.human)),
+            url: new_time_record_path,
+            options:
+            {
+              class: 'btn btn-primary'
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%= grid(@time_records_grid, :show_filters => :when_filtered) do |g|
+
+  g.column :name => t('activerecord.attributes.time_record.recorded_on'), :html => {:class => "grid-cell"} do |time_record|
+    time_record.recorded_on.strftime("%Y-%m-%d")
+  end
+  g.column :name => t('activerecord.attributes.time_record.user_id'), :html => {:class => "grid-cell"} do |time_record|
+    time_record.user.name
+  end
+  g.column :name => t('activerecord.attributes.time_record.project_id'), :html => {:class => "grid-cell"} do |time_record|
+    time_record.project.name
+  end
+  g.column :name => t('activerecord.attributes.time_record.value'), :html => {:class => "grid-cell"} do |time_record|
+    time_record.value
+  end
+
+  g.column :name => t('activerecord.attributes.time_record.updated_at'), :html => {:class => "grid-cell"} do |time_record|
+    time_record.updated_at.strftime("%Y-%m-%d")
+  end
+
+
+  g.column html: {class: 'btn-cell'} do |time_record|
+    link_to(fa_icon('edit'), edit_time_record_path(time_record), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
+  end
+
+  g.column html: {class: 'btn-cell'} do |time_record|
+    link_to(fa_icon('trash'), time_record_path(time_record), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
+  end
+end -%>

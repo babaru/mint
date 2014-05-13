@@ -1,0 +1,23 @@
+.breadcrumb {
+  padding: 0px 0;
+  margin: 0 0 $small-space !important;
+  background-color: $bodyBackground !important;
+  @include border-radius(0);
+  > li {
+    > .divider {
+      padding: 0 5px;
+      color: #ccc;
+    }
+
+    > a {
+      text-shadow: none;
+      &:hover,
+      &:focus {
+      }
+    }
+  }
+
+  .active {
+    color: $grayLight;
+  }
+}

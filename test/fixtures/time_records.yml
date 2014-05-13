@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  project: 
+  recorded_at: 2014-05-13 17:44:52
+  recorded_on: 2014-05-13 17:44:52
+  value: 9.99
+
+two:
+  user: 
+  project: 
+  recorded_at: 2014-05-13 17:44:52
+  recorded_on: 2014-05-13 17:44:52
+  value: 9.99

@@ -1,0 +1,28 @@
+<%= grid(@projects_grid, :show_filters => :when_filtered) do |g|
+
+  g.column :name => t('activerecord.attributes.project.name'), :html => {:class => "grid-cell"} do |project|
+    project.name
+  end
+  g.column :name => t('activerecord.attributes.project.started_at'), :html => {:class => "grid-cell"} do |project|
+    project.started_at.strftime("%Y-%m-%d")
+  end
+  g.column :name => t('activerecord.attributes.project.ended_at'), :html => {:class => "grid-cell"} do |project|
+    project.ended_at.strftime("%Y-%m-%d")
+  end
+
+  g.column :name => t('activerecord.attributes.project.client_id'), :html => {:class => "grid-cell"} do |project|
+    project.client.name unless project.client.nil?
+  end
+
+  g.column :name => t('activerecord.attributes.project.parent_id'), :html => {:class => "grid-cell"} do |project|
+    project.parent.name unless project.parent.nil?
+  end
+
+  g.column html: {class: 'btn-cell'} do |project|
+    link_to(fa_icon('edit'), edit_project_path(project), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
+  end
+
+  g.column html: {class: 'btn-cell'} do |project|
+    link_to(fa_icon('trash'), project_path(project), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
+  end
+end -%>

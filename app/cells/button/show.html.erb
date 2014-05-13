@@ -1,0 +1,26 @@
+<% if @button[:type] == 'dropdown' %>
+<div class="btn-group">
+  <%= link_to([@button[:name].html_safe, content_tag(:span, nil, class: 'caret')].join(' ').html_safe, "#", @button[:options]) %>
+  <ul class="dropdown-menu">
+    <% @button[:items].each do |item| %>
+    <% if item[:divider] %>
+    <%= content_tag(:li, nil, class: 'divider') %>
+    <% else %>
+    <%= content_tag(:li, link_to(item[:name], item[:url], item[:options])) %>
+    <% end %>
+    <% end %>
+  </ul>
+</div>
+<% elsif @button[:type] == 'split-dropdown' %>
+<div class="btn-group">
+  <%= link_to(@button[:name], @button[:url], @button[:options]) %>
+  <%= link_to(content_tag(:span, nil, class: 'caret'), '#', @button[:dropdown_options]) %>
+  <ul class="dropdown-menu">
+    <% @button[:items].each do |item| %>
+    <%= content_tag(:li, link_to(item[:name], item[:url], item[:options])) %>
+    <% end %>
+  </ul>
+</div>
+<% else %>
+<%= link_to(@button[:name], @button[:url], @button[:options]) %>
+<% end %>

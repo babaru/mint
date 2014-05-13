@@ -1,0 +1,17 @@
+<div class="page-title">
+  <div class="row-fluid">
+    <div class="span6">
+      <% if @page_title[:toolbar] && @page_title[:toolbar][:left] %>
+      <div class="btn-toolbar">
+        <%= @page_title[:toolbar][:left].join.html_safe %>
+      </div>
+      <% end %>
+      <h3><%= @page_title[:name].html_safe %></h3>
+    </div>
+    <div class="span6">
+      <div class="btn-toolbar pull-right">
+        <%= @page_title[:toolbar][:right].join.html_safe if @page_title[:toolbar] && @page_title[:toolbar][:right] %>
+      </div>
+    </div>
+  </div>
+</div>

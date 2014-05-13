@@ -1,0 +1,10 @@
+<tr class="selectors">
+  <td class="title">所属网站</td>
+  <td>
+    <ul class="nav nav-pills">
+      <% media.each do |medium| %>
+      <%= spot_picker_medium_candidates(spot_picker, medium) %>
+      <% end %>
+    </ul>
+  </td>
+</tr>

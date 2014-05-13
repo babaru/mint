@@ -1,0 +1,33 @@
+<%= grid(spots, :show_filters => :always) do |g|
+  g.column html: {style: "width:1px;"} do |spot|
+    [hidden_field_tag("spot_ids[]", spot.id), hidden_field_tag(:medium_id, spot.medium_id), hidden_field_tag(:channel_id, spot.channel_id)].join(' ').html_safe
+  end
+
+  g.column name: t('activerecord.attributes.spot.spot_category_id') do |spot|
+    spot.spot_category.name
+  end
+
+  g.column name: t('activerecord.attributes.spot.channel_id') do |spot|
+    spot.channel.name
+  end
+
+  g.column name: t('activerecord.attributes.spot.name') do |spot|
+    content_tag :strong, spot.name
+  end
+
+  g.column name: t('activerecord.attributes.spot.price'), html: {style: 'text-align: right; width: 120px;'} do |spot|
+    "#{content_tag(:strong, number_to_currency(spot.price, format: "%n", precision: 0))} #{spot.unit}".html_safe
+  end
+
+  g.column name: t('activerecord.attributes.spot.remark') do |spot|
+    spot.remark
+  end
+
+  g.column name: '数量' do |spot|
+    text_field_tag('counts[]', nil, class: 'spot-day-count-text-field')
+  end
+
+  g.column name: '配送？' do |spot|
+    check_box_tag 'is_on_houses[]', spot.id unless spot.is_a?(NetCostSpot)
+  end
+end -%>

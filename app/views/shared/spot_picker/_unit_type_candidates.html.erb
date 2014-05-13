@@ -1,0 +1,10 @@
+<tr class="selectors">
+  <td class="title">售卖方式</td>
+  <td>
+    <ul class="nav nav-pills">
+      <% spot_picker.unit_types.each do |unit_type| %>
+      <%= spot_picker_unit_type_candidates(spot_picker, unit_type) %>
+      <% end %>
+    </ul>
+  </td>
+</tr>

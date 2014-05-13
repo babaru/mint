@@ -1,0 +1,1 @@
+<%= content_tag :div, toolbar.inject([]) {|list, item| list << link_to(item[:name], item[:url], item[:options])}.join('').html_safe, class: 'toolbar' %>

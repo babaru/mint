@@ -1,0 +1,10 @@
+<header class="article-title grid">
+  <div class="grid-row">
+    <div class="cell6">
+      <h4 class="<%= article_title[:class] %>"><%= article_title[:title] %></h4>
+    </div>
+    <div class="cell6">
+      <%= render partial: 'shared/components/toolbar', object: article_title[:toolbar] if article_title[:toolbar] %>
+    </div>
+  </div>
+</header>

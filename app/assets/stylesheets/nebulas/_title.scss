@@ -1,0 +1,37 @@
+.page-title,
+.section-title {
+  @extend .container-fluid;
+  padding: 0 0 $small-space 0;
+  margin-bottom: $small-space;
+
+  [class*="span"] {
+    padding: 4px 0px;
+    vertical-align: center;
+  }
+
+  h3,
+  h4 {
+    line-height: 24px;
+    margin: 0px; padding: 0px;
+    display: inline-block;
+    top: 4px;
+    position: relative;
+  }
+
+  .btn-toolbar + h3,
+  .btn-toolbar + h4 {
+    margin-left: $small-space;
+  }
+
+  .btn {
+    top: -4px;
+  }
+
+  .btn-toolbar {
+    display: inline-block;
+    .btn {
+      top: auto;
+    }
+    margin: 0px;
+  }
+}

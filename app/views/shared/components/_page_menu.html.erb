@@ -1,0 +1,29 @@
+<div class="header">
+  <h3><%= page_menu[:name] %></h3>
+</div>
+<div class="accordion" id="page-menu-body">
+  <% if page_menu[:items] %>
+<% page_menu[:items].each_with_index do |item, index| %>
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <% if item[:children] %>
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#page-menu-body" href="#item_<%= index + 1 %>">
+        <%= item[:name] %>
+      </a>
+      <% else %>
+      <%= link_to item[:name], item[:url], class: item[:classes] %>
+      <% end %>
+    </div>
+    <% if item[:children] %>
+    <% item[:children].each do |child| %>
+    <div id="item_<%= index + 1 %>" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <%= link_to child[:name], child[:url], class: child[:classes] %>
+      </div>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+<% end %>
+  <% end %>
+</div>

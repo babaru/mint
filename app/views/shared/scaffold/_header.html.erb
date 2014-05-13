@@ -1,0 +1,9 @@
+<header>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <a class="brand" href="#"><span><%= Settings.app.name %></span></a>
+      <%= render_navigation renderer: :global_menu, expand_all: true %>
+      <%= render partial: 'shared/scaffold/user_block' %>
+    </div>
+  </div>
+</header>

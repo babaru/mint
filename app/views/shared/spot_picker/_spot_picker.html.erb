@@ -1,0 +1,9 @@
+<div>
+  <table class='table picker'>
+    <%= render partial: 'shared/spot_picker/selected_items', locals: {spot_picker: spot_picker} %>
+    <%= render partial: 'shared/spot_picker/medium_candidates', locals: {spot_picker: spot_picker, media: media} %>
+    <%= render partial: 'shared/spot_picker/channel_candidates', locals: {spot_picker: spot_picker} if spot_picker.selected_medium %>
+    <%= render partial: 'shared/spot_picker/spot_category_candidates', locals: {spot_picker: spot_picker} if spot_picker.selected_medium %>
+    <%= render partial: 'shared/spot_picker/unit_type_candidates', locals: {spot_picker: spot_picker} if spot_picker.selected_medium %>
+  </table>
+</div>

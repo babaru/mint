@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= Settings.app.name %></title>
+  <link rel="shortcut icon" href="/assets/favicon.ico" />
+  <%= stylesheet_link_tag :application, :media => "all" %>
+  <%= yield :js %>
+  <%= csrf_meta_tags %>
+</head>
+  <body id="login" class="session">
+    <div id="main">
+      <div id="content">
+        <header>
+          <h1><%= Settings.app.name %></h1>
+        </header>
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span2">
+              <div class="logo"></div>
+            </div>
+            <div class="span10">
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render partial: 'shared/scaffold/footer' %>
+  </body>
+</html>

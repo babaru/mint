@@ -1,0 +1,35 @@
+<div class="narrow-center-page">
+
+<%%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.create', model: <%= class_name.split('::').last %>.model_name.human)} <small>#{t('simple_form.required.text') }</small>",
+    toolbar: {
+      left:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('level-up rotate-270'),
+            url: <%= class_name.split('::').last.underscore.downcase.pluralize %>_path,
+            options:
+            {
+              class: 'btn',
+              rel: 'tooltip',
+              title: "#{t('labels.back_to')}#{t('model.list', :model => <%= class_name.split('::').last %>.model_name.human)}",
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%%= render 'form' %>
+
+</div>

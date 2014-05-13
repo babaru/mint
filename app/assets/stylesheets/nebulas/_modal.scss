@@ -1,0 +1,12 @@
+.modal {
+  @include border-radius(0);
+
+  .modal-header {
+    padding-top: $small-space !important;
+    padding-bottom: $small-space !important;
+  }
+
+  form {
+    margin: 0px;
+  }
+}

@@ -1,0 +1,21 @@
+<div id="devise-session-new">
+<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+
+<table>
+  <tr>
+    <td><%= f.input :email, autofocus: true, label: false, placeholder: 'email' %></td>
+    <td><%= f.input :password, label: false, placeholder: 'password' %></td>
+    <td><%= f.button :submit, t("buttons.sign_in") %></td>
+  </tr>
+</table>
+
+<%- if alert %>
+<div class="alert">
+  <%= alert %>
+</div>
+<% end -%>
+
+<% end %>
+</div>
+
+

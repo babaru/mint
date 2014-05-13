@@ -1,0 +1,123 @@
+<div class="narrow-center-page">
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{@project.name}",
+    toolbar: {
+      left:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('level-up rotate-270'),
+            url: projects_path,
+            options:
+            {
+              class: 'btn',
+              rel: 'tooltip',
+              title: "#{t('labels.back_to')}#{t('model.list', :model => Project.model_name.human)}",
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>
+        属性
+      </th>
+      <th>
+        值
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+        
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project.name') %>
+      </td>
+      <td>
+        <%= @project.name %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project.started_at') %>
+      </td>
+      <td>
+        <%= @project.started_at %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project.ended_at') %>
+      </td>
+      <td>
+        <%= @project.ended_at %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project.key') %>
+      </td>
+      <td>
+        <%= @project.key %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project.client_id') %>
+      </td>
+      <td>
+        <%= @project.client_id %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project.type') %>
+      </td>
+      <td>
+        <%= @project.type %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project.level') %>
+      </td>
+      <td>
+        <%= @project.level %>
+      </td>
+    </tr>
+    
+        
+        
+    
+  </tbody>
+  <tfoot>
+
+  </tfoot>
+</table>
+</div>

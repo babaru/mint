@@ -1,0 +1,28 @@
+zh-CN:
+  activerecord:
+    models:
+      user: 人员
+      client: 客户
+      project: 项目
+      time_record: 时间记录
+    attributes:
+      user:
+        name: 用户名
+        email: 邮箱
+        password: 密码
+        password_confirmation: 确认密码
+        roles: 用户身份
+      client:
+        name: 名称
+      project:
+        name: 名称
+        started_at: 开始日期
+        ended_at: 结束日期
+        parent_id: 父项目
+        client_id: 客户
+      time_record:
+        user_id: 人员
+        project_id: 项目
+        recorded_at: 记录于
+        recorded_on: 登记在
+        value: 小时数

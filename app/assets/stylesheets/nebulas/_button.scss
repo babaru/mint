@@ -1,0 +1,86 @@
+@mixin button-background($background-color, $color: #fff) {
+  background-image: none !important;
+  @include box-shadow(none);
+  color: $color;
+  background-color: $background-color; /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  @include reset-filter();
+
+  &:hover,
+  &:focus {
+    background-color: lighten($background-color, 5%);
+    @include box-shadow(0 -4px 0 darken($background-color, 8%) inset);
+  }
+
+  &:active,
+  &.active {
+    @include box-shadow(0 2px 4px rgba(0, 0, 0, .15) inset);
+  }
+
+  &.disabled, &[disabled] {
+  }
+}
+
+.btn {
+  padding: 6px 12px;
+  border: none !important;
+  border-image: none !important;
+  background-color: none !important;
+  text-shadow: none !important;
+  @include button-background($btnBackground, $grayDark);
+}
+
+.btn-small {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+// Set the backgrounds
+// -------------------------
+
+.btn-primary {
+  @include button-background($btnPrimaryBackground);
+}
+// Warning appears are orange
+.btn-warning {
+  @include button-background($btnWarningBackground);
+}
+// Danger and error appear as red
+.btn-danger {
+  @include button-background($btnDangerBackground);
+}
+// Success appears as green
+.btn-success {
+  @include button-background($btnSuccessBackground);
+}
+// Info appears as a neutral blue
+.btn-info {
+  @include button-background($btnInfoBackground);
+}
+// Inverse appears as dark gray
+.btn-inverse {
+  @include button-background($btnInverseBackground);
+}
+
+.btn-group {
+  > .btn-group {
+    &:first-child {
+      .btn:first-child {
+        @include border-top-left-radius($baseBorderRadius);
+        @include border-bottom-left-radius($baseBorderRadius);
+      }
+    }
+
+    .btn {
+      @include border-radius(0);
+    }
+
+    &:last-child {
+      .btn {
+        @include border-top-right-radius($baseBorderRadius);
+        @include border-bottom-right-radius($baseBorderRadius);
+      }
+    }
+  }
+}

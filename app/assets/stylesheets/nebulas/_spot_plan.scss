@@ -1,0 +1,127 @@
+.master-plan-item-row {
+  .is_on_house {
+    color: red !important;
+  }
+}
+
+#spot-plan-table {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: moz-none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &.is_history {
+    .spot-plan-item-cell {
+      cursor: auto !important;
+    }
+  }
+
+  .master-plan-item-row {
+    td {
+      vertical-align: center;
+
+      &.sun,
+      &.sat {
+        background: lighten($orange, 30%);
+      }
+
+      &.spot_name {
+        text-align: left;
+        font-weight: bold;
+      }
+
+      &.reality_count,
+      &.ideal_count {
+        padding: 0px;
+        width: 40px;
+      }
+
+      span {
+        &.reality_count,
+        &.ideal_count {
+          display: block;
+          height: 25px;
+          line-height: 25px;
+          padding: 0px $tiny-space;
+        }
+
+        &.warning {
+          color: #ff0000;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .spot-plan-item-cell {
+      cursor: pointer;
+      padding: 0px;
+
+      span {
+        display: block;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        text-align: center;
+
+        &.old_cell {
+          background: $yellow;
+        }
+      }
+    }
+
+    .disabled {
+      cursor: crosshair;
+      background: $grayLighter;
+    }
+  }
+
+  .spot-plan-calendar-month-row {
+    text-align: right;
+    font-weight: bold;
+    td {
+      padding: 2px 0px;
+      background: $grayLighter;
+      text-align: center;
+
+      &.disabled {
+        color: $grayLight;
+      }
+
+      &.sun,
+      &.sat {
+        background: lighten($orange, 30%);
+      }
+    }
+  }
+
+  .spot-plan-calendar-days-row {
+    td {
+      &:first-child {
+        padding: 0px $small-space;
+        background: $grayLighter;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 38px;
+        color: $textColor;
+        text-align: right;
+      }
+      padding: 0px;
+      width: 25px;
+      text-align: center;
+      color: #ccc;
+
+      &.sun,
+      &.sat {
+        background: lighten($orange, 20%);
+        color: white;
+      }
+
+      &.disabled {
+        background: $grayLighter;
+      }
+    }
+  }
+
+}

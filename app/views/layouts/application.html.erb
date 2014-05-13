@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= Settings.app.name %></title>
+  <link rel="shortcut icon" href="/assets/favicon.ico" />
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= yield :js %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <%= render partial: 'shared/scaffold/header' %>
+
+  <div id="main">
+    <%= render_breadcrumbs builder: ::Mint::View::BootstrapBreadcrumbsBuilder, separator: content_tag(:span, '/', class: 'divider').html_safe %>
+    <%= render partial: 'shared/components/notification' %>
+    <%= yield %>
+  </div>
+
+  <%= render partial: 'shared/scaffold/footer' %>
+
+</body>
+</html>

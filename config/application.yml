@@ -1,0 +1,14 @@
+defaults: &defaults
+  app:
+    name: 'Mint'
+    slogan: 'Mint is not terminal'
+    copy_right: '&copy; 2014 TPC All Rights Reserved.'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

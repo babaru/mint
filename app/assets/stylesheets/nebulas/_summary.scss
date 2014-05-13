@@ -1,0 +1,57 @@
+
+.plan-summary {
+  width: 100%;
+  margin-bottom: $small-space;
+  th, td {
+    padding: 2px $small-space;
+    text-align: left;
+    border-left: 1px solid $tableBorder;
+  }
+
+  th {
+    font-weight: normal;
+  }
+
+  td {
+    font-size: 14px;
+  }
+
+  .profit, .project-budget {
+    font-weight: bold;
+  }
+}
+
+.label-group {
+  .item {
+    display: inline-block;
+    padding: 3px;
+  }
+}
+
+.master-plan-value-group {
+  .medium {
+    background: $blueDark;
+    color: white;
+  }
+
+  .company {
+    background: $pink;
+    color: white;
+  }
+
+  .reality {
+  }
+}
+
+.value {
+  padding: 3px;
+  &.medium {
+    background: $blueDark;
+    color: white;
+  }
+
+  &.company {
+    background: $pink;
+    color: white;
+  }
+}

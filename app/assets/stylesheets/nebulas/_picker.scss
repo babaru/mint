@@ -1,0 +1,65 @@
+.picker {
+
+  tr {
+    border-bottom: 1px solid $tableBorder;
+
+    &:last-child {
+      border: none;
+    }
+
+    &:first-child {
+      td {
+        &:first-child {
+          padding-top: $tiny-space;
+        }
+      }
+    }
+
+    td {
+      padding: $tiny-space;
+      &:first-child {
+        width: 70px;
+        padding-top: $small-space;
+      }
+    }
+  }
+
+  .title {
+    font-weight: bold !important;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0; margin: 0px;
+
+    &.nav {
+      > li {
+        > a {
+          padding: $tiny-space;
+        }
+      }
+    }
+  }
+
+
+
+  .selected {
+    ul {
+      list-style: none;
+      padding-left: 20px;
+
+      .label {
+        font-size: 12px !important;
+      }
+
+      li {
+        display: inline;
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .selectors {
+    ul { padding-left: 10px; }
+  }
+}

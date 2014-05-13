@@ -1,0 +1,184 @@
+#main {
+  padding: 0 $big-space;
+
+  > .container-fluid {
+    padding: 0 !important;
+  }
+}
+
+.narrow-center-page {
+  max-width: 960px;
+  margin: auto; clear: both;
+}
+
+.well {
+  padding: $tiny-space $small-space !important;
+}
+
+.copyright {
+  padding: $tiny-space $big-space;
+  color: $grayLight;
+}
+
+
+// Stylesheet of session
+
+$content-width: 600px;
+$content-height: 120px;
+
+body.session {
+  background: $dark-gray-blue;
+  color: white;
+
+  #main {
+    position: absolute;
+    top: 40%;
+    margin-top: 0 - $content-height / 2;/* half of #content height*/
+    left: 0;
+    width: 100%;
+
+    #content {
+      width: $content-width;
+      height: $content-height;
+      margin: auto; clear: both;
+
+      header {
+        height: $content-height - 40px;
+      }
+
+      > .container-fluid {
+        padding: 0px; margin: 0px;
+        > .row-fluid {
+          padding: 0px; margin: 0px;
+          height: 40px;
+          > [class*="span"] {
+            padding: 0px; margin: 0px;
+            height: 40px;
+          }
+
+          > .span2 {
+            width: 50px;
+
+            > .logo {
+              width: 40px; height: 40px;
+              @include at2x('logo_40', 40px, 40px, '.png');
+            }
+          }
+        }
+      }
+
+      .alert {
+        background: $red;
+        border: none;
+        @include border-radius(0);
+        color: white;
+        text-shadow: none;
+        position: relative;
+        width: 401px;
+        margin: 0px;
+        top: 10px;
+      }
+    }
+  }
+
+  footer {
+    position: absolute;
+    bottom: $large-space;
+    left: $large-space;
+    a {
+      color: white;
+    }
+  }
+
+  #devise-session-new {
+    form {
+      padding: 0px; margin: 0px;
+    }
+    table {
+      border: none;
+      padding: 0px; margin: 0px;
+      tr {
+        border: none;
+        padding: 0px; margin: 0px;
+
+        td {
+          border: none;
+          padding: 0px; margin: 0px;
+          padding-right: 10px;
+        }
+      }
+    }
+    .control-group {
+      padding: 0px; margin: 0px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      @include border-radius(0);
+      @include box-shadow(none);
+      border: none !important;
+      outline: none !important;
+      width: 200px; height: 30px;
+      padding: 5px 10px;
+      margin: 0px;
+      background: #232b32;
+      font: {
+        size: 16px;
+        weight: bold;
+      }
+      color: white;
+
+      &:active, &:focus {
+        background: #191e23;
+      }
+
+      &::-webkit-input-placeholder { /* WebKit browsers */
+        color: #323d47;
+      }
+      &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color: #323d47;
+      }
+      &::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color: #323d47;
+      }
+      &:-ms-input-placeholder { /* Internet Explorer 10+ */
+        color: #323d47;
+      }
+    }
+
+    input[type="submit"] {
+      width: 90px; height: 40px !important;
+      @include border-radius(0);
+      font-size: 16px !important;
+      font-weight: normal !important;
+      color: white;
+      background: $logo-blue;
+      &:hover {
+        @include box-shadow(none);
+        background: $logo-blue;
+      }
+    }
+  }
+
+  #main {
+
+    #alert-box {
+      width: 200px; height: 30px;
+      line-height: 30px;
+      padding: 5px 10px;
+      background: black;
+      margin: auto; clear: both;
+      margin-bottom: 10px;
+
+      .caret {
+        display: block;
+        width: 0px;
+        border: 5px solid transparent;
+        border-top: 5px solid black;
+        border-bottom: none;
+        position: relative;
+        bottom: -5px;
+      }
+    }
+  }
+}
