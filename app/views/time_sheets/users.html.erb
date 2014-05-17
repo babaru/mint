@@ -1,0 +1,54 @@
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: t('navigation.page_user_time_sheet'),
+  }
+)
+%>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="btn-toolbar">
+        <%= render_cell(
+          :dropdown_button,
+          :show,
+          data:
+          {
+            name: @user.nil? ? "#{t('label.please_choose')}#{User.model_name.human}" : @user.name,
+            url: nil,
+            dropdown_list:
+            [
+              {
+                name: "All users",
+                url: user_time_sheet_path(@url_params.reject{|k,v| k == :user_id})
+              },
+              {
+                divider: true
+              },
+              User.tracking.inject([]) {|list, user| list << {
+                  name: user.name,
+                  url: user_time_sheet_path(@url_params.merge({user_id: user.id}))
+                }
+              }
+            ].flatten
+          }
+        ) %>
+        <div class="btn-group">
+        <%= link_to t('activerecord.attributes.time_sheet.duration.all'), user_time_sheet_path(@url_params.merge({duration: :all})), class: "btn #{@report_duration == :all ? 'active' : ''}" %>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.year'), user_time_sheet_path(@url_params.merge({duration: :year})), class: "btn #{@report_duration == :year ? 'active' : ''}" %>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.month'), user_time_sheet_path(@url_params.merge({duration: :month})), class: "btn #{@report_duration == :month ? 'active' : ''}" %>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.week'), user_time_sheet_path(@url_params.merge({duration: :week})), class: "btn #{@report_duration == :week ? 'active' : ''}" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= @personal_time_reports.inject([]) {|list, report| list << render(partial: 'personal_time_report_grid', locals: {user: report[:user], grid: report[:grid]}) }.join.html_safe if @user.nil? %>
+
+<%= render(partial: 'personal_time_report_grid', locals: {user: @user, grid: @personal_time_report_grid}) unless @user.nil? %>
+
+

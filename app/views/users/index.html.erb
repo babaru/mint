@@ -27,35 +27,4 @@
 )
 %>
 
-<%= grid(@users_grid, :show_filters => :when_filtered) do |g|
-  g.column :name => t('activerecord.attributes.user.name'), :html => {:class => "grid-cell"} do |user|
-    user.name
-  end
-  g.column :name => t('activerecord.attributes.user.email'), :html => {:class => "grid-cell"} do |user|
-    user.email
-  end
-  g.column :name => t('activerecord.attributes.user.sign_in_count'), :html => {:class => "grid-cell"} do |user|
-    user.sign_in_count
-  end
-  g.column :name => t('activerecord.attributes.user.current_sign_in_at'), :html => {:class => "grid-cell"} do |user|
-    user.current_sign_in_at
-  end
-  g.column :name => t('activerecord.attributes.user.last_sign_in_at'), :html => {:class => "grid-cell"} do |user|
-    user.last_sign_in_at
-  end
-  g.column :name => t('activerecord.attributes.user.current_sign_in_ip'), :html => {:class => "grid-cell"} do |user|
-    user.current_sign_in_ip
-  end
-  g.column :name => t('activerecord.attributes.user.user_group'), :html => {:class => "grid-cell"} do |user|
-    user.user_groups.inject([]) {|list, group| list << render_cell(:label, :show, data: {name: group.name, kind: 'info'})}.join(' ').html_safe
-  end
-
-
-  g.column html: {class: 'btn-cell'} do |user|
-    link_to(fa_icon('edit'), edit_user_path(user), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
-  end
-
-  g.column html: {class: 'btn-cell'} do |user|
-    link_to(fa_icon('trash'), user_path(user), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
-  end
-end -%>
+<%= render partial: 'users_grid' %>

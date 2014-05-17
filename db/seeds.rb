@@ -5,11 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = User.create(email: 'admin@mint.io', password: '12345678', password_confirmation: '12345678')
-puts "Created user: #{user.email}"
 
-role = Role.create(name: 'system_admin')
-puts "Created role: #{role.name}"
+admin = Admin.create(email: 'admin@mint.io', password: '12345678', password_confirmation: '12345678')
+puts "Created admin: #{admin.email}"
 
 role = Role.create(name: 'user')
 puts "Created role: #{role.name}"

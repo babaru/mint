@@ -1,0 +1,52 @@
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.list', model: TaskType.model_name.human)}",
+    toolbar:
+    {
+      right:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('plus-sign', text: t('model.create', :model => TaskType.model_name.human)),
+            url: new_task_type_path,
+            options:
+            {
+              class: 'btn btn-primary'
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%= grid(@task_types_grid, :show_filters => :when_filtered) do |g|
+  g.column :name => t('activerecord.attributes.task_type.id'), :html => {:class => "grid-cell"} do |task_type|
+    task_type.id
+  end
+  g.column :name => t('activerecord.attributes.task_type.name'), :html => {:class => "grid-cell"} do |task_type|
+    task_type.name
+  end
+  g.column :name => t('activerecord.attributes.task_type.created_at'), :html => {:class => "grid-cell"} do |task_type|
+    task_type.created_at
+  end
+  g.column :name => t('activerecord.attributes.task_type.updated_at'), :html => {:class => "grid-cell"} do |task_type|
+    task_type.updated_at
+  end
+
+
+  g.column html: {class: 'btn-cell'} do |task_type|
+    link_to(fa_icon('edit'), edit_task_type_path(task_type), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
+  end
+
+  g.column html: {class: 'btn-cell'} do |task_type|
+    link_to(fa_icon('trash'), task_type_path(task_type), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
+  end
+end -%>

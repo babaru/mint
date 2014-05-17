@@ -1,0 +1,14 @@
+<%= grid(@time_records_grid, :show_filters => :when_filtered) do |g|
+  g.column :name => t('activerecord.attributes.time_record.year_number'), :html => {:class => "grid-cell"} do |time_record|
+    time_record.year_number
+  end
+
+  g.column :name => t('activerecord.attributes.project.name'), :html => {:class => "grid-cell"} do |time_record|
+    time_record.project.name unless time_record.project.nil?
+  end
+
+  g.column :name => t('activerecord.attributes.time_record.value'), :html => {:class => "grid-cell"} do |time_record|
+    time_record.value
+  end
+
+end -%>

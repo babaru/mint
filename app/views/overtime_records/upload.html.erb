@@ -1,0 +1,43 @@
+<div class="narrow-center-page">
+
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.upload', model: UserOvertimeRecordFile.model_name.human)} <small>#{t('simple_form.required.text') }</small>",
+    toolbar: {
+      left:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('level-up rotate-270'),
+            url: url_for(:back),
+            options:
+            {
+              class: 'btn',
+              rel: 'tooltip',
+              title: "#{t('labels.back_to')}",
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%= simple_form_for(@upload_file, url: upload_overtime_records_path, method: :post, remote: false, html: {class: 'form-horizontal upload-user-time-records-file-form'}) do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <%= f.input :data_file, as: :file, label: '上传文件' %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, '确定', class: 'button button-primary' %>
+  </div>
+<% end %>
+
+</div>

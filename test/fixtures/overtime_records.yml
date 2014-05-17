@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  happened_at: 2014-05-15 22:34:49
+  value: 9.99
+
+two:
+  user: 
+  happened_at: 2014-05-15 22:34:49
+  value: 9.99

@@ -8,7 +8,8 @@
     <%= f.input :email %>
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
-    <%= f.association :roles, collection: Role.all.collect{|r| [r.name, r.id]}, as: :check_boxes %>
+    <%= f.association :roles, collection: Role.all.collect{|r| [r.name.humanize, r.id]}, as: :check_boxes %>
+    <%= f.association :user_groups, collection: UserGroup.all.collect{|r| [r.name.humanize, r.id]}, as: :check_boxes %>
 
   </div>
 

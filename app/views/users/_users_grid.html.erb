@@ -1,0 +1,23 @@
+<%= grid(@users_grid, :show_filters => :when_filtered) do |g|
+  g.column :name => t('activerecord.attributes.user.name'), :html => {:class => "grid-cell"} do |user|
+    user.name
+  end
+  g.column :name => t('activerecord.attributes.user.email'), :html => {:class => "grid-cell"} do |user|
+    user.email
+  end
+  g.column :name => t('activerecord.attributes.user.user_groups'), :html => {:class => "grid-cell"} do |user|
+    user.user_groups.inject([]) {|list, group| list << render_cell(:label, :show, data: {name: group.name.humanize, kind: 'info'})}.join(' ').html_safe
+  end
+  g.column :name => t('activerecord.attributes.user.roles'), :html => {:class => "grid-cell"} do |user|
+    user.roles.inject([]) {|list, role| list << render_cell(:label, :show, data: {name: role.name.humanize, kind: 'default'})}.join(' ').html_safe
+  end
+
+
+  g.column html: {class: 'btn-cell'} do |user|
+    link_to(fa_icon('edit'), edit_user_path(user), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
+  end
+
+  g.column html: {class: 'btn-cell'} do |user|
+    link_to(fa_icon('trash'), user_path(user), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
+  end
+end -%>

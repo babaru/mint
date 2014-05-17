@@ -1,0 +1,65 @@
+<ul class="nav nav-tabs">
+  <% if @query_type == :year %><li class="active"><% else %><li><% end %>
+    <%= link_to YearlyTimeRecord.model_name.human, users_overall_time_records_path(type: :year) %>
+  </li>
+  <% if @query_type == :month %><li class="active"><% else %><li><% end %>
+    <%= link_to MonthlyTimeRecord.model_name.human, users_overall_time_records_path(type: :month) %>
+  </li>
+  <% if @query_type == :week %><li class="active"><% else %><li><% end %>
+    <%= link_to WeeklyTimeRecord.model_name.human, users_overall_time_records_path(type: :week) %>
+  </li>
+</ul>
+
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{@user.name if @user} #{t('model.list', model: @query_type.to_s.capitalize.concat('lyTimeRecord').constantize.model_name.human)}",
+    toolbar:
+    {
+      right:
+      [
+        render_cell(
+          :dropdown_button,
+          :show,
+          data:
+          {
+            name: @user.nil? ? "Please choose a user": @user.name,
+            url: nil,
+            dropdown_list: User.tracking.inject([]) {|list, user| list << {name: user.name, url: users_overall_time_records_path(type: @query_type, user_id: user.id)} }
+          }
+        ),
+        (render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('cloud-upload', text: t('model.upload', :model => TimeRecord.model_name.human)),
+            url: upload_user_time_records_path(@user),
+            options:
+            {
+              class: 'btn btn-success'
+            }
+          }
+        ) if @user),
+        (render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('cloud-upload', text: t('model.upload', :model => OvertimeRecord.model_name.human)),
+            url: upload_user_overtime_records_path(@user),
+            options:
+            {
+              class: 'btn btn-warning'
+            }
+          }
+        ) if @user)
+      ]
+    }
+  }
+)
+%>
+
+<%= render partial: "#{@query_type}ly_time_records_grid" if @time_records_grid %>

@@ -80,4 +80,35 @@ class TimeRecordsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def upload
+    @upload_file = UserTimeRecordFile.new
+
+    if request.post?
+      @upload_file = UserTimeRecordFile.new(params[:user_time_record_file])
+      if @upload_file.save
+        @user = User.find @upload_file.user_id
+        time_record_data = @upload_file.parse
+
+        TimeRecord.transaction do
+          time_record_data.each do |item|
+            project = Project.find_by_name(item[:project_name]) || Project.create!(name: item[:project_name])
+            project.users << @user unless project.users.include?(@user)
+            TimeRecord.find_by_user_id_and_project_id_and_recorded_on(@user.id, project.id, item[:recorded_on]) || TimeRecord.create!(
+              {
+                user_id: @user.id,
+                project_id: project.id,
+                value: item[:time_record],
+                recorded_on: item[:recorded_on],
+                task_type_id: TaskType.first.id
+              })
+          end
+        end
+
+        redirect_to upload_time_records_path, notice: "#{@user.name} #{TimeRecord.model_name.human} 上传完毕"
+      else
+        render :upload
+      end
+    end
+  end
 end

@@ -1,0 +1,49 @@
+<div class="narrow-center-page">
+
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.calculate', model: TimeSheet.model_name.human)} <small>#{t('simple_form.required.text') }</small>",
+    toolbar: {
+      left:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('level-up rotate-270'),
+            url: url_for(:back),
+            options:
+            {
+              class: 'btn',
+              rel: 'tooltip',
+              title: "#{t('labels.back_to')}",
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%= simple_form_for(nil, as: :time_sheet, url: calculate_time_sheets_path, method: :post, html: {class: 'form-horizontal' }) do |f| %>
+  <div class="form-inputs">
+
+    <%= f.input :user_id, collection: User.tracking.collect{|u| [u.name, u.id]} %>
+
+    <%= f.input :start_date, as: :date_picker %>
+
+    <%= f.input :end_date, as: :date_picker %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "#{t('model.calculate', model: TimeSheet.model_name.human)}", class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+</div>

@@ -1,0 +1,58 @@
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.list', model: OvertimeRecord.model_name.human)}",
+    toolbar:
+    {
+      right:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('plus-sign', text: t('model.create', :model => OvertimeRecord.model_name.human)),
+            url: new_overtime_record_path,
+            options:
+            {
+              class: 'btn btn-primary'
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%= grid(@overtime_records_grid, :show_filters => :when_filtered) do |g|
+  g.column :name => t('activerecord.attributes.overtime_record.id'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.id
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.user_id'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.user_id
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.happened_at'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.happened_at
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.value'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.value
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.created_at'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.created_at
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.updated_at'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.updated_at
+  end
+
+
+  g.column html: {class: 'btn-cell'} do |overtime_record|
+    link_to(fa_icon('edit'), edit_overtime_record_path(overtime_record), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
+  end
+
+  g.column html: {class: 'btn-cell'} do |overtime_record|
+    link_to(fa_icon('trash'), overtime_record_path(overtime_record), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
+  end
+end -%>

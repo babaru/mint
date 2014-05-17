@@ -12,6 +12,8 @@
 
     <%= f.input :value, input_html: {min: '0.5', step: '0.5'} %>
 
+    <%= f.association :task_type, collection: TaskType.all.collect{|t| [t.name.humanize, t.id]}, as: :radio %>
+
   </div>
 
   <div class="form-actions">

@@ -1,8 +1,9 @@
 .table {
   th,
   td {
-    padding: 4px 7px;
-    white-space:nowrap;
+    padding: 3px 5px;
+    white-space: nowrap;
+    vertical-align: middle;
 
     &.auto {
       width: 100%;
@@ -24,6 +25,15 @@
           width: auto;
         }
       }
+    }
+
+    &.number-cell {
+      width: 1px;
+      text-align: right;
+    }
+
+    &.content-ext-cell {
+      width: auto;
     }
   }
 

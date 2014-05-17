@@ -5,7 +5,7 @@ class CreateTimeRecords < ActiveRecord::Migration
       t.references :project
       t.datetime :recorded_at
       t.datetime :recorded_on
-      t.decimal :value, precision: 20, scale: 2
+      t.decimal :value, precision: 20, scale: 2, default: 0
 
       t.timestamps
     end

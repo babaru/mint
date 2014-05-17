@@ -4,10 +4,13 @@
     project.name
   end
   g.column :name => t('activerecord.attributes.project.started_at'), :html => {:class => "grid-cell"} do |project|
-    project.started_at.strftime("%Y-%m-%d")
+    project.started_at.strftime("%Y-%m-%d") unless project.started_at.nil?
   end
   g.column :name => t('activerecord.attributes.project.ended_at'), :html => {:class => "grid-cell"} do |project|
-    project.ended_at.strftime("%Y-%m-%d")
+    project.ended_at.strftime("%Y-%m-%d") unless project.ended_at.nil?
+  end
+  g.column name: t('activerecord.attributes.project.users'), html: {class: 'grid-cell'} do |project|
+    project.users.inject([]) {|list, u| list << render_cell(:label, :show, data: {name: u.name, kind: 'success'})}.join(' ').html_safe
   end
 
   g.column :name => t('activerecord.attributes.project.client_id'), :html => {:class => "grid-cell"} do |project|

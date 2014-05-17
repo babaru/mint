@@ -1,0 +1,118 @@
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: @user.nil? ? "#{t('model.list', model: TimeSheet.model_name.human)}" : "#{@user.name} #{t('model.list', model: TimeSheet.model_name.human)}",
+    toolbar:
+    {
+      right:
+      [
+        render_cell(
+          :dropdown_button,
+          :show,
+          data:
+          {
+            name: @project.nil? ? "#{t('label.please_choose_a')}#{Project.model_name.human}" : @project.name,
+            url: nil,
+            dropdown_list:
+              [
+                {
+                  name: "All projects",
+                  url: time_sheets_path(@url_params.reject{|k,v| k == :project_id})
+                },
+                {
+                  divider: true
+                },
+                Project.order('name asc').all.inject([]) {|list, project| list << {
+                    name: project.name,
+                    url: time_sheets_path(@url_params.merge({project_id: project.id}))
+                  }
+                }
+              ].flatten
+          }
+        ),
+        render_cell(
+          :dropdown_button,
+          :show,
+          data:
+          {
+            name: @user.nil? ? "#{t('label.please_choose_a')}#{User.model_name.human}" : @user.name,
+            url: nil,
+            dropdown_list:
+            [
+              {
+                name: "All users",
+                url: time_sheets_path(@url_params.reject{|k,v| k == :user_id})
+              },
+              {
+                divider: true
+              },
+              User.tracking.inject([]) {|list, user| list << {
+                  name: user.name,
+                  url: time_sheets_path(@url_params.merge({user_id: user.id}))
+                }
+              }
+            ].flatten
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span8">
+      <div class="btn-toolbar">
+        <div class="btn-group">
+          <a href="" class="btn btn-info">Button</a>
+          <a href="" class="btn">Button</a>
+          <a href="" class="btn">Button</a>
+        </div>
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            Action
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- dropdown menu links -->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="span4">
+      <%= simple_form_for(:date_range, url: time_sheets_path(@conditions), method: :post, html: {class: 'form-inline pull-right'}) do |f| %>
+      <%= f.input :start_date, as: :date_picker, label: t('label.from'), required: false, input_html: {value: @start_date.strftime('%Y-%m-%d')} %>
+      <%= f.input :end_date, as: :date_picker, label: t('label.to'), required: false, input_html: {value: @end_date.strftime('%Y-%m-%d')} %>
+      <%= f.button :submit, t('buttons.ok') %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<table class="table-striped table-bordered table wice-grid">
+  <tr class="wice-grid-title-row">
+    <th><%= t('activerecord.attributes.time_sheet.recorded_hours') %></th>
+    <th><%= t('activerecord.attributes.time_sheet.calculated_normal_hours') %></th>
+    <th><%= t('activerecord.attributes.time_sheet.overtime_hours') %></th>
+    <th><%= t('activerecord.attributes.time_sheet.calculated_hours') %></th>
+  </tr>
+  <tr class="odd">
+    <td><%= @total_time_sheet.recorded_hours %></td>
+    <td><%= @total_time_sheet.calculated_normal_hours %></td>
+    <td><%= @total_time_sheet.overtime_hours %></td>
+    <td>
+      <strong><%= @total_time_sheet.calculated_hours %></strong>
+    </td>
+  </tr>
+</table>
+
+<%= render partial: 'time_sheets_grid', locals: { time_sheets_grid: @time_sheets_grid } unless @time_sheets_grid.nil? %>
+
+<style>
+  #total_grid tfoot {
+    display:none;
+  }
+</style>

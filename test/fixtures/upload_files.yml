@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  data_file: 
+  attachment_access_token: MyString
+  meta_data: MyString
+
+two:
+  data_file: 
+  attachment_access_token: MyString
+  meta_data: MyString

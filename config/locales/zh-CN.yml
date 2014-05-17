@@ -26,6 +26,7 @@ zh-CN:
     upload: "上传%{model}"
     manager: "%{model}管理"
     link: "关联%{model}"
+    calculate: "计算%{model}"
   labels:
     welcome: '欢迎'
     duration: "时间区段"
@@ -165,3 +166,6 @@ zh-CN:
     fri: 五
     sat: 六
     sun: 日
+  label:
+    please_choose_a: 请选择一个
+    please_choose: 请选择

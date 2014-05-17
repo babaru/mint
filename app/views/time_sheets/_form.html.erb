@@ -1,0 +1,27 @@
+
+<%= simple_form_for(@time_sheet , html: {class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+            
+    <%= f.input :user_id %>
+          
+    <%= f.input :project_id %>
+          
+    <%= f.input :recorded_hours %>
+          
+    <%= f.input :overtime_hours %>
+          
+    <%= f.input :calculated_hours %>
+          
+    <%= f.input :recorded_on %>
+                      
+    <%= f.input :calculated_normal_hours %>
+          
+    <%= f.input :calculated_overtime_hours %>
+        </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+<% end %>

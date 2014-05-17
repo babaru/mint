@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  project: 
+  recorded_value: 9.99
+  overtime_value: 9.99
+  calculated_value: 9.99
+  recorded_on: 2014-05-15 23:12:05
+
+two:
+  user: 
+  project: 
+  recorded_value: 9.99
+  overtime_value: 9.99
+  calculated_value: 9.99
+  recorded_on: 2014-05-15 23:12:05

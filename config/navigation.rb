@@ -38,43 +38,153 @@ SimpleNavigation::Configuration.run do |navigation|
   # Define the primary navigation
   navigation.items do |primary|
     primary.item(
-      :page_time_records,
-      t('navigation.page_time_records'),
-      time_records_path,
+      :page_time,
+      t('navigation.page_time'),
+      nil,
       {
         link:
         {
           icon: 'time'
         },
-        highlights_on: /time_records/
+        highlights_on: /time/
       }
-    )
+    ) do |time_menu|
+
+      time_menu.item(
+        :page_time_sheet,
+        t('navigation.page_time_sheet'),
+        nil,
+        {
+          link:
+          {
+            icon: 'file'
+          }
+        }
+      ) do |time_sheet_menu|
+
+        time_sheet_menu.item(
+          :page_user_time_sheet,
+          t('navigation.page_user_time_sheet'),
+          user_time_sheet_path,
+          {
+            link:
+            {
+              icon: 'user'
+            }
+          }
+        )
+
+        time_sheet_menu.item(
+          :page_project_time_sheet,
+          t('navigation.page_project_time_sheet'),
+          project_time_sheet_path,
+          {
+            link:
+            {
+              icon: 'briefcase'
+            }
+          }
+        )
+
+      end
+
+      time_menu.item(
+        :page_time_divider_1,
+        nil, nil,
+        {
+          link:
+          {
+            divider: true
+          }
+        }
+      )
+
+      time_menu.item(
+        :page_time_sheets,
+        t('navigation.page_calculate_time_sheets'),
+        calculate_time_sheets_path,
+        {
+          link:
+          {
+            icon: 'cogs'
+          }
+        }
+      )
+
+      time_menu.item(
+        :page_time_divider_2,
+        nil, nil,
+        {
+          link:
+          {
+            divider: true
+          }
+        }
+      )
+
+      time_menu.item(
+        :page_upload_time_records,
+        t('model.upload', :model => TimeRecord.model_name.human),
+        upload_time_records_path,
+        {
+          link:
+          {
+            icon: 'cloud-upload'
+          }
+        }
+      )
+
+      time_menu.item(
+        :page_upload_overtime_records,
+        t('model.upload', :model => OvertimeRecord.model_name.human),
+        upload_overtime_records_path,
+        {
+          link:
+          {
+            icon: 'cloud-upload'
+          }
+        }
+      )
+
+    end
 
     primary.item(
-      :page_projects,
-      t('navigation.page_projects'),
-      projects_path,
+      :page_management,
+      t('navigation.page_management'),
+      nil,
       {
         link:
         {
           icon: 'briefcase'
         },
-        highlights_on: /projects/
+        highlights_on: /manage/
       }
-    )
+    ) do |management_menu|
 
-    primary.item(
-      :page_users,
-      t('navigation.page_users'),
-      users_path,
-      {
-        link:
+      management_menu.item(
+        :page_projects,
+        t('navigation.page_projects'),
+        projects_path,
         {
-          icon: 'group'
-        },
-        highlights_on: /users/
-      }
-    )
+          link:
+          {
+            icon: 'briefcase'
+          }
+        }
+      )
 
+      management_menu.item(
+        :page_users,
+        t('navigation.page_users'),
+        users_path,
+        {
+          link:
+          {
+            icon: 'group'
+          }
+        }
+      )
+
+    end
   end
 end

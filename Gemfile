@@ -23,9 +23,9 @@ group :development do
   gem 'capistrano-rails',   '~> 1.1', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
   gem 'capistrano-rbenv',   '~> 2.0', require: false
-  gem 'quiet_assets',                 require: false
-  gem 'better_errors',                require: false
-  gem 'binding_of_caller',            require: false
+  gem 'quiet_assets'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 gem 'bootstrap-sass',                 '~> 2.3.2.1'
@@ -47,13 +47,14 @@ gem 'devise'
 gem 'settingslogic'
 gem "rails-i18n"
 gem 'i18n'
-gem 'spreadsheet'
 gem 'remotipart'
 gem 'pdfkit'
 gem 'cancan'
 gem 'breadcrumbs_on_rails'
 gem 'active_model_serializers'
 gem 'axlsx'
+gem 'spreadsheet'
+gem 'rubyXL'
 gem 'cells'
 
 # To use ActiveModel has_secure_password

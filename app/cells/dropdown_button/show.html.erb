@@ -1,0 +1,14 @@
+<div class="btn-group">
+  <%= link_to [@button[:name], content_tag(:span, nil, class: 'caret')].join(' ').html_safe, @button[:url], class: "btn dropdown-toggle #{@button[:style]}", toggle: 'dropdown' %>
+  <% if @button[:dropdown_list] %>
+  <ul class="dropdown-menu">
+  <%= @button[:dropdown_list].inject([]) do |list, item|
+      unless item[:divider].nil? || item[:divider] == false
+        list << content_tag(:li, nil, class: 'divider')
+      else
+        list << content_tag(:li, link_to(item[:name], item[:url]))
+      end
+    end.join.html_safe %>
+  </ul>
+  <% end %>
+</div>

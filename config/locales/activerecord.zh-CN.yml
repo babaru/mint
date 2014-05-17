@@ -4,25 +4,64 @@ zh-CN:
       user: 人员
       client: 客户
       project: 项目
-      time_record: 时间记录
+      time_record: 人员登记时间
+      overtime_record: 加班记录
+      time_sheet: 时间记录
+      task_type: 任务类型
+      user_group: 用户分组
+      role: 系统角色
+      weekly_time_record: 周时间记录
+      monthly_time_record: 月度时间记录
+      yearly_time_record: 年度时间记录
+      user_time_record_file: 人员登记时间文件
     attributes:
       user:
         name: 用户名
         email: 邮箱
         password: 密码
         password_confirmation: 确认密码
-        roles: 用户身份
+        roles: 系统角色
+        user_groups: 用户分组
       client:
-        name: 名称
+        name: 客户名称
       project:
-        name: 名称
+        name: 项目名称
         started_at: 开始日期
         ended_at: 结束日期
         parent_id: 父项目
         client_id: 客户
+        users: 成员
       time_record:
         user_id: 人员
-        project_id: 项目
-        recorded_at: 记录于
+        project_id: 项目名称
         recorded_on: 登记在
         value: 小时数
+        updated_at: 更新于
+        task_type_id: 任务类型
+        remark: 说明
+        year_number: 年度
+        week_number: 周数
+        month_number: 月份
+      overtime_record:
+        user_id: 人员
+        happended_at: 发生日期
+        value: 小时数
+      time_sheet:
+        user_id: 人员
+        project_id: 项目
+        recorded_on: 日期
+        recorded_hours: 登记小时数
+        overtime_hours: 加班小时数
+        calculated_normal_hours: 换算后正常小时数
+        calculated_overtime_hours: 换算后加班小时数
+        calculated_hours: 换算后总小时数
+        duration:
+          all: 全部
+          year: 年
+          month: 月
+          week: 周
+        start_date: 从
+        end_date: 到
+      user_time_record_file:
+        user_id: 人员
+        date_file: 数据文件

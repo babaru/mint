@@ -84,4 +84,23 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def time_records
+    @query_type = params[:type]
+    @query_type ||= 'year'
+    @query_type = @query_type.to_sym
+    @query_type = :year unless [:week, :month, :year].include? @query_type
+    @user = User.find(params[:user_id]) if params[:user_id]
+
+    if @user
+      case @query_type
+      when :month
+        @time_records_grid = initialize_grid(MonthlyTimeRecord.where(user_id: @user).order('user_id, project_id'))
+      when :week
+        @time_records_grid = initialize_grid(WeeklyTimeRecord.where(user_id: @user).order('user_id, project_id'))
+      else # default :year
+        @time_records_grid = initialize_grid(YearlyTimeRecord.where(user_id: @user).order('user_id, project_id'))
+      end
+    end
+  end
 end

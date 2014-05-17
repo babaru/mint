@@ -15,6 +15,22 @@
     }
   }
 
+  &.form-inline {
+    margin: 9px 0px;
+
+    .controls, .control-group {
+      display: inline;
+
+      label {
+        padding: 0 5px;
+      }
+    }
+
+    input.date_picker {
+      width: 8em !important;
+    }
+  }
+
   &.single-line {
     label {
       display: block;

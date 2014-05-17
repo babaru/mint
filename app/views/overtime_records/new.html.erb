@@ -1,0 +1,35 @@
+<div class="narrow-center-page">
+
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.create', model: OvertimeRecord.model_name.human)} <small>#{t('simple_form.required.text') }</small>",
+    toolbar: {
+      left:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('level-up rotate-270'),
+            url: overtime_records_path,
+            options:
+            {
+              class: 'btn',
+              rel: 'tooltip',
+              title: "#{t('labels.back_to')}#{t('model.list', :model => OvertimeRecord.model_name.human)}",
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%= render 'form' %>
+
+</div>

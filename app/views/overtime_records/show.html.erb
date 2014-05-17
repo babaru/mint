@@ -1,0 +1,83 @@
+<div class="narrow-center-page">
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{@overtime_record.name}",
+    toolbar: {
+      left:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('level-up rotate-270'),
+            url: overtime_records_path,
+            options:
+            {
+              class: 'btn',
+              rel: 'tooltip',
+              title: "#{t('labels.back_to')}#{t('model.list', :model => OvertimeRecord.model_name.human)}",
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>
+        属性
+      </th>
+      <th>
+        值
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+        
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.overtime_record.user_id') %>
+      </td>
+      <td>
+        <%= @overtime_record.user_id %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.overtime_record.happened_at') %>
+      </td>
+      <td>
+        <%= @overtime_record.happened_at %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.overtime_record.value') %>
+      </td>
+      <td>
+        <%= @overtime_record.value %>
+      </td>
+    </tr>
+    
+        
+        
+    
+  </tbody>
+  <tfoot>
+
+  </tfoot>
+</table>
+</div>
