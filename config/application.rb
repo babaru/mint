@@ -59,15 +59,17 @@ module Mint
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    config.generators.stylesheets = false
-    config.generators.javascripts = false
+    # config.generators.stylesheets = false
+    # config.generators.javascripts = false
 
     config.to_prepare do
       Devise::SessionsController.layout "single"
+      # RecorderController.layout "recorder"
     end
   end
 end

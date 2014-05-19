@@ -15,6 +15,8 @@ Mint::Application.routes.draw do
   get 'time/users' => 'time_sheets#users', as: :user_time_sheet
   get 'time/projects' => 'time_sheets#projects', as: :project_time_sheet
 
+  get 'recorder' => 'recorder#index'
+
   resources :users do
     resources :projects, :time_records, :overtime_records
   end
