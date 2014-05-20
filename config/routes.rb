@@ -6,6 +6,8 @@ Mint::Application.routes.draw do
   match 'time_records/upload' => 'time_records#upload', as: :upload_time_records
   match 'overtime_records/upload' => 'overtime_records#upload', as: :upload_overtime_records
 
+  get 'user_time_records_feed' => 'time_records#user_feed', as: :user_time_records_feed
+
   get 'users(/:user_id)/time_records(/:type)' => 'users#time_records', as: :users_overall_time_records
   get 'users(/:user_id)/overtime_records(/:type)' => 'users#overtime_records', as: :users_overall_overtime_records
 

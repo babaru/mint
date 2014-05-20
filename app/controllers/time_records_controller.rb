@@ -10,6 +10,16 @@ class TimeRecordsController < ApplicationController
     end
   end
 
+  # GET /user_time_records_feed.json
+  def user_feed
+    @started_at = Time.at(params[:start].to_i)
+    @ended_at = Time.at(params[:end].to_i)
+
+    respond_to do |format|
+      format.json { render json: TimeRecord.where(user_id: params[:user_id], recorded_on: (@started_at..@ended_at)).collect{|t| t.to_user_feed}.to_json }
+    end
+  end
+
   # GET /time_records/1
   # GET /time_records/1.json
   def show

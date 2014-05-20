@@ -2,12 +2,14 @@
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require jquery.remotipart
+
 //= require wice_grid
+
 //= require nebulas
-//= require backbone-rails
-//= require accounting
+
+//= require moment/min/moment-with-langs.min
+//= require accounting/accounting.min
 //= require jQuery-contextMenu/src/jquery.contextMenu
 //= require jQuery-contextMenu/src/jquery.ui.position
-//= require moment.min
-//= require jquery.blockUI.min
 //= require underscore/underscore
+

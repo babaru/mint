@@ -32,16 +32,16 @@ $(document).ready(function() {
     }
   );
 
-  $.blockUI.defaults.css = {
-    backgroundColor:'transparent',
-    color:          '#666'
-  };
+  // $.blockUI.defaults.css = {
+  //   backgroundColor:'transparent',
+  //   color:          '#666'
+  // };
 
-  $.blockUI.defaults.overlayCSS = {
-    backgroundColor:'#fff',
-    opacity:        0.75,
-    cursor:         'wait'
-  };
+  // $.blockUI.defaults.overlayCSS = {
+  //   backgroundColor:'#fff',
+  //   opacity:        0.75,
+  //   cursor:         'wait'
+  // };
 });
 
 function block_overlay(block, message) {

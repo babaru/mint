@@ -1,0 +1,82 @@
+$border-color: #666;
+
+.fc-header-title {
+  h2 {
+    color: $border-color;
+    font-size: 24px;
+  }
+}
+
+.fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.fc-event {
+  border-radius: 5px !important;
+  border: none;
+  background: #2b72d0;
+  opacity: 0.8;
+  margin-bottom: 3px;
+  padding-left: 4px;
+  padding-top: 1px;
+
+  .fc-event-inner, .fc-event-bg {
+    background: transparent !important;
+  }
+
+  .fc-event-time {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .fc-event-title {
+    font-size: 14px;
+  }
+}
+
+.fc-agenda-slots td div {
+   height: 30px !important;
+}
+
+.fc-widget-header,
+.fc-widget-content {
+  border-color: $border-color;
+  font-size: 14px;
+}
+
+.fc-widget-header {
+  border-left: none !important;
+  color: $border-color;
+  font-size: 18px;
+  font-weight: bold !important;
+}
+.fc-widget-content {
+  border-right: none;
+}
+
+.fc-minor th {
+  border: none !important;
+}
+
+.fc-last {
+  border-right: none;
+
+  .fc-widget-header {
+    border-top: none;
+  }
+}
+
+.fc-first {
+  th {
+    height: 30px;
+    vertical-align: middle;
+  }
+}
+
+.fc-agenda-axis {
+
+  &.fc-week-number {
+    border-right: none !important;
+  }
+}
+

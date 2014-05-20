@@ -17,4 +17,14 @@ class TimeRecord < ActiveRecord::Base
     item['project_name'] = self.project.name
     item
   end
+
+  def to_user_feed()
+    item = {}
+    item[:id] = self.id
+    item[:title] = "#{self.project.name}: #{self.remark}"
+    item[:start] = self.started_at.to_time.to_i
+    item[:end] = self.ended_at.to_time.to_i
+    item[:allDay] = false
+    item
+  end
 end
