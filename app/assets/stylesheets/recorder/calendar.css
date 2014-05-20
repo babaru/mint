@@ -51,6 +51,7 @@
 .wc-business-hours {
   font-size: 1em !important;
   font-weight: bold;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .wc-time-header-cell {
@@ -68,6 +69,7 @@
 
 .wc-cal-event {
   background: #2b72d0 !important;
+  border: 1px solid #1b62c0;
 }
 
 .wc-cal-event .wc-time {

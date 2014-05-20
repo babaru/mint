@@ -1,0 +1,19 @@
+$(document).ready(function() {
+    $("#currentWeek").text($("#calendar").weekCalendar("getCurrentFirstDay").toString('yyyy-MM-dd') + ' ~ ' + $("#calendar").weekCalendar("getCurrentLastDay").toString('yyyy-MM-dd'));
+    $('.calendar-next-week-btn').click(function() {
+      $("#calendar").weekCalendar("nextWeek");
+    });
+    $('.calendar-prev-week-btn').click(function() {
+      $("#calendar").weekCalendar("prevWeek");
+    });
+    $('.calendar-today-btn').click(function() {
+      $("#calendar").weekCalendar("today");
+    });
+
+    $('#calendar').weekCalendar({
+      eventNew: function(calEvent, $event) {
+        $('#dialog-panel').html('<%= javascript_escape(render_cell(:modal_window, :show, data: {name: "event-dialog", title: "Event", content: nil})) %>');
+        $('#event-dialog').modal();
+      }
+    });
+  });

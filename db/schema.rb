@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140516054325) do
+ActiveRecord::Schema.define(:version => 20140520014356) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -105,6 +105,8 @@ ActiveRecord::Schema.define(:version => 20140516054325) do
     t.integer  "task_type_id"
     t.string   "remark"
     t.integer  "time_sheet_id"
+    t.datetime "started_at"
+    t.datetime "ended_at"
   end
 
   add_index "time_records", ["project_id"], :name => "index_time_records_on_project_id"

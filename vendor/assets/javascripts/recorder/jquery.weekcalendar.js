@@ -81,7 +81,7 @@
         resizable: function(calEvent, element) {
           return true;
         },
-        eventClick: function(calEvent, element, dayFreeBusyManager, 
+        eventClick: function(calEvent, element, dayFreeBusyManager,
                                                       calendar, clickEvent) {
         },
         eventRender: function(calEvent, element) {
@@ -99,17 +99,17 @@
         },
         eventResize: function(calEvent, element) {
         },
-        eventNew: function(calEvent, element, dayFreeBusyManager, 
+        eventNew: function(calEvent, element, dayFreeBusyManager,
                                                     calendar, mouseupEvent) {
         },
         eventMouseover: function(calEvent, $event) {
         },
         eventMouseout: function(calEvent, $event) {
         },
-        eventDelete: function(calEvent, element, dayFreeBusyManager, 
+        eventDelete: function(calEvent, element, dayFreeBusyManager,
                                                       calendar, clickEvent) {
             calendar.weekCalendar('removeEvent',calEvent.id);
-	},
+  },
         calendarBeforeLoad: function(calendar) {
         },
         calendarAfterLoad: function(calendar) {
@@ -1148,12 +1148,12 @@
                   'createdFromSingleClick': createdFromSingleClick,
                   'calendar': self.element
                 });
-  							if (proceed) {
-									options.eventNew(newCalEvent, $renderedCalEvent, freeBusyManager, self.element, event);
-								}
-								else {
-									$($renderedCalEvent).remove();
-								}
+                if (proceed) {
+                  options.eventNew(newCalEvent, $renderedCalEvent, freeBusyManager, self.element, event);
+                }
+                else {
+                  $($renderedCalEvent).remove();
+                }
             }
           });
       },
@@ -1903,12 +1903,12 @@
         * Refresh the displayed details of a calEvent in the calendar
         */
       _refreshEventDetails: function(calEvent, $calEvent) {
-	  var suffix = '';
-	  if (!this.options.readonly &&
-		 this.options.allowEventDelete &&
-		 this.options.deletable(calEvent,$calEvent)) {
-	      suffix = '<div class="wc-cal-event-delete ui-icon ui-icon-close"></div>';
-	  }
+    var suffix = '';
+    if (!this.options.readonly &&
+     this.options.allowEventDelete &&
+     this.options.deletable(calEvent,$calEvent)) {
+        suffix = '<div class="wc-cal-event-delete ui-icon ui-icon-close"></div>';
+    }
           $calEvent.find('.wc-time').html(this.options.eventHeader(calEvent, this.element) + suffix);
           $calEvent.find('.wc-title').html(this.options.eventBody(calEvent, this.element));
           $calEvent.data('calEvent', calEvent);

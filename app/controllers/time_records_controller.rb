@@ -6,7 +6,7 @@ class TimeRecordsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @time_records_grid }
+      format.json { render json: TimeRecord.where(user_id: params[:user_id]).to_json }
     end
   end
 
@@ -41,14 +41,16 @@ class TimeRecordsController < ApplicationController
   # POST /time_records.json
   def create
     @time_record = TimeRecord.new(params[:time_record])
+    @time_record.value = (@time_record.ended_at - @time_record.started_at) / 1.hour
+    @time_record.recorded_on = @time_record.started_at.to_date
 
     respond_to do |format|
       if @time_record.save
         format.html { redirect_to time_records_path, notice: 'Time record was successfully created.' }
-        format.json { render json: @time_record, status: :created, location: @time_record }
+        format.json { render json: @time_record.to_json, status: :created, location: @time_record }
       else
         format.html { render action: "new" }
-        format.json { render json: @time_record.errors, status: :unprocessable_entity }
+        format.json { render json: @time_record.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
