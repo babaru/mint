@@ -47,7 +47,7 @@ $border-color: #666;
 .fc-widget-header {
   border-left: none !important;
   color: $border-color;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold !important;
 }
 .fc-widget-content {
@@ -80,3 +80,28 @@ $border-color: #666;
   }
 }
 
+.fc-header-title {
+  padding-left: 10px;
+  h2 {
+    font-size: 20px !important;
+    color: #999;
+  }
+
+}
+
+.context-menu-list {
+  padding: 4px 0px !important;
+  border: none !important;
+  background: #666 !important;
+  border-radius: 2px;
+}
+
+.context-menu-item {
+  color: white;
+  font-size: 12px;
+  background: #666 !important;
+
+  &.hover {
+    background: #777 !important;
+  }
+}

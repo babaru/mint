@@ -73,7 +73,7 @@ class TimeRecordsController < ApplicationController
     respond_to do |format|
       if @time_record.update_attributes(params[:time_record])
         format.html { redirect_to time_records_path, notice: 'Time record was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @time_record.to_json }
       else
         format.html { render action: "edit" }
         format.json { render json: @time_record.errors, status: :unprocessable_entity }

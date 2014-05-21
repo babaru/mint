@@ -17,7 +17,7 @@ Mint::Application.routes.draw do
   get 'time/users' => 'time_sheets#users', as: :user_time_sheet
   get 'time/projects' => 'time_sheets#projects', as: :project_time_sheet
 
-  get 'recorder' => 'recorder#index'
+  get 'recorder' => 'recorder#index', as: :time_recorder
 
   resources :users do
     resources :projects, :time_records, :overtime_records
@@ -78,7 +78,7 @@ Mint::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'dashboard#index'
+  root :to => 'recorder#index'
 
   # See how all your routes lay out with "rake routes"
 

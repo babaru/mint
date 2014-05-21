@@ -25,6 +25,8 @@ class TimeRecord < ActiveRecord::Base
     item[:start] = self.started_at.to_time.to_i
     item[:end] = self.ended_at.to_time.to_i
     item[:allDay] = false
+    item[:description] = self.remark
+    item[:project_id] = self.project_id
     item
   end
 end

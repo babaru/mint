@@ -2,12 +2,14 @@
  *= require jquery.ui.all
  *= require bootstrap
  *= require font-awesome
- *= require retina
 
  *= require fullcalendar/fullcalendar
+ *= require qtip2/jquery.qtip
  *= require recorder/calendar
  *= require jQuery-contextMenu/src/jquery.contextMenu
  */
+
+ @import 'retina';
 
  html {
   background: url(recorder-bg.jpg) no-repeat center center fixed;
@@ -27,21 +29,32 @@ body {
     margin: auto; clear: both;
     padding-top: 10px;
 
-    .page-header {
-      margin: 0px; padding: 0px;
-      border: none;
-      margin-bottom: 20px;
-      line-height: 30px;
+    #header {
+      .container-fluid {
+        padding: 0px;
+      }
 
       h2 {
-        margin: 0px;
-        line-height: 30px;
-        small {
-          line-height: 20px;
-          color: #888;
+        &.title {
+          display: block;
+          height: 40px; width: 320px;
+          @include at2x('time_recorder_logo', 320px, 40px, '.png');
+
+          span {
+            display: none;
+          }
+        }
+      }
+
+      .user-block {
+        a.dropdown-toggle,
+        .dropdown-menu li a {
+          font-size: 12px !important;
         }
       }
     }
+
+
   }
 
   #event-dialog {
