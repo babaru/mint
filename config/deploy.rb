@@ -76,7 +76,7 @@ require 'bundler/capistrano'
 after "deploy:update_code", "deploy:migrate"
 before "deploy:finalize_update", "deploy:link_config"
 # after "deploy:migrate", "deploy:seed"
-# after "deploy:create_symlink", "deploy:restart"
+after "deploy:create_symlink", "deploy:restart"
 # after "deploy:restart", "resque:restart"
 
 # require 'rvm/capistrano'

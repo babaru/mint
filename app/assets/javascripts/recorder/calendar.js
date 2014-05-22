@@ -76,9 +76,6 @@ $( function () {
 
         events: '/user_time_records_feed.json?user_id=' + userId,
         eventRender: function(event, element) {
-            element.qtip({
-                content: event.title
-            });
 
             element.attr('data-id', event.id);
         }
