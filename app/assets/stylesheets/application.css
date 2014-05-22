@@ -5,20 +5,6 @@
  *= require nebulas
  */
 
-#spot-candidates-panel {
-  overflow-y: auto;
-  bottom: 50px;
-}
-
-.spot-day-count-text-field {
-  width: 2em;
-}
-
-.cell3 {
-  line-height: 30px;
-}
-
-
 td input {
   margin-bottom: 0px !important;
 }

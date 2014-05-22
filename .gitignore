@@ -14,5 +14,6 @@
 /log/*.log
 /tmp
 config/database.yml
+config/deploy.rb
 public/system
 vendor/assets/bower_components

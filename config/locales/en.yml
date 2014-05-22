@@ -1,5 +1,171 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  dashboard: 控制台
+  retrieve: 撷取%{model}
+  retrieve:
+    data: 撷取数据
+  re-retrieve: 完全撷取%{model}
+  import: 导入%{model}
+  import_urls: 导入URLs
+  build:
+    report: 生成报告
+  model:
+    show: "%{model}详细信息"
+    create: "创建%{model}"
+    add: "添加%{model}"
+    read: "读取%{model}"
+    update: "修改%{model}"
+    destroy: "删除%{model}"
+    list: "%{model}列表"
+    edit: "编辑%{model}"
+    delete: "删除%{model}"
+    generate: "生成%{model}"
+    import: "导入%{model}"
+    batch_import: "批量导入%{model}"
+    export: "导出%{model}"
+    remove: "移除%{model}"
+    upload: "上传%{model}"
+    manager: "%{model}管理"
+    link: "关联%{model}"
+    calculate: "计算%{model}"
+  labels:
+    welcome: '欢迎'
+    duration: "时间区段"
+    loading: "正在载入..."
+    kpi: "KPI"
+    untitled: "未命名"
+    detail:
+      day_kpi_plan: "细化每日KPI要求"
+    grab:
+      weibo_user: "刷新"
+      kols: "刷新所有KOL资料"
+    back_to: "返回"
+    official:
+      weibo_users: "微博活动账号"
+      add: "添加微博活动账号"
+      list: "微博活动账号列表"
+    capture:
+      weibo_posts: "官方微博截图"
+      weibo_posts_file_name: "官方微博截图%{seq}"
+      kol10w_reposts: "10万级KOL转发截图"
+      kol10w_reposts_file_name: "官方微博-%{post_seq}-KOL%{kol_seq}"
+      kol30w_reposts: "30万级KOL转发截图"
+      snapshots: "创建网页截图"
+    renew:
+      cookies: "更新Cookies"
+    change:
+      kol:
+        vendor: "归属供应商"
+  buttons:
+    ok: OK
+    renew: '刷新'
+    edit: '编辑'
+    delete: '删除'
+    reset_form: "重置表单"
+    remove: "移除"
+    sign_in: Sign in
+    sign_up: Sign up
+    sign_out: Sign out
+    choose: "选择"
+    forgot_password: "忘记密码了？"
+    send: '发送'
+    add_plan: "添加项目内容"
+    capture: "截图"
+    check:
+      effect: "更新效果进度"
+    repost:
+      effect: "转发计划"
+    comment:
+      effect: "评论计划"
+    upload:
+      effects: "上传预编辑效果数据"
+    import:
+      weibo_post: "导入"
+      url: "导入URL"
+    redirect:
+      weibo_post_url: "原微博"
+    weibo_post:
+      effects: "效果列表"
+    create: 创建
+    publish_article: 发布文章
+    batch_capture: 批量截图
+  miscs:
+    or: "或者"
+  confirms:
+    delete: '你确定要删除这个项目吗?'
+    remove:
+      kol: "你确定要移除这个KOL吗？"
+  alerts:
+    weibo_user:
+      url_incorrect: "没有在给定的URL中找到合适的UID"
+      url_import_failed: "URL导入失败"
+  vendor_types:
+    kol: "KOL"
+  provinces:
+    beijing: 北京
+    tianjin: 天津
+    shanghai: 上海
+    chongqing: 重庆
+    hongkong: 香港
+    macau: 澳门
+    hebei: 河北
+    shanxi: 山西
+    neimenggu: 内蒙古
+    liaoning: 辽宁
+    jilin: 吉林
+    helongjiang: 黑龙江
+    jiangsu: 江苏
+    zhejiang: 浙江
+    anhui: 安徽
+    fujian: 福建
+    jiangxi: 江西
+    shandong: 山东
+    henan: 河南
+    hubei: 湖北
+    hunan: 湖南
+    guangdong: 广东
+    guangxi: 广西
+    hainan: 海南
+    sichuan: 四川
+    guizhou: 贵州
+    yunnan: 云南
+    xizang: 西藏
+    shaanxi: 陕西
+    gansu: 甘肃
+    qinghai: 青海
+    ningxia: 宁夏
+    xinjiang: 新疆
+    taiwan: 台湾
+  regions:
+    all: 全国
+    north: 北区
+    south: 南区
+    east: 东区
+    west: 西区
+    center: 中区
+  media_positions:
+    home: 首页
+    section_home: 版块首页
+    others: 其他版面
+  media_ad_styles:
+    important_focus_pic: 要闻区焦点图
+    important_text_link: 要闻区文字链
+    other_text_link: 文字链
+  media_levels:
+    top: 重点媒体
+    national: 全国媒体
+    region_important: 地区重要媒体
+    others: 其他媒体
+  invoice_types:
+    tax: 增值税发票
+    service: 服务发票
+  weekdays:
+    mon: 一
+    tue: 二
+    wed: 三
+    thu: 四
+    fri: 五
+    sat: 六
+    sun: 日
+  label:
+    please_choose_a: 请选择一个
+    please_choose: 请选择

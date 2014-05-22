@@ -3,7 +3,7 @@
 <head>
   <title><%= Settings.app.name %></title>
   <link rel="shortcut icon" href="/assets/favicon.ico" />
-  <%= stylesheet_link_tag :application, :media => "all" %>
+  <%= stylesheet_link_tag :single, :media => "all" %>
   <%= yield :js %>
   <%= csrf_meta_tags %>
 </head>
@@ -15,10 +15,7 @@
         </header>
         <div class="container-fluid">
           <div class="row-fluid">
-            <div class="span2">
-              <div class="logo"></div>
-            </div>
-            <div class="span10">
+            <div class="span12">
               <%= yield %>
             </div>
           </div>
