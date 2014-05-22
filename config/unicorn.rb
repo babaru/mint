@@ -7,12 +7,12 @@ env = ENV["RAILS_ENV"] || "development"
 worker_processes 2 # amount of unicorn workers to spin up
 
 listen "/tmp/mint.socket"
-
+shared_path = "/home/teamcity/www_root/mint/rails/shared"
 preload_app true
 
 timeout 30         # restarts workers that hang for 30 seconds
 
-pid "/tmp/unicorn.mint.pid"
+pid "#{shared_path}/tmp/pids/unicorn.mint.pid"
 
 if env == "production"
   # Help ensure your application will always spawn in the symlinked
@@ -21,7 +21,6 @@ if env == "production"
 
   # feel free to point this anywhere accessible on the filesystem
   user 'teamcity', 'teamcity' # 'user', 'group'
-  shared_path = "/home/teamcity/www_root/mint/rails/shared"
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"
   stdout_path "#{shared_path}/log/unicorn.stdout.log"
@@ -44,7 +43,7 @@ before_fork do |server, worker|
   # we send it a QUIT.
   #
   # This enables 0 downtime deploys.
-  old_pid = "/tmp/unicorn.mint.pid.oldbin"
+  old_pid = "#{shared_path}/tmp/pids/unicorn.mint.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
