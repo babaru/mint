@@ -46,8 +46,8 @@ end
 require 'bundler/capistrano'
 # set :bundle_flags, "--deployment --without development test"
 
-after "deploy:update_code", "link_config"
-after "link_config", "deploy:migrate"
+after "deploy:update_code", "deploy:migrate"
+before "deploy:finalize_update", "deploy:link_config"
 # after "deploy:migrate", "deploy:seed"
 after "deploy:create_symlink", "deploy:restart"
 # after "deploy:restart", "resque:restart"
