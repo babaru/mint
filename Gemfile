@@ -18,8 +18,9 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'capistrano', '~> 2.15.4'
+
 group :development do
-  gem 'capistrano', '~> 2.15.4', require: false
   # gem 'capistrano-rails',   '~> 1.1', require: false
   # gem 'capistrano-bundler', '~> 1.1', require: false
   # gem 'capistrano-rbenv',   '~> 2.0', require: false

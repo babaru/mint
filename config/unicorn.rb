@@ -17,11 +17,11 @@ pid "/tmp/unicorn.mint.pid"
 if env == "production"
   # Help ensure your application will always spawn in the symlinked
   # "current" directory that Capistrano sets up.
-  working_directory "/home/app/www_root/mint/rails/current"
+  working_directory "/home/teamcity/www_root/mint/rails/current"
 
   # feel free to point this anywhere accessible on the filesystem
-  user 'app', 'app' # 'user', 'group'
-  shared_path = "/home/app/www_root/mint/rails/shared"
+  user 'teamcity', 'teamcity' # 'user', 'group'
+  shared_path = "/home/teamcity/www_root/mint/rails/shared"
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"
   stdout_path "#{shared_path}/log/unicorn.stdout.log"
