@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   before_save :set_default_role
 
   scope :tracking, -> { joins(:roles).where("roles.name = 'tracking_user'")}
+  scope :system_admin, -> { joins(:roles).where("roles.name = 'system_admin'")}
 
   validates :name, uniqueness: true
   validates :email, uniqueness: true
