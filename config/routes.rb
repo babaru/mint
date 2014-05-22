@@ -1,33 +1,38 @@
 Mint::Application.routes.draw do
-  devise_for :admins
 
   devise_for :users, path_prefix: 'sys'
 
-  match 'time_records/upload' => 'time_records#upload', as: :upload_time_records
-  match 'overtime_records/upload' => 'overtime_records#upload', as: :upload_overtime_records
+  scope '/manager' do
+    get 'dashboard' => 'dashboard#index', as: :dashboard
+
+    match 'time_records/upload' => 'time_records#upload', as: :upload_time_records
+    match 'overtime_records/upload' => 'overtime_records#upload', as: :upload_overtime_records
+
+    get 'users(/:user_id)/time_records(/:type)' => 'users#time_records', as: :users_overall_time_records
+    get 'users(/:user_id)/overtime_records(/:type)' => 'users#overtime_records', as: :users_overall_overtime_records
+
+    match 'time_sheets/calculate' => 'time_sheets#calculate', as: :calculate_time_sheets
+    post 'time_sheets' => 'time_sheets#index'
+
+    get 'time/users' => 'time_sheets#users', as: :user_time_sheet
+    get 'time/projects' => 'time_sheets#projects', as: :project_time_sheet
+
+    resources :users do
+      resources :projects, :time_records, :overtime_records
+    end
+
+    resources :projects do
+      resources :users, :time_records
+    end
+
+    resources :projects, :users, :time_records, :roles, :user_groups, :task_types, :overtime_records, :time_sheets
+
+  end
 
   get 'user_time_records_feed' => 'time_records#user_feed', as: :user_time_records_feed
-
-  get 'users(/:user_id)/time_records(/:type)' => 'users#time_records', as: :users_overall_time_records
-  get 'users(/:user_id)/overtime_records(/:type)' => 'users#overtime_records', as: :users_overall_overtime_records
-
-  match 'time_sheets/calculate' => 'time_sheets#calculate', as: :calculate_time_sheets
-  post 'time_sheets' => 'time_sheets#index'
-
-  get 'time/users' => 'time_sheets#users', as: :user_time_sheet
-  get 'time/projects' => 'time_sheets#projects', as: :project_time_sheet
+  resources :time_records # TODO use api gem
 
   get 'recorder' => 'recorder#index', as: :time_recorder
-
-  resources :users do
-    resources :projects, :time_records, :overtime_records
-  end
-
-  resources :projects do
-    resources :users, :time_records
-  end
-
-  resources :projects, :users, :time_records, :roles, :user_groups, :task_types, :overtime_records, :time_sheets
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

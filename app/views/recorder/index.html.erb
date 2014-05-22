@@ -15,6 +15,11 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
+                <% if current_user.has_role?(:system_admin) %>
+                <li>
+                  <%= link_to( fa_icon('cog', text: t('administration')), dashboard_path) %>
+                </li>
+                <% end %>
                 <li>
                   <%= link_to( fa_icon('signout', text: t("buttons.sign_out")), destroy_user_session_path, :method=>'delete') %>
                 </li>
