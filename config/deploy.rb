@@ -24,12 +24,12 @@ set :assets_dependencies, %w(app/assets lib/assets vendor/assets Gemfile.lock co
 namespace :deploy do
 
   task :start, :roles => :app, :except => { :no_release => true } do
-    run "cd #{current_path} ; bundle exec unicorn_rails -c config/unicorn.rb -D"
+    run "cd #{current_path} ; RAILS_ENV=production bundle exec unicorn_rails -c config/unicorn.rb -D"
   end
 
   task :stop, :roles => :app, :except => { :no_release => true } do
-    command = "if [ -e #{shared_path}/tmp/pids/unicorn.mint.pid ]; then \
-              #{try_sudo} kill -s QUIT `cat #{shared_path}/tmp/pids/unicorn.mint.pid` ; \
+    command = "if [ -e /tmp/unicorn.mint.pid ]; then \
+              #{try_sudo} kill -s QUIT `cat /tmp/unicorn.mint.pid` ; \
               fi;"
     run command
   end
@@ -41,6 +41,7 @@ namespace :deploy do
 
   task :link_config, :roles => :app, :except => { no_release: true } do
     run "cd #{release_path} ; ln -s #{shared_path}/config/database.yml config/database.yml"
+    run "cd #{release_path} ; ln -s #{shared_path}/config/unicorn.rb config/unicorn.rb"
   end
 
   # namespace :assets do
@@ -75,7 +76,7 @@ require 'bundler/capistrano'
 after "deploy:update_code", "deploy:migrate"
 before "deploy:finalize_update", "deploy:link_config"
 # after "deploy:migrate", "deploy:seed"
-after "deploy:create_symlink", "deploy:restart"
+# after "deploy:create_symlink", "deploy:restart"
 # after "deploy:restart", "resque:restart"
 
 # require 'rvm/capistrano'
