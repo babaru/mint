@@ -5,6 +5,9 @@
   g.column :name => t('activerecord.attributes.user.email'), :html => {:class => "grid-cell"} do |user|
     user.email
   end
+  g.column :name => t('activerecord.attributes.user.full_name'), :html => {:class => "grid-cell"} do |user|
+    user.full_name
+  end
   g.column :name => t('activerecord.attributes.user.user_groups'), :html => {:class => "grid-cell"} do |user|
     user.user_groups.inject([]) {|list, group| list << render_cell(:label, :show, data: {name: group.name.humanize, kind: 'info'})}.join(' ').html_safe
   end

@@ -6,6 +6,8 @@
 
     <%= f.input :name %>
     <%= f.input :email %>
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
     <%= f.association :roles, collection: Role.all.collect{|r| [r.name.humanize, r.id]}, as: :check_boxes %>

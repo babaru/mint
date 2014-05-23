@@ -17,6 +17,9 @@ zh-CN:
     attributes:
       user:
         name: 用户名
+        first_name: 名
+        last_name: 姓
+        full_name: 全名
         email: 邮箱
         password: 密码
         password_confirmation: 确认密码
