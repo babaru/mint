@@ -67,4 +67,4 @@ gem 'bcrypt-ruby'
 # Use unicorn as the app server
 gem 'unicorn'
 
-gem 'whenever'
+# gem 'whenever'

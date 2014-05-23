@@ -5,7 +5,7 @@ puts "Created role: #{system_admin_role.name}"
 tracking_user_role = Role.create(name: 'tracking_user')
 puts "Created role: #{tracking_user_role.name}"
 
-admin = Admin.create(email: 'admin@mint.io', password: '12345678', password_confirmation: '12345678')
+admin = User.create(email: 'admin@mint.io', password: '12345678', password_confirmation: '12345678')
 admin.roles << system_admin_role
 puts "Created admin: #{admin.email}"
 
