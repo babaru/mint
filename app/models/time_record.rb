@@ -10,7 +10,8 @@ class TimeRecord < ActiveRecord::Base
   validates :recorded_on, presence: true
   validates :started_at, presence: true
   validates :ended_at, presence: true
-  validates :value, presence: true
+  # validates :value, presence: true
+  validates :remark, presence: true
 
   def as_json(options={})
     item = super(options)

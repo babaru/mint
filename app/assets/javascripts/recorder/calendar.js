@@ -93,7 +93,7 @@ $( function () {
             var events = calendar.fullCalendar('clientEvents', eventId);
             if (events.length == 0) {
                 var title = data["project_name"] + ': ' + data["remark"];
-                renderEventOnCalendar(title, data['started_at'], data['ended_at'], false);
+                renderEventOnCalendar(data['id'], title, data['started_at'], data['ended_at'], false);
             } else {
                 var event = events[0];
                 event.title = data["project_name"] + ': ' + data["remark"];
@@ -203,9 +203,10 @@ $( function () {
         });
     }
 
-    function renderEventOnCalendar(title, start, end, allDay) {
+    function renderEventOnCalendar(id, title, start, end, allDay) {
         if (title) {
             calendar.fullCalendar('renderEvent', {
+                id: id,
                 title: title,
                 start: start,
                 end: end,
