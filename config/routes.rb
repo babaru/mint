@@ -1,5 +1,7 @@
 Mint::Application.routes.draw do
 
+  get "leave_recorder/index"
+
   devise_for :users, path_prefix: 'sys'
 
   scope '/manager' do
@@ -30,7 +32,8 @@ Mint::Application.routes.draw do
   end
 
   get 'user_time_records_feed' => 'time_records#user_feed', as: :user_time_records_feed
-  resources :time_records # TODO use api gem
+  get 'user_leave_records_feed' => 'leave_records#user_feed', as: :user_leave_records_feed
+  resources :time_records, :leave_records # TODO use api gem
 
   get 'recorder' => 'recorder#index', as: :time_recorder
 
@@ -89,5 +92,5 @@ Mint::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+  match ':controller(/:action(/:id))(.:format)'
 end

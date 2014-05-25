@@ -1,0 +1,79 @@
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.list', model: LeaveRecord.model_name.human)}",
+    toolbar:
+    {
+      right:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('plus-sign', text: t('model.create', :model => LeaveRecord.model_name.human)),
+            url: new_leave_record_path,
+            options:
+            {
+              class: 'btn btn-primary'
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%= grid(@leave_records_grid, :show_filters => :when_filtered) do |g|
+  g.column :name => t('activerecord.attributes.leave_record.id'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.id
+  end
+  g.column :name => t('activerecord.attributes.leave_record.user_id'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.user_id
+  end
+  g.column :name => t('activerecord.attributes.leave_record.project_id'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.project_id
+  end
+  g.column :name => t('activerecord.attributes.leave_record.recorded_on'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.recorded_on
+  end
+  g.column :name => t('activerecord.attributes.leave_record.value'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.value
+  end
+  g.column :name => t('activerecord.attributes.leave_record.created_at'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.created_at
+  end
+  g.column :name => t('activerecord.attributes.leave_record.updated_at'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.updated_at
+  end
+  g.column :name => t('activerecord.attributes.leave_record.task_type_id'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.task_type_id
+  end
+  g.column :name => t('activerecord.attributes.leave_record.remark'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.remark
+  end
+  g.column :name => t('activerecord.attributes.leave_record.time_sheet_id'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.time_sheet_id
+  end
+  g.column :name => t('activerecord.attributes.leave_record.started_at'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.started_at
+  end
+  g.column :name => t('activerecord.attributes.leave_record.ended_at'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.ended_at
+  end
+  g.column :name => t('activerecord.attributes.leave_record.type'), :html => {:class => "grid-cell"} do |leave_record|
+    leave_record.type
+  end
+
+
+  g.column html: {class: 'btn-cell'} do |leave_record|
+    link_to(fa_icon('edit'), edit_leave_record_path(leave_record), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
+  end
+
+  g.column html: {class: 'btn-cell'} do |leave_record|
+    link_to(fa_icon('trash'), leave_record_path(leave_record), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
+  end
+end -%>

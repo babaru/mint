@@ -5,7 +5,7 @@ class TimeRecord < ActiveRecord::Base
   belongs_to :time_sheet
   attr_accessible :recorded_on, :value, :user_id, :project_id, :task_type_id, :time_sheet_id, :remark, :started_at, :ended_at
 
-  validates :project_id, presence: true
+  # validates :project_id, presence: true
   validates :user_id, presence: true
   validates :recorded_on, presence: true
   validates :started_at, presence: true
@@ -15,14 +15,14 @@ class TimeRecord < ActiveRecord::Base
 
   def as_json(options={})
     item = super(options)
-    item['project_name'] = self.project.name
+    item['project_name'] = self.project.name if self.project
     item
   end
 
   def to_user_feed()
     item = {}
     item[:id] = self.id
-    item[:title] = "#{self.project.name}: #{self.remark}"
+    self.project.nil? ? item[:title] = self.remark : item[:title] = "#{self.project.name}: #{self.remark}"
     item[:start] = self.started_at.to_time.to_i
     item[:end] = self.ended_at.to_time.to_i
     item[:allDay] = false

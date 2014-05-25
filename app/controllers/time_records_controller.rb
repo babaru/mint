@@ -16,7 +16,7 @@ class TimeRecordsController < ApplicationController
     @ended_at = Time.at(params[:end].to_i)
 
     respond_to do |format|
-      format.json { render json: TimeRecord.where(user_id: params[:user_id], recorded_on: (@started_at..@ended_at)).collect{|t| t.to_user_feed}.to_json }
+      format.json { render json: TimeRecord.where(type: TimeRecord.name, user_id: params[:user_id], recorded_on: (@started_at..@ended_at)).collect{|t| t.to_user_feed}.to_json }
     end
   end
 

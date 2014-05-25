@@ -105,3 +105,23 @@ $border-color: #666;
     background: #777 !important;
   }
 }
+
+.fc-view-month {
+  .fc-first {
+    &.fc-widget-content {
+      border-left: none;
+    }
+  }
+
+  .fc-other-month {
+    .fc-day-number {
+      font-weight: normal;
+      color: white !important;
+    }
+  }
+
+  .fc-day-number {
+    color: #999;
+    font-weight: bold;
+  }
+}
