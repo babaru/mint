@@ -6,6 +6,7 @@ zh-CN:
       project: 项目
       time_record: 人员登记时间
       overtime_record: 加班记录
+      leave_record: 休假记录
       time_sheet: 时间记录
       task_type: 任务类型
       user_group: 用户分组
