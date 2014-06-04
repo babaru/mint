@@ -291,10 +291,10 @@ class TimeSheetsController < ApplicationController
           user_id = user.id
 
           (start_date..end_date).each do |recorded_on|
-            overtime_record = OvertimeRecord.find_by_user_id_and_happened_at(user_id, recorded_on)
-            time_records = TimeRecord.where(user_id: user_id, recorded_on: recorded_on)
+            overtime_records = OvertimeRecord.where(user_id: user_id, recorded_on: (1.day.ago(recorded_on).end_of_day..recorded_on.end_of_day))
+            time_records = TimeRecord.where(user_id: user_id, recorded_on: (1.day.ago(recorded_on).end_of_day..recorded_on.end_of_day), type: TimeRecord.name)
 
-            calculated_results = calculate_time_sheet(time_records, overtime_record)
+            calculated_results = calculate_time_sheet(time_records, overtime_records)
 
             calculated_results.each do |item|
               time_sheet = TimeSheet.find_by_user_id_and_project_id_and_recorded_on(user_id, item[:project_id], (recorded_on.beginning_of_day..recorded_on.end_of_day))
@@ -318,9 +318,13 @@ class TimeSheetsController < ApplicationController
                   calculated_overtime_hours: item[:calculated_overtime_hours]
                 })
               end
-              time_sheet.overtime_record = overtime_record if time_sheet.overtime_record.nil?
+
+              time_sheet.overtime_records.clear
+              overtime_records.each {|ot| time_sheet.overtime_records << overtime_records if time_sheet.overtime_records.include?(ot) }
+
               time_sheet.time_records.clear
               item[:time_records].each {|tr| time_sheet.time_records << tr unless time_sheet.time_records.include?(tr)}
+
             end
           end
         end

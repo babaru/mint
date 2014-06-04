@@ -1,10 +1,14 @@
 module Mint
   module Calculators
     module TimeSheetCalculator
-      def calculate_time_sheet(time_records, overtime_record)
+      def calculate_time_sheet(time_records, overtime_records)
         return [] if time_records.length == 0
 
-        overtime_hours = overtime_record.nil? ? 0 : overtime_record.value
+        overtime_hours = 0
+        if overtime_records
+          overtime_records.each {|ot| overtime_hours += ot.value}
+        end
+        # overtime_hours = overtime_record.nil? ? 0 : overtime_record.value
 
         time_record_hours = time_records.inject(0) {|sum, item| sum += item.value}
         calculated_time_record_hours = time_record_hours - overtime_hours
