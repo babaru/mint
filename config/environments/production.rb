@@ -46,7 +46,7 @@ Mint::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( recorder.css recorder.js single.css )
+  config.assets.precompile += %w( recorder.css single.css time_recorder.js overtime_recorder.js leave_recorder.js )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

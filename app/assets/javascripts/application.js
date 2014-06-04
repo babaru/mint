@@ -13,4 +13,5 @@
 //= require jQuery-contextMenu/src/jquery.ui.position
 //= require underscore/underscore
 //= require fullcalendar/fullcalendar
+//= require recorder/recorder_calendar
 
