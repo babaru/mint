@@ -33,7 +33,7 @@
 <%= simple_form_for(@upload_file, url: upload_time_records_path, method: :post, remote: false, html: {class: 'form-horizontal upload-user-time-records-file-form'}) do |f| %>
   <%= f.error_notification %>
   <div class="form-inputs">
-    <%= f.input :user_id, collection: User.tracking.collect{|u| [u.name, u.id]} %>
+    <%= f.input :user_id, collection: User.tracked.collect{|u| [u.name, u.id]} %>
     <%= f.input :data_file, as: :file, required: true %>
   </div>
   <div class="form-actions">

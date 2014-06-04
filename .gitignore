@@ -17,3 +17,5 @@ config/database.yml
 config/unicorn.rb
 config/deploy.rb
 public/system
+
+.DS_Store

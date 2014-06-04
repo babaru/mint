@@ -1,6 +1,8 @@
 Mint::Application.routes.draw do
 
-  get "leave_recorder/index"
+  get 'personal_time_recorder' => 'time_recorder#index', as: :personal_time_recorder
+  get 'leave_time_recorder' => 'leave_recorder#index', as: :leave_time_recorder
+  get 'overtime_recorder' => 'overtime_recorder#index', as: :overtime_recorder
 
   devise_for :users, path_prefix: 'sys'
 
@@ -33,9 +35,9 @@ Mint::Application.routes.draw do
 
   get 'user_time_records_feed' => 'time_records#user_feed', as: :user_time_records_feed
   get 'user_leave_records_feed' => 'leave_records#user_feed', as: :user_leave_records_feed
-  resources :time_records, :leave_records # TODO use api gem
+  get 'user_overtime_records_feed' => 'overtime_records#user_feed', as: :user_overtime_records_feed
 
-  get 'recorder' => 'recorder#index', as: :time_recorder
+  resources :time_records, :leave_records, :overtime_records # TODO use api gem
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -86,7 +88,7 @@ Mint::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'recorder#index'
+  root :to => 'time_recorder#index'
 
   # See how all your routes lay out with "rake routes"
 

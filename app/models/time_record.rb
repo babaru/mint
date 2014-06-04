@@ -3,7 +3,8 @@ class TimeRecord < ActiveRecord::Base
   belongs_to :project
   belongs_to :task_type
   belongs_to :time_sheet
-  attr_accessible :recorded_on, :value, :user_id, :project_id, :task_type_id, :time_sheet_id, :remark, :started_at, :ended_at
+  attr_accessible :recorded_on, :value, :user_id, :project_id, :task_type_id,
+    :time_sheet_id, :remark, :started_at, :ended_at, :type
 
   # validates :project_id, presence: true
   validates :user_id, presence: true
@@ -15,7 +16,8 @@ class TimeRecord < ActiveRecord::Base
 
   def as_json(options={})
     item = super(options)
-    item['project_name'] = self.project.name if self.project
+    item[:project_name] = self.project.name if self.project
+    self.project.nil? ? item[:title] = self.remark : item[:title] = "#{self.project.name}: #{self.remark}"
     item
   end
 
@@ -28,6 +30,7 @@ class TimeRecord < ActiveRecord::Base
     item[:allDay] = false
     item[:description] = self.remark
     item[:project_id] = self.project_id
+    item[:user_id] = self.user_id
     item
   end
 end

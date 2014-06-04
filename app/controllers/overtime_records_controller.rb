@@ -10,6 +10,15 @@ class OvertimeRecordsController < ApplicationController
     end
   end
 
+  def user_feed
+    @started_at = Time.at(params[:start].to_i)
+    @ended_at = Time.at(params[:end].to_i)
+
+    respond_to do |format|
+      format.json { render json: OvertimeRecord.where(recorded_on: (@started_at..@ended_at)).collect{|t| t.to_user_feed}.to_json }
+    end
+  end
+
   # GET /overtime_records/1
   # GET /overtime_records/1.json
   def show
@@ -78,37 +87,6 @@ class OvertimeRecordsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to overtime_records_url }
       format.json { head :no_content }
-    end
-  end
-
-  def upload
-    if request.get?
-      @upload_file = UserOvertimeRecordFile.new
-    end
-
-    if request.post?
-      @upload_file = UserOvertimeRecordFile.new(params[:user_overtime_record_file])
-      @upload_file.save!
-      time_record_data = @upload_file.parse
-
-      OvertimeRecord.transaction do
-        time_record_data.each do |item|
-          user = User.where("name like '%#{item[:user_name]}%'").first || User.temp_create!(item[:user_name])
-          record = OvertimeRecord.find_by_user_id_and_happened_at(user.id, item[:happened_at])
-          unless record.nil?
-            record.update_attributes!({value: item[:value]})
-          else
-            OvertimeRecord.create!(
-              {
-                user_id: user.id,
-                value: item[:value],
-                happened_at: item[:happened_at]
-              })
-          end
-        end
-      end
-
-      redirect_to time_sheets_path, notice: "#{OvertimeRecord.model_name.human} 上传完毕"
     end
   end
 end

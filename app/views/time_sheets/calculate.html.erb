@@ -33,7 +33,7 @@
 <%= simple_form_for(nil, as: :time_sheet, url: calculate_time_sheets_path, method: :post, html: {class: 'form-horizontal' }) do |f| %>
   <div class="form-inputs">
 
-    <%= f.input :user_id, collection: User.tracking.collect{|u| [u.name, u.id]} %>
+    <%= f.input :user_id, collection: User.tracked.collect{|u| [u.name, u.id]} %>
 
     <%= f.input :start_date, as: :date_picker %>
 

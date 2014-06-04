@@ -48,7 +48,7 @@
               {
                 divider: true
               },
-              User.tracking.inject([]) {|list, user| list << {
+              User.tracked.inject([]) {|list, user| list << {
                   name: user.name,
                   url: time_sheets_path(@url_params.merge({user_id: user.id}))
                 }

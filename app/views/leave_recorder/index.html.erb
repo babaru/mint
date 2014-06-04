@@ -1,47 +1,15 @@
 <div id="main">
 
-<%= hidden_field_tag :current_user_id, current_user.id, id: 'current-user-id' %>
-
-  <div id="header">
-
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span6"><h2 class='title'><span><i class="icon-calendar"></i> Time Recorder </span></h2></div>
-        <div class="span6">
-          <div class="user-block pull-right btn-toolbar">
-            <div class="btn-group">
-              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                Welcome, <%= content_tag(:strong, current_user.name) %>
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                <% if current_user.has_role?(:system_admin) %>
-                <li>
-                  <%= link_to( fa_icon('cog', text: t('administration')), dashboard_path) %>
-                </li>
-                <% end %>
-                <li>
-                  <%= link_to( fa_icon('signout', text: t("buttons.sign_out")), destroy_user_session_path, :method=>'delete') %>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
+  <%= render partial: 'shared/recorder/header' %>
 
   <div id="leave-calendar"></div>
 
 </div>
 
-<%= render_cell(:modal_window, :show, data: {name: "user-leave-recorder-dialog", title: t('model.create', model: LeaveRecord.model_name.human), content: render(partial: 'shared/recorder/user_leave_record_form')}) %>
+<%= render_cell(:modal_window, :show, data: {name: "record-dialog", title: t('model.create', model: LeaveRecord.model_name.human), content: render(partial: 'shared/recorder/user_leave_record_form')}) %>
 
 <% content_for :js do %>
 
-<%= javascript_include_tag "leave_recorder" %>
-
+<%= javascript_include_tag "leave_recorder", "recorder/recorder_calendar" %>
 
 <% end %>

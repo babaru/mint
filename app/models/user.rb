@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :login
 
-  scope :tracking, -> { joins(:roles).where("roles.name = 'tracking_user'")}
+  scope :tracked, -> { joins(:roles).where("roles.name = 'tracked_user'")}
   scope :system_admin, -> { joins(:roles).where("roles.name = 'system_admin'")}
 
   validates :email,

@@ -1,0 +1,15 @@
+<div id="main">
+
+  <%= render partial: 'shared/recorder/header' %>
+
+  <div id="time-calendar"></div>
+
+</div>
+
+<%= render_cell(:modal_window, :show, data: {name: "record-dialog", title: "Event", content: render(partial: 'shared/recorder/user_time_record_form').html_safe}) %>
+
+<% content_for :js do %>
+
+<%= javascript_include_tag "time_recorder", "recorder/recorder_calendar" %>
+
+<% end %>

@@ -1,9 +1,7 @@
-class RecorderController < ApplicationController
+class TimeRecorderController < ApplicationController
   layout 'recorder'
-
   before_filter :authenticate_user!
 
   def index
-
   end
 end

@@ -1,0 +1,44 @@
+<div id="header">
+
+<%= hidden_field_tag :current_user_id, current_user.id, id: 'current-user-id' if current_user %>
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span6"><h2 class='title'><span><i class="icon-calendar"></i> Time Recorder </span></h2></div>
+      <div class="span6">
+        <div class="user-block pull-right btn-toolbar">
+          <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              Welcome, <%= content_tag(:strong, current_user.name) %>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <% if current_user.has_role?(:system_admin) %>
+              <li>
+                <%= link_to( fa_icon('cog', text: t('administration')), dashboard_path) %>
+              </li>
+              <li class="divider"></li>
+              <% end %>
+              <li>
+                <%= link_to('Personal Time', personal_time_recorder_path) %>
+              </li>
+              <% if current_user.has_role?(:time_admin) %>
+              <li>
+                <%= link_to('Leave', leave_time_recorder_path) %>
+              </li>
+              <li>
+                <%= link_to('Overtime', overtime_recorder_path) %>
+              </li>
+              <% end %>
+              <li class="divider"></li>
+              <li>
+                <%= link_to( fa_icon('signout', text: t("buttons.sign_out")), destroy_user_session_path, :method=>'delete') %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -46,6 +46,7 @@ zh-CN:
         year_number: 年度
         week_number: 周数
         month_number: 月份
+        type: 类型
       leave_record:
         user_id: 人员
       overtime_record:

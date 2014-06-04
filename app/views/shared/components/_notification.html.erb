@@ -1,0 +1,12 @@
+<%- if alert %>
+<div class="alert alert-error notification">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <i class="icon-frown"></i> <%= alert %>
+</div>
+<% end -%>
+<%- if notice %>
+<div class="alert alert-success notification">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <i class="icon-smile"></i> <%= notice %>
+</div>
+<% end -%>

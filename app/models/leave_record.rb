@@ -9,7 +9,8 @@ class LeaveRecord < TimeRecord
 
   def as_json(options={})
     item = super(options)
-    item['user_name'] = self.user.name
+    item[:user_name] = self.user.name
+    item[:title] = "#{self.user.name}: ?"
     item
   end
 end

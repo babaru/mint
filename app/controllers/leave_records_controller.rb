@@ -12,11 +12,14 @@ class LeaveRecordsController < ApplicationController
 
   # GET /user_time_records_feed.json
   def user_feed
+    @conditions = {}
     @started_at = Time.at(params[:start].to_i)
     @ended_at = Time.at(params[:end].to_i)
+    @conditions[:recorded_on] = (@started_at..@ended_at)
+    @conditions[:user_id] = params[:user_id] if params[:user_id]
 
     respond_to do |format|
-      format.json { render json: TimeRecord.where(recorded_on: (@started_at..@ended_at)).collect{|t| t.to_user_feed}.to_json }
+      format.json { render json: LeaveRecord.where(@conditions).collect{|t| t.to_user_feed}.to_json }
     end
   end
 

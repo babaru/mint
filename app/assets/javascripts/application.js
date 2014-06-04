@@ -12,4 +12,5 @@
 //= require jQuery-contextMenu/src/jquery.contextMenu
 //= require jQuery-contextMenu/src/jquery.ui.position
 //= require underscore/underscore
+//= require fullcalendar/fullcalendar
 

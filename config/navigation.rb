@@ -185,6 +185,18 @@ SimpleNavigation::Configuration.run do |navigation|
         }
       )
 
+      management_menu.item(
+        :page_roles,
+        t('navigation.page_roles'),
+        roles_path,
+        {
+          link:
+          {
+            icon: 'tag'
+          }
+        }
+      )
+
     end
   end
 end

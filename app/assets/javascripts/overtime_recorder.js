@@ -6,8 +6,8 @@ $(function() {
     var calendar = recordCalendar({
         userIdType: 'select',
         calendar: {
-            element: $('#leave-calendar'),
-            events: '/user_leave_records_feed.json'
+            element: $('#overtime-calendar'),
+            events: '/user_overtime_records_feed.json'
         }
     });
 

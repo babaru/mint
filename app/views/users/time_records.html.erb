@@ -27,7 +27,7 @@
           {
             name: @user.nil? ? "Please choose a user": @user.name,
             url: nil,
-            dropdown_list: User.tracking.inject([]) {|list, user| list << {name: user.name, url: users_overall_time_records_path(type: @query_type, user_id: user.id)} }
+            dropdown_list: User.tracked.inject([]) {|list, user| list << {name: user.name, url: users_overall_time_records_path(type: @query_type, user_id: user.id)} }
           }
         ),
         (render_cell(

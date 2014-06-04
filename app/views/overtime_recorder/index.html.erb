@@ -1,0 +1,15 @@
+<div id="main">
+
+  <%= render partial: 'shared/recorder/header' %>
+
+  <div id="overtime-calendar"></div>
+
+</div>
+
+<%= render_cell(:modal_window, :show, data: {name: "record-dialog", title: t('model.create', model: OvertimeRecord.model_name.human), content: render(partial: 'shared/recorder/user_overtime_record_form')}) %>
+
+<% content_for :js do %>
+
+<%= javascript_include_tag "overtime_recorder", "recorder/recorder_calendar" %>
+
+<% end %>

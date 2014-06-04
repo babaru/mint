@@ -1,0 +1,20 @@
+
+<%= simple_form_for :time_record, as: :time_record, url: nil, html: {class: 'form-horizontal', method: :post}, remote: true do |f| %>
+<div class="alert alert-error hide">
+  <strong>Error!</strong> <span id="time-record-error-message"></span>
+</div>
+
+<div class="modal-boday">
+  <div class="form-inputs">
+    <%= f.input :project_id, collection: Project.top.collect{|p| [p.name, p.id]}, label: t('activerecord.attributes.time_record.project_id') %>
+    <%= f.input :remark, as: :text, input_html: { rows: 5 }, label: t('activerecord.attributes.time_record.remark') %>
+    <%= f.input :started_at, as: :hidden %>
+    <%= f.input :ended_at, as: :hidden %>
+    <%= f.input :user_id, as: :hidden %>
+    <%= f.input :type, as: :hidden, input_html: {value: TimeRecord.name} %>
+  </div>
+</div>
+<div class="modal-footer">
+  <%= f.button :submit, 'OK', class: 'btn btn-primary' %> <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+</div>
+<% end %>

@@ -19,18 +19,6 @@ ActiveRecord::Schema.define(:version => 20140523063148) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "overtime_records", :force => true do |t|
-    t.integer  "user_id"
-    t.datetime "happened_at"
-    t.decimal  "value",         :precision => 20, :scale => 2, :default => 0.0
-    t.datetime "created_at",                                                    :null => false
-    t.datetime "updated_at",                                                    :null => false
-    t.integer  "time_sheet_id"
-  end
-
-  add_index "overtime_records", ["time_sheet_id"], :name => "index_overtime_records_on_time_sheet_id"
-  add_index "overtime_records", ["user_id"], :name => "index_overtime_records_on_user_id"
-
   create_table "project_users", :force => true do |t|
     t.integer  "project_id"
     t.integer  "user_id"

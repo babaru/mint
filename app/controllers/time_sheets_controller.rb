@@ -105,7 +105,7 @@ class TimeSheetsController < ApplicationController
     @url_params[:project_id] = @project.id if @project
 
     if @user.nil?
-      @personal_time_reports = User.tracking.order('name').inject([]) do |list, user|
+      @personal_time_reports = User.tracked.order('name').inject([]) do |list, user|
         list << {
           user: user,
           grid: initialize_grid(TimeSheet.select([
@@ -267,7 +267,7 @@ class TimeSheetsController < ApplicationController
         params[:time_sheet][:user_id].empty?
         users = [User.find(params[:time_sheet][:user_id])]
       else
-        users = User.tracking
+        users = User.tracked
       end
 
       start_date = Date.today.beginning_of_week

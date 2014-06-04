@@ -34,8 +34,11 @@
   g.column :name => t('activerecord.attributes.overtime_record.user_id'), :html => {:class => "grid-cell"} do |overtime_record|
     overtime_record.user_id
   end
-  g.column :name => t('activerecord.attributes.overtime_record.happened_at'), :html => {:class => "grid-cell"} do |overtime_record|
-    overtime_record.happened_at
+  g.column :name => t('activerecord.attributes.overtime_record.project_id'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.project_id
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.recorded_on'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.recorded_on
   end
   g.column :name => t('activerecord.attributes.overtime_record.value'), :html => {:class => "grid-cell"} do |overtime_record|
     overtime_record.value
@@ -45,6 +48,24 @@
   end
   g.column :name => t('activerecord.attributes.overtime_record.updated_at'), :html => {:class => "grid-cell"} do |overtime_record|
     overtime_record.updated_at
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.task_type_id'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.task_type_id
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.remark'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.remark
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.time_sheet_id'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.time_sheet_id
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.started_at'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.started_at
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.ended_at'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.ended_at
+  end
+  g.column :name => t('activerecord.attributes.overtime_record.type'), :html => {:class => "grid-cell"} do |overtime_record|
+    overtime_record.type
   end
 
 

@@ -8,6 +8,9 @@
         <%= link_to(fa_icon('file-text-alt', text: '用户资料'), edit_user_path(current_user)) %>
       </li>
       <li>
+        <%= link_to(fa_icon('time', text: 'Time Recorder'), personal_time_recorder_path, target: :blank) %>
+      </li>
+      <li>
         <%= link_to( fa_icon('signout', text: t("buttons.sign_out")), destroy_user_session_path, :method=>'delete') %>
       </li>
     </ul>

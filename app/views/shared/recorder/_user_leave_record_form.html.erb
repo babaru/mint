@@ -1,5 +1,5 @@
 
-<%= simple_form_for :leave_record, as: :leave_record, url: nil, html: {class: 'form-horizontal', method: :post}, remote: true do |f| %>
+<%= simple_form_for :time_record, as: :time_record, url: nil, html: {class: 'form-horizontal', method: :post}, remote: true do |f| %>
 
 <div class="modal-boday">
   <div class="alert alert-error hide">
@@ -7,10 +7,11 @@
   </div>
 
   <div class="form-inputs">
-    <%= f.input :user_id, collection: User.tracking.collect{|u| [u.name, u.id]} %>
+    <%= f.input :user_id, collection: User.tracked.collect{|u| [u.name, u.id]} %>
     <%= f.input :remark, as: :text, input_html: { rows: 5 } %>
     <%= f.input :started_at, as: :hidden %>
     <%= f.input :ended_at, as: :hidden %>
+    <%= f.input :type, as: :hidden, input_html: { value: LeaveRecord.name} %>
   </div>
 </div>
 <div class="modal-footer">
