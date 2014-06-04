@@ -7,7 +7,13 @@ $(function() {
         userIdType: 'select',
         calendar: {
             element: $('#leave-calendar'),
-            events: '/user_leave_records_feed.json'
+            eventSources: [
+              {
+                url: '/user_leave_records_feed.json',
+                color: '#ea5929',
+                className: 'leave_record'
+              }
+            ]
         }
     });
 

@@ -103,17 +103,41 @@ class TimeRecordsController < ApplicationController
         time_record_data = @upload_file.parse
 
         TimeRecord.transaction do
+          started_at = nil
           time_record_data.each do |item|
             project = Project.find_by_name(item[:project_name]) || Project.create!(name: item[:project_name])
             project.users << @user unless project.users.include?(@user)
-            TimeRecord.find_by_user_id_and_project_id_and_recorded_on(@user.id, project.id, item[:recorded_on]) || TimeRecord.create!(
-              {
-                user_id: @user.id,
-                project_id: project.id,
-                value: item[:time_record],
-                recorded_on: item[:recorded_on],
-                task_type_id: TaskType.first.id
-              })
+            started_at = DateTime.civil_from_format(:local, item[:recorded_on].year, item[:recorded_on].month, item[:recorded_on].day, 9) if started_at.nil? || !(started_at === item[:recorded_on])
+            ended_at = item[:time_record].hours.since(started_at)
+
+            lunch_break = (DateTime.civil_from_format(:local, started_at.year, started_at.month, started_at.day, Settings.time.working_hours.am.to)..DateTime.civil_from_format(:local, started_at.year, started_at.month, started_at.day, Settings.time.working_hours.pm.from))
+            ranges = remove_lunch_break((started_at..ended_at), lunch_break)
+
+            ranges.each do |range|
+
+            # logger.debug('=====================================================')
+            # logger.debug(started_at)
+            # logger.debug(ended_at)
+            # logger.debug(item[:recorded_on])
+
+            # logger.debug(range.begin)
+            # logger.debug(range.end)
+
+              TimeRecord.find_by_user_id_and_project_id_and_started_at_and_ended_at(@user.id, project.id, range.begin, range.end) || TimeRecord.create!(
+                {
+                  user_id: @user.id,
+                  project_id: project.id,
+                  value: ((range.end.to_f - range.begin.to_f) / 3600).round,
+                  recorded_on: DateTime.civil_from_format(:local, item[:recorded_on].year, item[:recorded_on].month, item[:recorded_on].day),
+                  started_at: range.begin,
+                  ended_at: range.end,
+                  type: TimeRecord.name,
+                  remark: '☻'
+                })
+
+            end
+
+            started_at = ranges.last.end
           end
         end
 
@@ -121,6 +145,19 @@ class TimeRecordsController < ApplicationController
       else
         render :upload
       end
+    end
+  end
+
+  def remove_lunch_break(range, lunch)
+    return [range] if range.end <= lunch.begin
+    return [range] if range.begin >= lunch.end
+
+    if range.begin >= lunch.begin && range.begin <= lunch.end
+      return [(lunch.end..Time.at(lunch.end.to_i - range.begin.to_i + range.end.to_i))]
+    end
+
+    if range.begin < lunch.begin
+      return [(range.begin..lunch.begin), (lunch.end..1.hour.since(range.end))]
     end
   end
 end
