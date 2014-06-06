@@ -1,15 +1,15 @@
 <%= render_cell(:section_title, :show, data: {name: user.full_name}) %>
 
-<div class="well">
-  Total Working Days: <strong><%= @start_date.business_days_until(@end_date) %></strong> | Total Working Hours: <strong><%= @start_date.business_days_until(@end_date) * 8 %></strong></strong>
-</div>
-
 <% total_calculated_hours, total_recorded_hours, total_caluclated_normal_hours, total_overtime_hours, total_calculated_overtime_hours = 0, 0, 0, 0, 0 %>
 
 <%= grid(grid, :show_filters => :when_filtered) do |g|
 
   g.column name: t('activerecord.attributes.time_sheet.project_id'), :html => {:class => "grid-cell"} do |time_sheet|
     time_sheet.project.name
+  end
+
+  g.column :name => t('activerecord.attributes.time_sheet.total_business_days'), :html => {:class => "number-cell"} do |time_sheet|
+
   end
 
   g.column :name => t('activerecord.attributes.time_sheet.total_business_hours'), :html => {:class => "number-cell"} do |time_sheet|
@@ -41,6 +41,7 @@
 
     content_tag(:tr, [
       content_tag(:td, t('labels.total'), style: 'text-align:right; font-weight:bold;'),
+      content_tag(:td, content_tag(:strong, @start_date.business_days_until(@end_date)), class: 'number-cell'),
       content_tag(:td, content_tag(:strong, (@start_date.business_days_until(@end_date) * 8).to_f), class: 'number-cell'),
       content_tag(:td, content_tag(:strong, total_recorded_hours), class: 'number-cell'),
       content_tag(:td, content_tag(:strong, total_caluclated_normal_hours), class: 'number-cell'),

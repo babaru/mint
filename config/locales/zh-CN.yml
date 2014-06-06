@@ -58,6 +58,7 @@ zh-CN:
         vendor: "归属供应商"
     from: 从
     to: 至
+    total: 总计
   buttons:
     ok: "确定"
     renew: '刷新'

@@ -63,6 +63,8 @@ zh-CN:
         calculated_normal_hours: 换算后正常小时数
         calculated_overtime_hours: 换算后加班小时数
         calculated_hours: 换算后总小时数
+        total_business_days: 总工作日
+        total_business_hours: 总工作时间
         duration:
           all: 全部
           this_year: 今年
