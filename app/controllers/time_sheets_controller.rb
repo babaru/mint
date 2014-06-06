@@ -41,13 +41,13 @@ class TimeSheetsController < ApplicationController
     if @report_kind == :project
 
       @project_time_sheet_grid = initialize_grid(TimeSheet.select([
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
-      :project_id
-    ]).where(@conditions).group(:project_id), per_page: 50)
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
+        :project_id
+      ]).where(@conditions).group(:project_id), per_page: 50)
 
     end
 
@@ -104,16 +104,6 @@ class TimeSheetsController < ApplicationController
 
     @url_params[:user_id] = @user.id if @user
     @url_params[:project_id] = @project.id if @project
-  end
-
-  def users
-
-  end
-
-  def projects
-    parse_conditions
-
-
   end
 
   # GET /time_sheets/1
