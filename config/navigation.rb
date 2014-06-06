@@ -38,68 +38,57 @@ SimpleNavigation::Configuration.run do |navigation|
   # Define the primary navigation
   navigation.items do |primary|
     primary.item(
-      :page_time,
-      t('navigation.page_time'),
+      :page_dashboard,
+      t('navigation.page_dashboard'),
+      dashboard_path,
+      {
+        link:
+        {
+          icon: 'dashboard'
+        },
+        highlights_on: /dashboard/
+      }
+    )
+    primary.item(
+      :page_report,
+      t('navigation.page_report'),
       nil,
       {
         link:
         {
-          icon: 'time'
+          icon: 'file-text'
         },
-        highlights_on: /time/
+        highlights_on: /reports/
       }
-    ) do |time_menu|
+    ) do |report_menu|
 
-      time_menu.item(
-        :page_time_sheet,
-        t('navigation.page_time_sheet'),
-        nil,
+      report_menu.item(
+        :page_time_report,
+        t('navigation.page_time_report'),
+        time_report_path,
         {
           link:
           {
             icon: 'file'
           }
         }
-      ) do |time_sheet_menu|
-
-        time_sheet_menu.item(
-          :page_user_time_sheet,
-          t('navigation.page_user_time_sheet'),
-          user_time_sheet_path,
-          {
-            link:
-            {
-              icon: 'user'
-            }
-          }
-        )
-
-        time_sheet_menu.item(
-          :page_project_time_sheet,
-          t('navigation.page_project_time_sheet'),
-          project_time_sheet_path,
-          {
-            link:
-            {
-              icon: 'briefcase'
-            }
-          }
-        )
-
-      end
-
-      time_menu.item(
-        :page_time_divider_1,
-        nil, nil,
-        {
-          link:
-          {
-            divider: true
-          }
-        }
       )
 
-      time_menu.item(
+    end
+
+    primary.item(
+      :page_operation,
+      t('navigation.page_operation'),
+      nil,
+      {
+        link:
+        {
+          icon: 'cog'
+        }
+      }
+    ) do |operation_menu|
+
+      operation_menu.item(
         :page_time_sheets,
         t('navigation.page_calculate_time_sheets'),
         calculate_time_sheets_path,
@@ -111,7 +100,7 @@ SimpleNavigation::Configuration.run do |navigation|
         }
       )
 
-      time_menu.item(
+      operation_menu.item(
         :page_time_divider_2,
         nil, nil,
         {
@@ -122,7 +111,7 @@ SimpleNavigation::Configuration.run do |navigation|
         }
       )
 
-      time_menu.item(
+      operation_menu.item(
         :page_upload_time_records,
         t('model.upload', :model => TimeRecord.model_name.human),
         upload_time_records_path,
@@ -134,7 +123,7 @@ SimpleNavigation::Configuration.run do |navigation|
         }
       )
 
-      time_menu.item(
+      operation_menu.item(
         :page_upload_overtime_records,
         t('model.upload', :model => OvertimeRecord.model_name.human),
         upload_overtime_records_path,
@@ -149,19 +138,19 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     primary.item(
-      :page_management,
-      t('navigation.page_management'),
+      :page_configuration,
+      t('navigation.page_configuration'),
       nil,
       {
         link:
         {
-          icon: 'briefcase'
+          icon: 'puzzle-piece'
         },
-        highlights_on: /manage/
+        highlights_on: /config/
       }
-    ) do |management_menu|
+    ) do |configuration_menu|
 
-      management_menu.item(
+      configuration_menu.item(
         :page_projects,
         t('navigation.page_projects'),
         projects_path,
@@ -173,7 +162,7 @@ SimpleNavigation::Configuration.run do |navigation|
         }
       )
 
-      management_menu.item(
+      configuration_menu.item(
         :page_users,
         t('navigation.page_users'),
         users_path,
@@ -185,7 +174,7 @@ SimpleNavigation::Configuration.run do |navigation|
         }
       )
 
-      management_menu.item(
+      configuration_menu.item(
         :page_roles,
         t('navigation.page_roles'),
         roles_path,

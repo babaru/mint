@@ -3,116 +3,102 @@
   :show,
   data:
   {
-    name: @user.nil? ? "#{t('model.list', model: TimeSheet.model_name.human)}" : "#{@user.name} #{t('model.list', model: TimeSheet.model_name.human)}",
-    toolbar:
-    {
-      right:
-      [
-        render_cell(
+    name: @report_kind == :user ? t('navigation.page_user_time_report') : t('navigation.page_project_time_report'),
+  }
+)
+%>
+
+<ul class="nav nav-tabs">
+  <li class="<%= @report_kind == :project ? "active" : '' %>">
+    <%= link_to t('navigation.page_project_time_report'), time_report_path(@url_params.merge({kind: :project})) %>
+  </li>
+  <li class="<%= @report_kind == :user ? "active" : '' %>">
+    <%= link_to t('navigation.page_user_time_report'), time_report_path(@url_params.merge({kind: :user})) %>
+  </li>
+</ul>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="btn-toolbar">
+
+        <%= @report_kind == :user ? render_cell(
           :dropdown_button,
           :show,
           data:
           {
-            name: @project.nil? ? "#{t('label.please_choose_a')}#{Project.model_name.human}" : @project.name,
-            url: nil,
-            dropdown_list:
-              [
-                {
-                  name: "All projects",
-                  url: time_sheets_path(@url_params.reject{|k,v| k == :project_id})
-                },
-                {
-                  divider: true
-                },
-                Project.order('name asc').all.inject([]) {|list, project| list << {
-                    name: project.name,
-                    url: time_sheets_path(@url_params.merge({project_id: project.id}))
-                  }
-                }
-              ].flatten
-          }
-        ),
-        render_cell(
-          :dropdown_button,
-          :show,
-          data:
-          {
-            name: @user.nil? ? "#{t('label.please_choose_a')}#{User.model_name.human}" : @user.name,
+            name: @user.nil? ? "#{t('label.please_choose')}#{User.model_name.human}" : @user.name,
             url: nil,
             dropdown_list:
             [
               {
                 name: "All users",
-                url: time_sheets_path(@url_params.reject{|k,v| k == :user_id})
+                url: time_report_path(@url_params.reject{|k,v| k == :user_id})
               },
               {
                 divider: true
               },
               User.tracked.inject([]) {|list, user| list << {
                   name: user.name,
-                  url: time_sheets_path(@url_params.merge({user_id: user.id}))
+                  url: time_report_path(@url_params.merge({user_id: user.id}))
                 }
               }
             ].flatten
           }
-        )
-      ]
-    }
-  }
-)
-%>
+        ) : render_cell(
+          :dropdown_button,
+          :show,
+          data:
+          {
+            name: @project.nil? ? "#{t('label.please_choose')}#{Project.model_name.human}" : @project.name,
+            url: nil,
+            dropdown_list:
+            [
+              {
+                name: "All projects",
+                url: time_report_path(@url_params.reject{|k,v| k == :project_id})
+              },
+              {
+                divider: true
+              },
+              Project.top.inject([]) {|list, project| list << {
+                  name: project.name,
+                  url: time_report_path(@url_params.merge({project_id: project.id}))
+                }
+              }
+            ].flatten
+          }
+        ) %>
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span8">
-      <div class="btn-toolbar">
+
         <div class="btn-group">
-          <a href="" class="btn btn-info">Button</a>
-          <a href="" class="btn">Button</a>
-          <a href="" class="btn">Button</a>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.this_year'), time_report_path(@url_params.merge({start_date: Date.new(Date.today.year, 1, 1), end_date: Date.new(Date.today.year, 12, 31)})), class: "btn" %>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.last_month'), time_report_path(@url_params.merge({start_date: Date.new(Date.today.year, Date.today.month - 1, 1), end_date: 1.day.ago(Date.new(Date.today.year, Date.today.month , 1))})), class: "btn" %>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.this_month'), time_report_path(@url_params.merge({start_date: Date.new(Date.today.year, Date.today.month, 1), end_date: 1.day.ago(Date.new(Date.today.year, Date.today.month + 1, 1))})), class: "btn" %>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.last_week'), time_report_path(@url_params.merge({start_date: 1.day.ago(Date.today.beginning_of_week).beginning_of_week, end_date: 1.day.ago(Date.today.beginning_of_week).end_of_week})), class: "btn #{@report_duration == :week ? 'active' : ''}" %>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.this_week'), time_report_path(@url_params.merge({start_date: Date.today.beginning_of_week, end_date: Date.today.end_of_week})), class: "btn #{@report_duration == :week ? 'active' : ''}" %>
         </div>
-        <div class="btn-group">
-          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-            Action
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <!-- dropdown menu links -->
-          </ul>
-        </div>
+
       </div>
     </div>
-    <div class="span4">
-      <%= simple_form_for(:date_range, url: time_sheets_path(@conditions), method: :post, html: {class: 'form-inline pull-right'}) do |f| %>
-      <%= f.input :start_date, as: :date_picker, label: t('label.from'), required: false, input_html: {value: @start_date.strftime('%Y-%m-%d')} %>
-      <%= f.input :end_date, as: :date_picker, label: t('label.to'), required: false, input_html: {value: @end_date.strftime('%Y-%m-%d')} %>
-      <%= f.button :submit, t('buttons.ok') %>
+    <div class="span6">
+      <%= simple_form_for(:date_range, url: query_time_report_by_duration_path(@url_params), method: :post, html: {class: 'form-inline pull-right'}) do |f| %>
+        <%= f.input :start_date, as: :date_picker, label: t('labels.from'), required: false, input_html: {value: @start_date.strftime('%Y-%m-%d')} %>
+        <%= f.input :end_date, as: :date_picker, label: t('labels.to'), required: false, input_html: {value: @end_date.strftime('%Y-%m-%d')} %>
+        <%= f.button :submit, t('buttons.ok') %>
       <% end %>
     </div>
   </div>
 </div>
 
-<table class="table-striped table-bordered table wice-grid">
-  <tr class="wice-grid-title-row">
-    <th><%= t('activerecord.attributes.time_sheet.recorded_hours') %></th>
-    <th><%= t('activerecord.attributes.time_sheet.calculated_normal_hours') %></th>
-    <th><%= t('activerecord.attributes.time_sheet.overtime_hours') %></th>
-    <th><%= t('activerecord.attributes.time_sheet.calculated_hours') %></th>
-  </tr>
-  <tr class="odd">
-    <td><%= @total_time_sheet.recorded_hours %></td>
-    <td><%= @total_time_sheet.calculated_normal_hours %></td>
-    <td><%= @total_time_sheet.overtime_hours %></td>
-    <td>
-      <strong><%= @total_time_sheet.calculated_hours %></strong>
-    </td>
-  </tr>
-</table>
+<% if @report_kind == :user %>
 
-<%= render partial: 'time_sheets_grid', locals: { time_sheets_grid: @time_sheets_grid } unless @time_sheets_grid.nil? %>
+<%= @user_time_reports.inject([]) {|list, report| list << render(partial: 'user_time_report_grid', locals: {user: report[:user], grid: report[:grid]}) }.join.html_safe if @user.nil? %>
 
-<style>
-  #total_grid tfoot {
-    display:none;
-  }
-</style>
+<%= render(partial: 'user_time_report_grid', locals: {user: @user, grid: @user_time_report_grid}) unless @user.nil? %>
+
+<% else %>
+
+<%= render partial: 'project_time_report_grid' %>
+
+<% end %>

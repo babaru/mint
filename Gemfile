@@ -57,6 +57,7 @@ gem 'axlsx'
 gem 'spreadsheet'
 gem 'rubyXL'
 gem 'cells'
+gem 'business_time'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby'

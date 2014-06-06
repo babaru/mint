@@ -29,6 +29,10 @@
     input.date_picker {
       width: 8em !important;
     }
+
+    input[type="submit"] {
+      margin-left: 5px;
+    }
   }
 
   &.single-line {

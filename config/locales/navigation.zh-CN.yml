@@ -1,16 +1,21 @@
 zh-CN:
   navigation:
     page_dashboard: 控制台
-    page_time: 时间
-    page_time_sheet: 时间报表
-    page_user_time_sheet: 人员时间报表
-    page_project_time_sheet: 项目时间报表
+
+    page_report: 报表
+    page_time_report: 时间报表
+    page_user_time_report: 人员时间
+    page_project_time_report: 项目时间
+
+    page_operation: 操作
     page_calculate_time_sheets: 运算时间报表
     page_upload_time_record: 上传登记时间记录
     page_upload_overtime_record: 上传加班记录
     page_upload_leave_record: 上传休假记录
-    page_management: 管理
+
+    page_configuration: 设置
     page_projects: 项目
     page_users: 人员
     page_roles: 角色
+    page_holidays: 节假日
 

@@ -1,99 +1,100 @@
 class TimeSheetsController < ApplicationController
   include Mint::Calculators::TimeSheetCalculator
+  before_filter :authenticate_user!
+
   # GET /time_sheets
   # GET /time_sheets.json
   def index
-    default_start_date = Date.today.beginning_of_week
-    default_end_date = Date.today.end_of_week
+
+    parse_conditions
+
+    if @report_kind == :user
+
+      if @user.nil?
+        @user_time_reports = User.tracked.order('name').inject([]) do |list, user|
+          list << {
+            user: user,
+            grid: initialize_grid(TimeSheet.select([
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
+              :project_id,
+              :user_id
+            ]).where(@conditions.merge({user_id: user.id})).group(:user_id, :project_id), name: "#{user.id}_time_report_grid")
+          }
+        end
+      else
+        @user_time_report_grid = initialize_grid(TimeSheet.select([
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
+              Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
+              :project_id,
+              :user_id
+            ]).where(@conditions).group(:user_id, :project_id), name: "#{@user.id}_time_report_grid")
+      end
+    end
+
+    if @report_kind == :project
+
+      @project_time_sheet_grid = initialize_grid(TimeSheet.select([
+      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
+      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
+      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
+      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
+      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
+      :project_id
+    ]).where(@conditions).group(:project_id), per_page: 50)
+
+    end
+
+  end
+
+  def query_by_duration
+    @url_params = {}
     if request.post?
-      @url_params = {}
+      if params[:date_range]&& params[:date_range][:start_date] && params[:date_range][:end_date]
+        @start_date = Date.parse(params[:date_range][:start_date])
+        @end_date = Date.parse(params[:date_range][:end_date])
+        @url_params[:start_date] = @start_date.strftime('%Y-%m-%d')
+        @url_params[:end_date] = @end_date.strftime('%Y-%m-%d')
+      end
+
+      @report_kind = params[:kind]
+      @report_kind ||= 'project'
+      @report_kind = @report_kind.to_sym
+      @url_params[:kind] = @report_kind
+
       @url_params[:user_id] = params[:user_id] if params[:user_id]
       @url_params[:project_id] = params[:project_id] if params[:project_id]
-      @url_params[:start_date] = params[:date_range][:start_date] if params[:date_range] && params[:date_range][:start_date] && !params[:date_range][:start_date].empty?
-      @url_params[:end_date] = params[:date_range][:end_date] if params[:date_range] && params[:date_range][:end_date]
-      redirect_to time_sheets_path(@url_params)
-    else
-      @url_params = {}
-      @user = User.find params[:user_id] if params[:user_id]
-      @project = Project.find params[:project_id] if params[:project_id]
-      @conditions = {}
-      @conditions[:user_id] = @user.id if @user
-      @url_params[:user_id] = @user.id if @user
-      @conditions[:project_id] = @project.id if @project
-      @url_params[:project_id] = @project.id if @project
-      @start_date = default_start_date
-      unless params[:start_date].nil? || params[:start_date].empty?
-        @start_date = Date.parse(params[:start_date])
-      end
-      @end_date = default_end_date
-      unless params[:end_date].nil? || params[:end_date].empty?
-        @end_date = Date.parse(params[:end_date])
-      end
-
-      @conditions[:recorded_on] = (@start_date.beginning_of_day..@end_date.end_of_day)
-      @url_params[:start_date] = @start_date.strftime("%Y-%m-%d")
-      @url_params[:end_date] = @end_date.strftime("%Y-%m-%d")
-
-      @time_sheets_grid = initialize_grid(TimeSheet.where(@conditions), name: 'details_grid')
-      @total_time_sheet = TimeSheet.select([
-          Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
-          Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
-          Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
-          Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
-          Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
-          Arel::Nodes::NamedFunction.new('MAX', [TimeSheet.arel_table[:recorded_on]]).as('recorded_on')
-        ]).where(@conditions).first
 
       respond_to do |format|
-        format.html # index.html.erb
-        format.json { render json: @time_sheets_grid }
+        format.html { redirect_to time_report_path(@url_params)}
       end
     end
   end
 
-  def users
+  def parse_conditions
     @conditions, @url_params = {}, {}
 
     @report_kind = params[:kind]
-    @report_kind ||= 'personal'
+    @report_kind ||= 'project'
     @report_kind = @report_kind.to_sym
     @url_params[:kind] = @report_kind
 
-    @report_duration = params[:duration]
-    @report_duration ||= 'week'
-    @report_duration = @report_duration.to_sym
-    @url_params[:duration] = @report_duration
+    @start_date = Date.parse(params[:start_date]) if params[:start_date]
+    @end_date = Date.parse(params[:end_date]) if params[:end_date]
 
-    @week_number = params[:week].to_i if params[:week]
-    @week_number ||= Date.today.strftime("%U").to_i + 1
-    @url_params[:week] = @week_number
+    @start_date ||= Date.new(2000,1,1)
+    @end_date ||= Date.today
 
-    @month_number = params[:month].to_i if params[:month]
-    @month_number ||= Date.today.strftime("%m").to_i
-    @url_params[:month] = @month_number
+    @url_params[:start_date] = @start_date.strftime('%Y-%m-%d')
+    @url_params[:end_date] = @end_date.strftime('%Y-%m-%d')
 
-    @year_number = params[:year].to_i if params[:year]
-    @year_number ||= Date.today.strftime("%Y").to_i
-    @url_params[:year] = @year_number
-
-    case @report_duration
-    when :year
-      start_date = Date.new(@year_number, 1, 1)
-      end_date = Date.new(@year_number, 12, 31)
-      @conditions[:recorded_on] = (start_date.beginning_of_day..end_date.end_of_day)
-    when :month
-      start_date = Date.new(@year_number, @month_number, 1)
-      end_date = Date.new(@year_number, @month_number, -1)
-      @conditions[:recorded_on] = (start_date.beginning_of_day..end_date.end_of_day)
-    when :week
-      start_date = Date.commercial(@year_number, @week_number, 1)
-      end_date = Date.commercial(@year_number, @week_number, 7)
-      @conditions[:recorded_on] = (start_date.beginning_of_day..end_date.end_of_day)
-    else
-      start_date = Date.new(2000,1,1)
-      end_date = Date.today
-      @conditions[:recorded_on] = (start_date.beginning_of_day..end_date.end_of_day)
-    end
+    @conditions[:recorded_on] = (@start_date.beginning_of_day..@end_date.end_of_day)
 
     @user = User.find params[:user_id] if params[:user_id]
     @project = Project.find params[:project_id] if params[:project_id]
@@ -103,88 +104,16 @@ class TimeSheetsController < ApplicationController
 
     @url_params[:user_id] = @user.id if @user
     @url_params[:project_id] = @project.id if @project
+  end
 
-    if @user.nil?
-      @personal_time_reports = User.tracked.order('name').inject([]) do |list, user|
-        list << {
-          user: user,
-          grid: initialize_grid(TimeSheet.select([
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
-            :project_id,
-            :user_id
-          ]).where(@conditions.merge({user_id: user.id})).group(:user_id, :project_id), name: "#{user.id}_time_report_grid")
-        }
-      end
-    else
-      @personal_time_report_grid = initialize_grid(TimeSheet.select([
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
-            Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
-            :project_id,
-            :user_id
-          ]).where(@conditions).group(:user_id, :project_id), name: "#{@user.id}_time_report_grid")
-    end
+  def users
+
   end
 
   def projects
-    @conditions, @url_params = {}, {}
+    parse_conditions
 
-    @report_duration = params[:duration]
-    @report_duration ||= 'week'
-    @report_duration = @report_duration.to_sym
-    @url_params[:duration] = @report_duration
 
-    @week_number = params[:week].to_i if params[:week]
-    @week_number ||= Date.today.strftime("%U").to_i + 1
-    @url_params[:week] = @week_number
-
-    @month_number = params[:month].to_i if params[:month]
-    @month_number ||= Date.today.strftime("%m").to_i
-    @url_params[:month] = @month_number
-
-    @year_number = params[:year].to_i if params[:year]
-    @year_number ||= Date.today.strftime("%Y").to_i
-    @url_params[:year] = @year_number
-
-    case @report_duration
-    when :year
-      start_date = Date.new(@year_number, 1, 1)
-      end_date = Date.new(@year_number, 12, 31)
-      @conditions[:recorded_on] = (start_date.beginning_of_day..end_date.end_of_day)
-    when :month
-      start_date = Date.new(@year_number, @month_number, 1)
-      end_date = Date.new(@year_number, @month_number, -1)
-      @conditions[:recorded_on] = (start_date.beginning_of_day..end_date.end_of_day)
-    when :week
-      start_date = Date.commercial(@year_number, @week_number, 1)
-      end_date = Date.commercial(@year_number, @week_number, 7)
-      @conditions[:recorded_on] = (start_date.beginning_of_day..end_date.end_of_day)
-    else
-      start_date = Date.new(2000,1,1)
-      end_date = Date.today
-      @conditions[:recorded_on] = (start_date.beginning_of_day..end_date.end_of_day)
-    end
-
-    @project = Project.find params[:project_id] if params[:project_id]
-
-    @conditions[:project_id] = @project.id if @project
-
-    @url_params[:project_id] = @project.id if @project
-
-    @project_time_sheet_grid = initialize_grid(TimeSheet.select([
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
-      Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
-      :project_id
-    ]).where(@conditions).group(:project_id), per_page: 50)
   end
 
   # GET /time_sheets/1

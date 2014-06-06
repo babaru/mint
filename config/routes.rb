@@ -18,8 +18,8 @@ Mint::Application.routes.draw do
     match 'time_sheets/calculate' => 'time_sheets#calculate', as: :calculate_time_sheets
     post 'time_sheets' => 'time_sheets#index'
 
-    get 'time/users' => 'time_sheets#users', as: :user_time_sheet
-    get 'time/projects' => 'time_sheets#projects', as: :project_time_sheet
+    get 'time/report' => 'time_sheets#index', as: :time_report
+    post 'time/query_by_duration' => 'time_sheets#query_by_duration', as: :query_time_report_by_duration
 
     resources :users do
       resources :projects, :time_records, :overtime_records
@@ -29,7 +29,7 @@ Mint::Application.routes.draw do
       resources :users, :time_records
     end
 
-    resources :projects, :users, :time_records, :roles, :user_groups, :task_types, :overtime_records, :time_sheets
+    resources :projects, :users, :time_records, :roles, :user_groups, :task_types, :overtime_records, :time_sheets, :holidays
 
   end
 
