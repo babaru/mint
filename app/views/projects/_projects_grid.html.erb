@@ -21,6 +21,9 @@
   g.column :name => t('activerecord.attributes.project.ended_at'), :html => {:class => "grid-cell"} do |project|
     project.ended_at.strftime("%Y-%m-%d") unless project.ended_at.nil?
   end
+  g.column name: t('activerecord.attributes.project.users'), html: {class: 'grid-cell'} do |project|
+    project.users.inject([]) {|list, u| list << render_cell(:label, :show, data: {name: u.name, kind: 'success'})}.join(' ').html_safe
+  end
 
   g.column html: {class: 'btn-cell'} do |project|
     link_to(fa_icon('edit'), edit_project_path(project), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
