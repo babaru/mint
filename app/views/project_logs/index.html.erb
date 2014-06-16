@@ -1,0 +1,61 @@
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{t('model.list', model: ProjectLog.model_name.human)}",
+    toolbar:
+    {
+      right:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('plus-sign', text: t('model.create', :model => ProjectLog.model_name.human)),
+            url: new_project_log_path,
+            options:
+            {
+              class: 'btn btn-primary'
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<%= grid(@project_logs_grid, :show_filters => :when_filtered) do |g|
+  g.column :name => t('activerecord.attributes.project_log.id'), :html => {:class => "grid-cell"} do |project_log|
+    project_log.id
+  end
+  g.column :name => t('activerecord.attributes.project_log.type'), :html => {:class => "grid-cell"} do |project_log|
+    project_log.type
+  end
+  g.column :name => t('activerecord.attributes.project_log.recorded_on'), :html => {:class => "grid-cell"} do |project_log|
+    project_log.recorded_on
+  end
+  g.column :name => t('activerecord.attributes.project_log.remark'), :html => {:class => "grid-cell"} do |project_log|
+    project_log.remark
+  end
+  g.column :name => t('activerecord.attributes.project_log.project_id'), :html => {:class => "grid-cell"} do |project_log|
+    project_log.project_id
+  end
+  g.column :name => t('activerecord.attributes.project_log.created_at'), :html => {:class => "grid-cell"} do |project_log|
+    project_log.created_at
+  end
+  g.column :name => t('activerecord.attributes.project_log.updated_at'), :html => {:class => "grid-cell"} do |project_log|
+    project_log.updated_at
+  end
+
+
+  g.column html: {class: 'btn-cell'} do |project_log|
+    link_to(fa_icon('edit'), edit_project_log_path(project_log), class: 'btn', rel: 'tooltip', title: t('buttons.edit'))
+  end
+
+  g.column html: {class: 'btn-cell'} do |project_log|
+    link_to(fa_icon('trash'), project_log_path(project_log), method: :delete, confirm: t("confirms.delete"), class: 'btn btn-danger', rel: 'tooltip', title: t('buttons.delete'))
+  end
+end -%>

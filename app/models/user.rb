@@ -38,6 +38,18 @@ class User < ActiveRecord::Base
     roles.any? { |r| r.name.underscore.to_sym == role_sym }
   end
 
+  def is_sys_admin?
+    has_role?(:system_admin)
+  end
+
+  def is_normal_user?
+    has_role?(:tracked_user) && !has_role?(:time_admin)
+  end
+
+  def is_time_admin?
+    has_role?(:time_admin)
+  end
+
   def self.temp_create!(name)
     new_uuid = UUID.new.generate
     User.create!({name: name, email: "#{new_uuid}@email.com", password: '12345678', password_confirmation: '12345678'})

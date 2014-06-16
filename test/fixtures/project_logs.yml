@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  type: 
+  recorded_on: 2014-06-10 11:09:36
+  remark: MyString
+  project: 
+
+two:
+  type: 
+  recorded_on: 2014-06-10 11:09:36
+  remark: MyString
+  project: 

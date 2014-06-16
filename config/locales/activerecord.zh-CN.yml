@@ -11,9 +11,6 @@ zh-CN:
       task_type: 任务类型
       user_group: 用户分组
       role: 系统角色
-      weekly_time_record: 周时间记录
-      monthly_time_record: 月度时间记录
-      yearly_time_record: 年度时间记录
       user_time_record_file: 人员登记时间文件
       holiday: 节假日
     attributes:
@@ -74,6 +71,8 @@ zh-CN:
           this_week: 本周
         start_date: 从
         end_date: 到
+        planned_hours: 计划小时数
+        released_hours: 发布小时数
       user_time_record_file:
         user_id: 人员
         date_file: 数据文件

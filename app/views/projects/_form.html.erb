@@ -14,8 +14,6 @@
 
     <%= f.input :parent_id, collection: Project.all.map{|v| [v.name, v.id]} %>
 
-    <%= f.association :users, collection: User.all.collect{|u| [u.name, u.id]}, as: :check_boxes %>
-
   </div>
 
   <div class="form-actions">

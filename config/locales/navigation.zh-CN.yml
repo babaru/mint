@@ -7,6 +7,9 @@ zh-CN:
     page_user_time_report: 人员时间
     page_project_time_report: 项目时间
 
+    page_clients: 客户
+    page_projects: 项目
+
     page_operation: 操作
     page_calculate_time_sheets: 运算时间报表
     page_upload_time_record: 上传登记时间记录
@@ -14,7 +17,6 @@ zh-CN:
     page_upload_leave_record: 上传休假记录
 
     page_configuration: 设置
-    page_projects: 项目
     page_users: 人员
     page_roles: 角色
     page_holidays: 节假日

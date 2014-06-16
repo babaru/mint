@@ -28,6 +28,9 @@ function recordCalendar(options) {
         calendar: {
             element: $('#calendar'),
 
+            eventClasses: [
+            ],
+
             defaultView: 'agendaWeek',
             header: {
                 left: 'title',
@@ -145,61 +148,54 @@ function recordCalendar(options) {
         });
     };
 
-    $.contextMenu({
-        selector: '.personal_record',
-        build: function($trigger, e) {
-            var target = $trigger;
+    console.log(options.calendar.eventClasses);
 
-            return {
+    $.each(options.calendar.eventClasses, function(i, el) {
+        console.log(el);
+        $.contextMenu({
+            selector: '.' + el,
+            build: function($trigger, e) {
+                var target = $trigger;
 
-                callback: function() {},
+                return {
 
-                items: {
-                    'edit': {
-                        name: '<i class="icon-pencil"></i> Edit',
-                        callback: function() {
-                            // console.log(target.data('id'));
-                            var currentEvents = cal.fullCalendar('clientEvents', target.data('id'));
-                            if (currentEvents.length > 0) {
-                                console.log(currentEvents[0]);
-                                showRecordDialog({
-                                    url: '/time_records/' + target.data('id') + '.json',
-                                    method: 'put',
-                                    start: currentEvents[0].start,
-                                    end: currentEvents[0].end,
-                                    project_id: currentEvents[0].project_id,
-                                    remark: currentEvents[0].description,
-                                    user_id: currentEvents[0].user_id
+                    callback: function() {},
+
+                    items: {
+                        'edit': {
+                            name: '<i class="icon-pencil"></i> Edit',
+                            callback: function() {
+                                // console.log(target.data('id'));
+                                var currentEvents = cal.fullCalendar('clientEvents', target.data('id'));
+                                if (currentEvents.length > 0) {
+                                    console.log(currentEvents[0]);
+                                    showRecordDialog({
+                                        url: '/time_records/' + target.data('id') + '.json',
+                                        method: 'put',
+                                        start: currentEvents[0].start,
+                                        end: currentEvents[0].end,
+                                        project_id: currentEvents[0].project_id,
+                                        remark: currentEvents[0].description,
+                                        user_id: currentEvents[0].user_id
+                                    });
+                                }
+                            }
+                        },
+                        'delete': {
+                            name: '<i class="icon-trash"></i> Delete',
+                            callback: function() {
+                                deleteRecord(target.data('id'), function() {
+                                    cal.fullCalendar('removeEvents', target.data('id'));
                                 });
                             }
-                        }
-                    },
-                    'delete': {
-                        name: '<i class="icon-trash"></i> Delete',
-                        callback: function() {
-                            deleteRecord(target.data('id'), function() {
-                                cal.fullCalendar('removeEvents', target.data('id'));
-                            });
                         }
                     }
                 }
             }
-        }
+        });
     });
 
     function renderRecordOnCalendar(id, title, start, end, allDay) {
-        // cal.fullCalendar('renderEvent', {
-        //         id: id,
-        //         title: title,
-        //         start: start,
-        //         end: end,
-        //         allDay: allDay,
-        //         color: '#2b72d0',
-        //         className: 'personal_record',
-        //         'data-id': id
-        //     },
-        //     true // make the event "stick"
-        // );
         cal.fullCalendar('refetchEvents');
         cal.fullCalendar('unselect');
     }

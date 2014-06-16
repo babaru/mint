@@ -1,8 +1,8 @@
 Mint::Application.routes.draw do
 
-  get 'personal_time_recorder' => 'time_recorder#index', as: :personal_time_recorder
-  get 'leave_time_recorder' => 'leave_recorder#index', as: :leave_time_recorder
-  get 'overtime_recorder' => 'overtime_recorder#index', as: :overtime_recorder
+  get 'me' => 'time_recorder#index', as: :personal_time_recorder
+  get 'leave' => 'leave_recorder#index', as: :leave_time_recorder
+  get 'overtime' => 'overtime_recorder#index', as: :overtime_recorder
 
   devise_for :users, path_prefix: 'sys'
 
@@ -11,6 +11,7 @@ Mint::Application.routes.draw do
 
     match 'time_records/upload' => 'time_records#upload', as: :upload_time_records
     match 'overtime_records/upload' => 'overtime_records#upload', as: :upload_overtime_records
+    match 'leave_records/upload' => 'leave_records#upload', as: :upload_leave_records
 
     get 'users(/:user_id)/time_records(/:type)' => 'users#time_records', as: :users_overall_time_records
     get 'users(/:user_id)/overtime_records(/:type)' => 'users#overtime_records', as: :users_overall_overtime_records
@@ -26,10 +27,10 @@ Mint::Application.routes.draw do
     end
 
     resources :projects do
-      resources :users, :time_records
+      resources :users, :time_records, :project_logs
     end
 
-    resources :projects, :users, :time_records, :roles, :user_groups, :task_types, :overtime_records, :time_sheets, :holidays
+    resources :clients, :projects, :users, :time_records, :roles, :user_groups, :task_types, :overtime_records, :time_sheets, :project_logs
 
   end
 

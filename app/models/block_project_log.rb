@@ -1,0 +1,2 @@
+class BlockProjectLog < ProjectLog
+end

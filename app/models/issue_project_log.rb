@@ -1,0 +1,2 @@
+class IssueProjectLog < ProjectLog
+end

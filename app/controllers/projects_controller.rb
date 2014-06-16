@@ -2,7 +2,15 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects_grid = initialize_grid(Project)
+    @show_type = params[:show]
+    @show_type ||= 'root'
+    @show_type = @show_type.to_sym
+    case @show_type
+    when :all
+      @projects_grid = initialize_grid(Project)
+    else
+      @projects_grid = initialize_grid(Project.where('projects.parent_id IS NULL'))
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +22,8 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
+
+    @project_logs_grid = initialize_grid(ProjectLog.where(project_id: @project.id).order(:recorded_on).reverse_order)
 
     respond_to do |format|
       format.html # show.html.erb

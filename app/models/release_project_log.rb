@@ -1,0 +1,2 @@
+class ReleaseProjectLog < ProjectLog
+end

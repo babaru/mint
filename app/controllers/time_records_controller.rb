@@ -1,4 +1,6 @@
 class TimeRecordsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /time_records
   # GET /time_records.json
   def index
@@ -12,11 +14,16 @@ class TimeRecordsController < ApplicationController
 
   # GET /user_time_records_feed.json
   def user_feed
+    @conditions = {}
     @started_at = Time.at(params[:start].to_i)
     @ended_at = Time.at(params[:end].to_i)
+    @conditions[:recorded_on] = (@started_at..@ended_at)
+
+    @conditions[:user_id] = current_user.id
+    @conditions[:type] = TimeRecord.name
 
     respond_to do |format|
-      format.json { render json: TimeRecord.where(type: TimeRecord.name, user_id: params[:user_id], recorded_on: (@started_at..@ended_at)).collect{|t| t.to_user_feed}.to_json }
+      format.json { render json: TimeRecord.where(@conditions).collect{|t| t.to_user_feed}.to_json }
     end
   end
 

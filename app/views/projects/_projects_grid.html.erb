@@ -1,24 +1,25 @@
 <%= grid(@projects_grid, :show_filters => :when_filtered) do |g|
 
+  g.column :name => t('activerecord.attributes.project.client_id'), :html => {:class => "grid-cell"} do |project|
+    project.client.name unless project.client.nil?
+  end
+
+  if @show_type == :all
+
+  g.column :name => t('activerecord.attributes.project.parent_id'), :html => {:class => "grid-cell"} do |project|
+    project.parent.name unless project.parent.nil?
+  end
+
+  end
+
   g.column :name => t('activerecord.attributes.project.name'), :html => {:class => "grid-cell"} do |project|
-    project.name
+    project.parent.nil? ? link_to(project.name, project_path(project)) : project.name
   end
   g.column :name => t('activerecord.attributes.project.started_at'), :html => {:class => "grid-cell"} do |project|
     project.started_at.strftime("%Y-%m-%d") unless project.started_at.nil?
   end
   g.column :name => t('activerecord.attributes.project.ended_at'), :html => {:class => "grid-cell"} do |project|
     project.ended_at.strftime("%Y-%m-%d") unless project.ended_at.nil?
-  end
-  g.column name: t('activerecord.attributes.project.users'), html: {class: 'grid-cell'} do |project|
-    project.users.inject([]) {|list, u| list << render_cell(:label, :show, data: {name: u.name, kind: 'success'})}.join(' ').html_safe
-  end
-
-  g.column :name => t('activerecord.attributes.project.client_id'), :html => {:class => "grid-cell"} do |project|
-    project.client.name unless project.client.nil?
-  end
-
-  g.column :name => t('activerecord.attributes.project.parent_id'), :html => {:class => "grid-cell"} do |project|
-    project.parent.name unless project.parent.nil?
   end
 
   g.column html: {class: 'btn-cell'} do |project|

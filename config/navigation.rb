@@ -77,6 +77,32 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     primary.item(
+      :page_clients,
+      t('navigation.page_clients'),
+      clients_path,
+      {
+        link:
+        {
+          icon: 'male'
+        },
+        highlights_on: /clients/
+      }
+    )
+
+    primary.item(
+      :page_projects,
+      t('navigation.page_projects'),
+      projects_path,
+      {
+        link:
+        {
+          icon: 'briefcase'
+        },
+        highlights_on: /projects/
+      }
+    )
+
+    primary.item(
       :page_operation,
       t('navigation.page_operation'),
       nil,
@@ -149,18 +175,6 @@ SimpleNavigation::Configuration.run do |navigation|
         highlights_on: /config/
       }
     ) do |configuration_menu|
-
-      configuration_menu.item(
-        :page_projects,
-        t('navigation.page_projects'),
-        projects_path,
-        {
-          link:
-          {
-            icon: 'briefcase'
-          }
-        }
-      )
 
       configuration_menu.item(
         :page_users,

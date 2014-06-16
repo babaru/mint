@@ -25,6 +25,12 @@
 @import 'nebulas/spot_plan';
 @import 'nebulas/summary';
 
-input.spot-day-count-text-field {
-  padding: 0 2px;
+.well {
+  .container-fluid {
+    padding: 0px;
+
+    [class*="span"] {
+      line-height: 28px;
+    }
+  }
 }

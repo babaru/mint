@@ -7,6 +7,10 @@ $(function() {
         userIdType: 'select',
         calendar: {
             element: $('#leave-calendar'),
+            eventClasses: [
+                'leave_record'
+            ],
+
             eventSources: [
               {
                 url: '/user_leave_records_feed.json',

@@ -1,6 +1,6 @@
 module Mint
   module ExcelParsers
-    class UserOvertimeRecordFileParser
+    class UserLeaveRecordFileParser
       attr_reader :file_path
 
       def initialize(file_path)

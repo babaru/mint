@@ -1,0 +1,93 @@
+<div class="narrow-center-page">
+<%= render_cell(
+  :page_title,
+  :show,
+  data:
+  {
+    name: "#{@project_log.name}",
+    toolbar: {
+      left:
+      [
+        render_cell(
+          :button,
+          :show,
+          data:
+          {
+            name: fa_icon('level-up rotate-270'),
+            url: project_logs_path,
+            options:
+            {
+              class: 'btn',
+              rel: 'tooltip',
+              title: "#{t('labels.back_to')}#{t('model.list', :model => ProjectLog.model_name.human)}",
+            }
+          }
+        )
+      ]
+    }
+  }
+)
+%>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>
+        属性
+      </th>
+      <th>
+        值
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+        
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project_log.type') %>
+      </td>
+      <td>
+        <%= @project_log.type %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project_log.recorded_on') %>
+      </td>
+      <td>
+        <%= @project_log.recorded_on %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project_log.remark') %>
+      </td>
+      <td>
+        <%= @project_log.remark %>
+      </td>
+    </tr>
+    
+        
+    <tr>
+      <td>
+        <%= t('activerecord.attributes.project_log.project_id') %>
+      </td>
+      <td>
+        <%= @project_log.project_id %>
+      </td>
+    </tr>
+    
+        
+        
+    
+  </tbody>
+  <tfoot>
+
+  </tfoot>
+</table>
+</div>

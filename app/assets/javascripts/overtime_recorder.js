@@ -7,6 +7,9 @@ $(function() {
         userIdType: 'select',
         calendar: {
             element: $('#overtime-calendar'),
+            eventClasses: [
+                'overtime_record'
+            ],
             eventSources: [
               {
                 url: '/user_overtime_records_feed.json',

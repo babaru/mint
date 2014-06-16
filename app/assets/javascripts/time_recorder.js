@@ -10,6 +10,10 @@ $(function() {
         calendar: {
             element: $('#time-calendar'),
             // events: '/user_time_records_feed.json?user_id=' + currentUserId
+            eventClasses: [
+              'personal_record',
+            ],
+
             eventSources: [
               {
                 url: '/user_time_records_feed.json?user_id=' + currentUserId,

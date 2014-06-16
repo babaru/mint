@@ -16,7 +16,12 @@ class LeaveRecordsController < ApplicationController
     @started_at = Time.at(params[:start].to_i)
     @ended_at = Time.at(params[:end].to_i)
     @conditions[:recorded_on] = (@started_at..@ended_at)
-    @conditions[:user_id] = params[:user_id] if params[:user_id]
+
+    if current_user.is_normal_user?
+      @conditions[:user_id] = current_user.id
+    else
+      @conditions[:user_id] = params[:user_id] if params[:user_id]
+    end
 
     respond_to do |format|
       format.json { render json: LeaveRecord.where(@conditions).collect{|t| t.to_user_feed}.to_json }
@@ -93,6 +98,48 @@ class LeaveRecordsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to leave_records_url }
       format.json { head :no_content }
+    end
+  end
+
+  def upload
+    @upload_file = UserLeaveRecordFile.new
+
+    if request.post?
+      @upload_file = UserLeaveRecordFile.new(params[:user_leave_record_file])
+      if @upload_file.save
+        time_record_data = @upload_file.parse
+        logger.debug time_record_data
+
+        TimeRecord.transaction do
+          time_record_data.each do |user_name, items|
+            user = User.where("name like '%#{user_name}%'").first
+            if user
+              items.each do |time, value|
+                ranges = []
+                if value < 1 && value > 0
+                  ranges << (Time.new(time.year, time.month, time.day, 14)..Time.new(time.year, time.month, time.day, 18))
+                else
+                  ranges << (Time.new(time.year, time.month, time.day, 13)..Time.new(time.year, time.month, time.day, 18))
+                  ranges << (Time.new(time.year, time.month, time.day, 9)..Time.new(time.year, time.month, time.day, 12))
+                end
+                ranges.each do |range|
+                  LeaveRecord.find_by_user_id_and_started_at_and_ended_at(user.id, range.begin, range.end) || LeaveRecord.create!(
+                    {
+                      user_id: user.id,
+                      recorded_on: time,
+                      started_at: range.begin,
+                      ended_at: range.end,
+                      value: (range.begin - range.end) / 1.hour,
+                      remark: 'IFF'
+                    })
+                end
+              end
+            end
+          end
+        end
+      else
+        render :upload
+      end
     end
   end
 end
