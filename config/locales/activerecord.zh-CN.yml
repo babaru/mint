@@ -33,6 +33,9 @@ zh-CN:
         parent_id: 父项目
         client_id: 客户
         users: 成员
+        show:
+          all: 全部
+          top: 根项目
       time_record:
         user_id: 人员
         project_id: 项目名称

@@ -6,44 +6,63 @@ class TimeRecordsController < ApplicationController
   def index
     parse_conditions
 
-    # if @request_kind == :user
-    # @time_records_grid = initialize_grid(TimeRecord)
+    @time_records = []
 
-    @project_time_record_grid = initialize_grid(TimeRecord.where(user_id: 4))
+    if @user
+      @project_time_record_grid = initialize_grid(TimeRecord.where(user_id: @user.id, type: TimeRecord.name).group(:project_id))
+      @time_records = TimeRecord.where(@conditions.merge(type: TimeRecord.name))
+    end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: TimeRecord.where(user_id: params[:user_id]).to_json }
+      format.json { render json: @time_records.to_json }
     end
   end
 
   def parse_conditions
     @conditions, @url_params = {}, {}
 
-    @report_kind = params[:kind]
-    @report_kind ||= 'project'
-    @report_kind = @report_kind.to_sym
-    @url_params[:kind] = @report_kind
-
     @start_date = Date.parse(params[:start_date]) if params[:start_date]
-    @end_date = Date.parse(params[:end_date]) if params[:end_date]
 
-    @start_date ||= Date.new(Date.today.year,1,1)
-    @end_date ||= Date.today
+    @start_date ||= Date.new(Date.today.year, Date.today.month, 1)
+    @end_date ||= 1.day.ago(Date.new(@start_date.year, @start_date.month + 1, 1))
 
     @url_params[:start_date] = @start_date.strftime('%Y-%m-%d')
-    @url_params[:end_date] = @end_date.strftime('%Y-%m-%d')
 
     @conditions[:recorded_on] = (@start_date.beginning_of_day..@end_date.end_of_day)
 
     @user = User.find params[:user_id] if params[:user_id]
-    @project = Project.find params[:project_id] if params[:project_id]
 
     @conditions[:user_id] = @user.id if @user
     @conditions[:project_id] = @project.id if @project
 
     @url_params[:user_id] = @user.id if @user
     @url_params[:project_id] = @project.id if @project
+  end
+
+  def query_by_month
+    @url_params = {}
+    if request.post?
+      if params[:date_range]&& params[:date_range][:start_date]
+        selected_date = Date.parse(params[:date_range][:start_date])
+        @start_date = Date.new(selected_date.year, selected_date.month, 1)
+        @end_date = 1.ago(Date.new(selected_date.year, selected_date.month + 1, 1))
+        @url_params[:start_date] = @start_date.strftime('%Y-%m-%d')
+        @url_params[:end_date] = @end_date.strftime('%Y-%m-%d')
+      end
+
+      @report_kind = params[:kind]
+      @report_kind ||= 'project'
+      @report_kind = @report_kind.to_sym
+      @url_params[:kind] = @report_kind
+
+      @url_params[:user_id] = params[:user_id] if params[:user_id]
+      @url_params[:project_id] = params[:project_id] if params[:project_id]
+
+      respond_to do |format|
+        format.html { redirect_to time_record_path(@url_params)}
+      end
+    end
   end
 
   # GET /user_time_records_feed.json

@@ -23,6 +23,7 @@ Mint::Application.routes.draw do
     post 'time/query_by_duration' => 'time_sheets#query_by_duration', as: :query_time_report_by_duration
 
     get 'time/record' => 'time_records#index', as: :time_record
+    post 'time/query_by_month' => 'time_records#query_by_month', as: :query_time_record_by_month
 
     resources :users do
       resources :projects, :time_records, :overtime_records

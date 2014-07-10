@@ -3,28 +3,60 @@
   :show,
   data:
   {
-    name: "#{t('model.list', model: TimeRecord.model_name.human)}",
+    name: "#{t('model.list', model: TimeRecord.model_name.human)} #{@start_date.year}年#{@start_date.month}月",
     toolbar:
     {
       right:
       [
-        render_cell(
-          :button,
-          :show,
-          data:
-          {
-            name: fa_icon('plus-sign', text: t('model.create', :model => TimeRecord.model_name.human)),
-            url: new_time_record_path,
-            options:
-            {
-              class: 'btn btn-primary'
-            }
-          }
-        )
       ]
     }
   }
 )
 %>
 
-<%= render partial: 'project_time_record_grid' %>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="btn-toolbar">
+        <%= render_cell(
+          :dropdown_button,
+          :show,
+          data:
+          {
+            name: @user.nil? ? "#{t('label.please_choose')}#{User.model_name.human}" : @user.name,
+            url: nil,
+            dropdown_list:
+            [
+              User.tracked.inject([]) {|list, user| list << {
+                  name: user.name,
+                  url: time_record_path(@url_params.merge({user_id: user.id}))
+                }
+              }
+            ].flatten
+          }
+        ) %>
+
+
+        <div class="btn-group">
+          <%= link_to t('activerecord.attributes.time_sheet.duration.last_month'), time_record_path(@url_params.merge({start_date: Date.new(Date.today.year, Date.today.month - 1, 1)})), class: "btn" %>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.this_month'), time_record_path(@url_params.merge({start_date: Date.new(Date.today.year, Date.today.month, 1)})), class: "btn" %>
+        </div>
+
+      </div>
+    </div>
+    <div class="span6">
+      <%= simple_form_for(:date_range, url: query_time_record_by_month_path(@url_params), method: :post, html: {class: 'form-inline pull-right'}) do |f| %>
+        <%= f.input :start_date, as: :date_picker, label: t('labels.from'), required: false, input_html: {value: @start_date.strftime('%Y-%m-%d')} %>
+        <%= f.button :submit, t('buttons.ok') %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render partial: 'project_time_record_grid' if @project_time_record_grid %>
+
+<% content_for :js do %>
+
+<%= javascript_include_tag "project_time_records" %>
+
+<% end %>

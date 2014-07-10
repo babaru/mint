@@ -49,32 +49,6 @@ SimpleNavigation::Configuration.run do |navigation|
         highlights_on: /dashboard/
       }
     )
-    primary.item(
-      :page_report,
-      t('navigation.page_report'),
-      nil,
-      {
-        link:
-        {
-          icon: 'file-text'
-        },
-        highlights_on: /reports/
-      }
-    ) do |report_menu|
-
-      report_menu.item(
-        :page_time_report,
-        t('navigation.page_time_report'),
-        time_report_path,
-        {
-          link:
-          {
-            icon: 'file'
-          }
-        }
-      )
-
-    end
 
     primary.item(
       :page_clients,
@@ -100,7 +74,60 @@ SimpleNavigation::Configuration.run do |navigation|
         },
         highlights_on: /projects/
       }
-    )
+    ) do |projects_menu|
+
+      projects_menu.item(
+        :page_projects,
+        t('navigation.page_projects'),
+        projects_path,
+        {
+          link:
+          {
+            icon: 'briefcase'
+          }
+        }
+      )
+
+      projects_menu.item(
+        :page_project_time_report,
+        t('navigation.page_project_time_report'),
+        time_report_path(kind: :project),
+        {
+          link:
+          {
+            icon: 'file'
+          }
+        }
+      )
+
+    end
+
+    primary.item(
+      :page_users,
+      t('navigation.page_users'),
+      nil,
+      {
+        link:
+        {
+          icon: 'briefcase'
+        },
+        highlights_on: /users/
+      }
+    ) do |users_menu|
+
+      users_menu.item(
+        :page_user_time_report,
+        t('navigation.page_user_time_report'),
+        time_report_path(kind: :user),
+        {
+          link:
+          {
+            icon: 'file'
+          }
+        }
+      )
+
+    end
 
     primary.item(
       :page_operation,
