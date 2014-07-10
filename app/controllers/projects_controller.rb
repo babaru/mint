@@ -7,9 +7,9 @@ class ProjectsController < ApplicationController
     @show_type = @show_type.to_sym
     case @show_type
     when :all
-      @projects_grid = initialize_grid(Project)
+      @projects_grid = initialize_grid(Project.order('name asc'))
     else
-      @projects_grid = initialize_grid(Project.where('projects.parent_id IS NULL'))
+      @projects_grid = initialize_grid(Project.where('projects.parent_id IS NULL').order('name asc'))
     end
 
     respond_to do |format|

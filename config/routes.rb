@@ -22,6 +22,8 @@ Mint::Application.routes.draw do
     get 'time/report' => 'time_sheets#index', as: :time_report
     post 'time/query_by_duration' => 'time_sheets#query_by_duration', as: :query_time_report_by_duration
 
+    get 'time/record' => 'time_records#index', as: :time_record
+
     resources :users do
       resources :projects, :time_records, :overtime_records
     end
