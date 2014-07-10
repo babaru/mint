@@ -12,7 +12,7 @@
 
     <%= f.input :client_id, collection: Client.all.map{|v| [v.name, v.id]} %>
 
-    <%= f.input :parent_id, collection: Project.all.map{|v| [v.name, v.id]} %>
+    <%= f.input :parent_id, collection: Project.top.order('name asc').map{|v| [v.name, v.id]} %>
 
   </div>
 
