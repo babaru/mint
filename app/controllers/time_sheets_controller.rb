@@ -88,7 +88,7 @@ class TimeSheetsController < ApplicationController
     @start_date = Date.parse(params[:start_date]) if params[:start_date]
     @end_date = Date.parse(params[:end_date]) if params[:end_date]
 
-    @start_date ||= Date.new(2000,1,1)
+    @start_date ||= Date.new(Date.today.year,1,1)
     @end_date ||= Date.today
 
     @url_params[:start_date] = @start_date.strftime('%Y-%m-%d')
