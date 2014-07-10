@@ -6,6 +6,7 @@ zh-CN:
     page_time_report: 时间报表
     page_user_time_report: 人员时间报表
     page_project_time_report: 项目时间报表
+    page_client_time_report: 客户时间报表
 
     page_clients: 客户
     page_projects: 项目
