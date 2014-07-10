@@ -35,7 +35,7 @@ class Project < ActiveRecord::Base
             tr.update_attributes({project_id: top.id})
           end
         end
-        current.children.each {|p| do_migrate_children_time_records(top, p)} if current.children.length > 0
+        current.children.each {|p| do_migrate_children_time_records(top, p, user_id, started_at, ended_at)} if current.children.length > 0
       end
   end
 end
