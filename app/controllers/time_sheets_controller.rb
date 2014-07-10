@@ -51,6 +51,17 @@ class TimeSheetsController < ApplicationController
 
     end
 
+    if @report_kind == :client
+      @client_time_report_grid = initialize_grid(TimeSheet.select([
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_hours]]).as('calculated_hours'),
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:overtime_hours]]).as('overtime_hours'),
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:recorded_hours]]).as('recorded_hours'),
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
+        Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
+        :client_id
+      ]).where(@conditions).group(:client_id), per_page: 50)
+    end
+
   end
 
   def query_by_duration
@@ -203,11 +214,11 @@ class TimeSheetsController < ApplicationController
 
       TimeRecord.transaction do
 
-        Project.migrate_children_time_records
-        Project.children.each {|child| TimeSheet.delete_all(project_id: child.id)}
-
         users.each do |user|
           user_id = user.id
+
+          Project.migrate_children_time_records(user_id, start_date, end_date)
+          TimeSheet.delete_all(user_id: user_id, recorded_on: (start_date.beginning_of_day..end_date.end_of_day))
 
           (start_date..end_date).each do |recorded_on|
             overtime_records = OvertimeRecord.where(user_id: user_id, recorded_on: (1.day.ago(recorded_on).end_of_day..recorded_on.end_of_day))
@@ -217,8 +228,10 @@ class TimeSheetsController < ApplicationController
 
             calculated_results.each do |item|
               time_sheet = TimeSheet.find_by_user_id_and_project_id_and_recorded_on(user_id, item[:project_id], (recorded_on.beginning_of_day..recorded_on.end_of_day))
+              project = Project.find item[:project_id]
               unless time_sheet.nil?
                 time_sheet.update_attributes!({
+                  client_id: project.client_id,
                   calculated_hours: item[:calculated_hours],
                   overtime_hours: item[:overtime_hours],
                   recorded_hours: item[:recorded_hours],
@@ -229,6 +242,7 @@ class TimeSheetsController < ApplicationController
                 time_sheet = TimeSheet.create!({
                   user_id: user_id,
                   project_id: item[:project_id],
+                  client_id: project.client_id,
                   recorded_on: recorded_on,
                   calculated_hours: item[:calculated_hours],
                   overtime_hours: item[:overtime_hours],

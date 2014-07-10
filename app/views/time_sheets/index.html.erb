@@ -8,15 +8,6 @@
 )
 %>
 
-<ul class="nav nav-tabs">
-  <li class="<%= @report_kind == :project ? "active" : '' %>">
-    <%= link_to t('navigation.page_project_time_report'), time_report_path(@url_params.merge({kind: :project})) %>
-  </li>
-  <li class="<%= @report_kind == :user ? "active" : '' %>">
-    <%= link_to t('navigation.page_user_time_report'), time_report_path(@url_params.merge({kind: :user})) %>
-  </li>
-</ul>
-
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span6">
@@ -97,8 +88,16 @@
 
 <%= render(partial: 'user_time_report_grid', locals: {user: @user, grid: @user_time_report_grid}) unless @user.nil? %>
 
-<% else %>
+<% end %>
+
+<% if @report_kind == :project %>
 
 <%= render partial: 'project_time_report_grid' %>
+
+<% end %>
+
+<% if @report_kind == :client %>
+
+<%= render partial: 'client_time_report_grid' %>
 
 <% end %>

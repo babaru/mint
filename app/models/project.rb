@@ -17,11 +17,11 @@ class Project < ActiveRecord::Base
   end
 
   class << self
-    def migrate_children_time_records
+    def migrate_children_time_records(user_id, started_at, ended_at)
         TimeRecord.transaction do
           Project.top.each do |project|
             project.children.each do |child|
-              do_migrate_children_time_records(project, child)
+              do_migrate_children_time_records(project, child, user_id, started_at, ended_at)
             end
           end
         end
@@ -29,9 +29,9 @@ class Project < ActiveRecord::Base
 
       private
 
-      def do_migrate_children_time_records(top, current)
+      def do_migrate_children_time_records(top, current, user_id, started_at, ended_at)
         if current.id != top.id
-          TimeRecord.where(project_id: current.id).each do |tr|
+          TimeRecord.where(project_id: current.id, user_id: user_id, recorded_on: (started_at.beginning_of_day..ended_at.end_of_day)).each do |tr|
             tr.update_attributes({project_id: top.id})
           end
         end

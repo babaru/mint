@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140610030936) do
+ActiveRecord::Schema.define(:version => 20140710083859) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -99,8 +99,10 @@ ActiveRecord::Schema.define(:version => 20140610030936) do
     t.datetime "updated_at",                                                                :null => false
     t.decimal  "calculated_normal_hours",   :precision => 20, :scale => 2
     t.decimal  "calculated_overtime_hours", :precision => 20, :scale => 2
+    t.integer  "client_id"
   end
 
+  add_index "time_sheets", ["client_id"], :name => "index_time_sheets_on_client_id"
   add_index "time_sheets", ["project_id"], :name => "index_time_sheets_on_project_id"
   add_index "time_sheets", ["user_id"], :name => "index_time_sheets_on_user_id"
 

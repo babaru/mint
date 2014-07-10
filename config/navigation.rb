@@ -61,7 +61,33 @@ SimpleNavigation::Configuration.run do |navigation|
         },
         highlights_on: /clients/
       }
-    )
+    ) do |clients_menu|
+
+      clients_menu.item(
+        :page_clients,
+        t('navigation.page_clients'),
+        clients_path,
+        {
+          link:
+          {
+            icon: 'list'
+          }
+        }
+      )
+
+      clients_menu.item(
+        :page_client_time_report,
+        t('navigation.page_client_time_report'),
+        time_report_path(kind: :client),
+        {
+          link:
+          {
+            icon: 'file'
+          }
+        }
+      )
+
+    end
 
     primary.item(
       :page_projects,
@@ -83,7 +109,7 @@ SimpleNavigation::Configuration.run do |navigation|
         {
           link:
           {
-            icon: 'briefcase'
+            icon: 'list'
           }
         }
       )

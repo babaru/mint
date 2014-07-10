@@ -1,0 +1,21 @@
+<%= grid(@client_time_report_grid, :show_filters => :when_filtered) do |g|
+  g.column :name => t('activerecord.attributes.time_sheet.client_id'), :html => {:class => "grid-cell"} do |time_sheet|
+    time_sheet.client.name
+  end
+
+  g.column :name => t('activerecord.attributes.time_sheet.recorded_hours'), :html => {:class => "number-cell"} do |time_sheet|
+    time_sheet.recorded_hours
+  end
+  g.column :name => t('activerecord.attributes.time_sheet.calculated_normal_hours'), :html => {:class => "number-cell"} do |time_sheet|
+    time_sheet.calculated_normal_hours
+  end
+  g.column :name => t('activerecord.attributes.time_sheet.overtime_hours'), :html => {:class => "number-cell"} do |time_sheet|
+    time_sheet.overtime_hours
+  end
+  g.column :name => t('activerecord.attributes.time_sheet.calculated_overtime_hours'), :html => {:class => "number-cell"} do |time_sheet|
+    time_sheet.calculated_overtime_hours
+  end
+  g.column :name => t('activerecord.attributes.time_sheet.calculated_hours'), :html => {:class => "number-cell"} do |time_sheet|
+    time_sheet.calculated_hours
+  end
+end -%>
