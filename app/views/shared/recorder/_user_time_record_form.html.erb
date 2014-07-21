@@ -6,7 +6,7 @@
 
 <div class="modal-boday">
   <div class="form-inputs">
-    <%= f.input :project_id, collection: Project.top.collect{|p| [p.name, p.id]}, label: t('activerecord.attributes.time_record.project_id') %>
+    <%= f.input :project_id, collection: Project.top.order('name asc').collect{|p| [p.name, p.id]}, label: t('activerecord.attributes.time_record.project_id') %>
     <%= f.input :remark, as: :text, input_html: { rows: 5 }, label: t('activerecord.attributes.time_record.remark') %>
     <%= f.input :started_at, as: :hidden %>
     <%= f.input :ended_at, as: :hidden %>
