@@ -237,6 +237,7 @@ class TimeSheetsController < ApplicationController
 
             calculated_results.each do |item|
               time_sheet = TimeSheet.find_by_user_id_and_project_id_and_recorded_on(user_id, item[:project_id], (recorded_on.beginning_of_day..recorded_on.end_of_day))
+              logger.info("Project ID: #{item[:project_id]}")
               project = Project.find item[:project_id]
               unless time_sheet.nil?
                 time_sheet.update_attributes!({
