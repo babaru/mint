@@ -33,7 +33,7 @@ Mint::Application.routes.draw do
       resources :users, :time_records, :project_logs
     end
 
-    resources :clients, :projects, :users, :time_records, :roles, :user_groups, :task_types, :overtime_records, :time_sheets, :project_logs
+    resources :clients, :projects, :users, :time_records, :roles, :user_groups, :task_types, :overtime_records, :leave_records, :time_sheets, :project_logs
 
   end
 

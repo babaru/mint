@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
 
   scope :tracked, -> { joins(:roles).where("roles.name = 'tracked_user'")}
   scope :system_admin, -> { joins(:roles).where("roles.name = 'system_admin'")}
+  scope :ordered, order('first_name asc')
 
   validates :email,
     :uniqueness => {

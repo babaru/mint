@@ -7,7 +7,7 @@
   </div>
 
   <div class="form-inputs">
-    <%= f.input :user_id, collection: User.tracked.collect{|u| [u.name, u.id]} %>
+    <%= f.input :user_id, collection: User.tracked.ordered.collect{|u| [u.full_name, u.id]} %>
     <%= f.input :remark, as: :text, input_html: { rows: 5 } %>
     <%= f.input :started_at, as: :hidden %>
     <%= f.input :ended_at, as: :hidden %>
