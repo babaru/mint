@@ -36,11 +36,20 @@ body {
       h2 {
         &.title {
           display: block;
-          height: 40px; width: 320px;
+          height: 40px; width: 620px;
           @include at2x('time_recorder_logo', 320px, 40px, '.png');
+          background-repeat: no-repeat;
 
           span {
             display: none;
+          }
+
+          small {
+            margin-left: 320px;
+            padding: 5px;
+            border-left: 2px solid #666;
+            font-size: 24px;
+            font-weight: bold;
           }
         }
       }

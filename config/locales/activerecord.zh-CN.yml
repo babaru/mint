@@ -68,6 +68,7 @@ zh-CN:
         duration:
           all: 全部
           this_year: 今年
+          before_last_month: 上上月
           last_month: 上月
           this_month: 本月
           last_week: 上周

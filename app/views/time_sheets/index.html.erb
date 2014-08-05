@@ -3,7 +3,7 @@
   :show,
   data:
   {
-    name: @report_kind == :user ? t('navigation.page_user_time_report') : t('navigation.page_project_time_report'),
+    name: @report_kind == :user ? t('navigation.page_user_time_report') : (@report_kind == :project ? t('navigation.page_project_time_report') : t('navigation.page_client_time_report')),
   }
 )
 %>
@@ -64,6 +64,7 @@
 
         <div class="btn-group">
           <%= link_to t('activerecord.attributes.time_sheet.duration.this_year'), time_report_path(@url_params.merge({start_date: Date.new(Date.today.year, 1, 1), end_date: Date.new(Date.today.year, 12, 31)})), class: "btn" %>
+          <%= link_to t('activerecord.attributes.time_sheet.duration.before_last_month'), time_report_path(@url_params.merge({start_date: Date.new(Date.today.year, Date.today.month - 2, 1), end_date: 1.day.ago(Date.new(Date.today.year, Date.today.month - 1 , 1))})), class: "btn" %>
           <%= link_to t('activerecord.attributes.time_sheet.duration.last_month'), time_report_path(@url_params.merge({start_date: Date.new(Date.today.year, Date.today.month - 1, 1), end_date: 1.day.ago(Date.new(Date.today.year, Date.today.month , 1))})), class: "btn" %>
           <%= link_to t('activerecord.attributes.time_sheet.duration.this_month'), time_report_path(@url_params.merge({start_date: Date.new(Date.today.year, Date.today.month, 1), end_date: 1.day.ago(Date.new(Date.today.year, Date.today.month + 1, 1))})), class: "btn" %>
           <%= link_to t('activerecord.attributes.time_sheet.duration.last_week'), time_report_path(@url_params.merge({start_date: 1.day.ago(Date.today.beginning_of_week).beginning_of_week, end_date: 1.day.ago(Date.today.beginning_of_week).end_of_week})), class: "btn #{@report_duration == :week ? 'active' : ''}" %>

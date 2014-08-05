@@ -3,5 +3,6 @@ class TimeRecorderController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    @title = TimeRecord.model_name.human
   end
 end
