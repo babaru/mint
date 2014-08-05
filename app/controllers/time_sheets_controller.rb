@@ -9,9 +9,10 @@ class TimeSheetsController < ApplicationController
     parse_conditions
 
     if @report_kind == :user
-
+      user_grids = {}
       if @user.nil?
         @user_time_reports = User.tracked.order('name').inject([]) do |list, user|
+          grid_name = "g_#{user.id}"
           list << {
             user: user,
             grid: initialize_grid(TimeSheet.select([
@@ -22,7 +23,7 @@ class TimeSheetsController < ApplicationController
               Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
               :project_id,
               :user_id
-            ]).where(@conditions.merge({user_id: user.id})).group(:user_id, :project_id), name: "#{user.id}_time_report_grid")
+            ]).where(@conditions.merge({user_id: user.id})).group(:user_id, :project_id), per_page: 50, name: grid_name)
           }
         end
       else
@@ -34,7 +35,10 @@ class TimeSheetsController < ApplicationController
               Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
               :project_id,
               :user_id
-            ]).where(@conditions).group(:user_id, :project_id), name: "#{@user.id}_time_report_grid")
+            ]).where(@conditions).group(:user_id, :project_id), per_page: 50, name: 'g1', enable_export_to_csv: true, csv_file_name: "user_time_report")
+
+        export_grid_if_requested('g1' => "user_time_report_grid") do
+        end
       end
     end
 
@@ -47,7 +51,10 @@ class TimeSheetsController < ApplicationController
         Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
         Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
         :project_id
-      ]).where(@conditions).group(:project_id), per_page: 50)
+      ]).where(@conditions).group(:project_id), per_page: 50, name: 'g2', enable_export_to_csv: true, csv_file_name: 'project_time_report')
+
+      export_grid_if_requested('g2' => "project_time_report_grid") do
+      end
 
     end
 
@@ -59,9 +66,11 @@ class TimeSheetsController < ApplicationController
         Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_normal_hours]]).as('calculated_normal_hours'),
         Arel::Nodes::NamedFunction.new('SUM', [TimeSheet.arel_table[:calculated_overtime_hours]]).as('calculated_overtime_hours'),
         :client_id
-      ]).where(@conditions).group(:client_id), per_page: 50)
-    end
+      ]).where(@conditions).group(:client_id), per_page: 50, name: 'g3', enable_export_to_csv: true, csv_file_name: 'client_time_report')
 
+      export_grid_if_requested('g3' => 'client_time_report_grid') do
+      end
+    end
   end
 
   def query_by_duration

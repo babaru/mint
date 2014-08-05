@@ -1,7 +1,5 @@
-<%= render_cell(:section_title, :show, data: {name: user.full_name}) %>
-
 <% total_calculated_hours, total_recorded_hours, total_caluclated_normal_hours, total_overtime_hours, total_calculated_overtime_hours = 0, 0, 0, 0, 0 %>
-
+<% grid = @user_time_report_grid if grid.nil? %>
 <%= grid(grid, :show_filters => :when_filtered) do |g|
 
   g.column name: t('activerecord.attributes.time_sheet.project_id'), :html => {:class => "grid-cell"} do |time_sheet|

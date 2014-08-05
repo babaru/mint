@@ -85,9 +85,9 @@
 
 <% if @report_kind == :user %>
 
-<%= @user_time_reports.inject([]) {|list, report| list << render(partial: 'user_time_report_grid', locals: {user: report[:user], grid: report[:grid]}) }.join.html_safe if @user.nil? %>
+<%= @user_time_reports.inject([]) {|list, report| list << render(partial: 'user_time_report', locals: {user: report[:user], grid: report[:grid]}) }.join.html_safe if @user.nil? %>
 
-<%= render(partial: 'user_time_report_grid', locals: {user: @user, grid: @user_time_report_grid}) unless @user.nil? %>
+<%= render(partial: 'user_time_report', locals: {user: @user, grid: @user_time_report_grid}) unless @user.nil? %>
 
 <% end %>
 
