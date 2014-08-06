@@ -62,6 +62,13 @@
   th {
     border-bottom: 2px solid $tableBorder;
   }
+
+  .last-row {
+    td {
+      border-top: 2px solid $tableBorder;
+      font-weight: bold;
+    }
+  }
 }
 
 .table-horizontal-bordered {

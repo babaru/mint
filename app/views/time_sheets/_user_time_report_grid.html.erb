@@ -1,4 +1,4 @@
-<% total_calculated_hours, total_recorded_hours, total_caluclated_normal_hours, total_overtime_hours, total_calculated_overtime_hours = 0, 0, 0, 0, 0 %>
+<% total_calculated_hours, total_recorded_hours, total_overtime_hours, = 0, 0, 0 %>
 <% grid = @user_time_report_grid if grid.nil? %>
 <%= grid(grid, :show_filters => :when_filtered) do |g|
 
@@ -18,17 +18,9 @@
     total_recorded_hours += time_sheet.recorded_hours
     time_sheet.recorded_hours
   end
-  g.column :name => t('activerecord.attributes.time_sheet.calculated_normal_hours'), :html => {:class => "number-cell"} do |time_sheet|
-    total_caluclated_normal_hours += time_sheet.calculated_normal_hours
-    time_sheet.calculated_normal_hours
-  end
   g.column :name => t('activerecord.attributes.time_sheet.overtime_hours'), :html => {:class => "number-cell"} do |time_sheet|
     total_overtime_hours += time_sheet.overtime_hours
     time_sheet.overtime_hours
-  end
-  g.column :name => t('activerecord.attributes.time_sheet.calculated_overtime_hours'), :html => {:class => "number-cell"} do |time_sheet|
-    total_calculated_overtime_hours += time_sheet.calculated_overtime_hours
-    time_sheet.calculated_overtime_hours
   end
   g.column :name => t('activerecord.attributes.time_sheet.calculated_hours'), :html => {:class => "number-cell"} do |time_sheet|
     total_calculated_hours += time_sheet.calculated_hours
@@ -42,9 +34,7 @@
       content_tag(:td, content_tag(:strong, @start_date.business_days_until(@end_date)), class: 'number-cell'),
       content_tag(:td, content_tag(:strong, (@start_date.business_days_until(@end_date) * 8).to_f), class: 'number-cell'),
       content_tag(:td, content_tag(:strong, total_recorded_hours), class: 'number-cell'),
-      content_tag(:td, content_tag(:strong, total_caluclated_normal_hours), class: 'number-cell'),
       content_tag(:td, content_tag(:strong, total_overtime_hours), class: 'number-cell'),
-      content_tag(:td, content_tag(:strong, total_calculated_overtime_hours), class: 'number-cell'),
       content_tag(:td, content_tag(:strong, total_calculated_hours), class: 'number-cell')
     ].join.html_safe)
 
